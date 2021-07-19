@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1093299383799",
+    "project_id": "converta-91126",
+    "storage_bucket": "converta-91126.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1093299383799:android:8ebfcf079cb1a8a1ddd2f2",
+        "android_client_info": {
+          "package_name": "com.delet_dis.converta"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1093299383799-rjh7192gqeh7eh05oiuvfk5tga90kd7a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAHBL0xD7V-391N4hTCCZl1Jsc2msp05Jk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1093299383799-rjh7192gqeh7eh05oiuvfk5tga90kd7a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
