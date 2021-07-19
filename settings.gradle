@@ -1,0 +1,2 @@
+rootProject.name = "Converta"
+include ':app'
