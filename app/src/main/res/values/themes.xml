@@ -1,10 +1,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Theme.Converta" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <!-- Primary brand color. -->
         <item name="colorPrimary">@color/orange</item>
         <item name="colorPrimaryVariant">@color/gradientSubOrangeOne</item>
-
 
         <item name="colorSecondary">@color/blue</item>
         <item name="colorSecondaryVariant">@color/gradientSubBlueThree</item>

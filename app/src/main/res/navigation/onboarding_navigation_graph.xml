@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/onboarding_navigation_graph"
+        app:startDestination="@id/helloFragment">
+
+    <fragment
+            android:id="@+id/helloFragment"
+            android:name="com.delet_dis.converta.presentation.activities.onboardingActivity.fragments.helloFragment.HelloFragment"
+            android:label="HelloFragment" />
+</navigation>

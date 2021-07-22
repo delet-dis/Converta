@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">Converta</string>
+    <string name="appName" translatable="false">Converta</string>
+    <string name="onboardingBackgroundImageContentDescription">Gradient image</string>
+    <string name="helloText">Hello</string>
 </resources>

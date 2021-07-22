@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="onboardingBackgroundImageContentDescription">Градиентное изображение</string>
+    <string name="helloText">Привет</string>
+</resources>
