@@ -2,4 +2,6 @@
     <string name="appName" translatable="false">Converta</string>
     <string name="onboardingBackgroundImageContentDescription">Gradient image</string>
     <string name="helloText">Hello</string>
+    <string name="chooseCommunicationLanguageText">Choose your communication language</string>
+    <string name="chooseCommunicationLanguageButtonText">Go to speech synthesizer settings</string>
 </resources>

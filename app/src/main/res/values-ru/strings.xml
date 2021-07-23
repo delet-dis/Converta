@@ -2,4 +2,6 @@
 <resources>
     <string name="onboardingBackgroundImageContentDescription">Градиентное изображение</string>
     <string name="helloText">Привет</string>
+    <string name="chooseCommunicationLanguageText">Выбери язык для общения</string>
+    <string name="chooseCommunicationLanguageButtonText">Перейти в настройки синтезатора речи</string>
 </resources>

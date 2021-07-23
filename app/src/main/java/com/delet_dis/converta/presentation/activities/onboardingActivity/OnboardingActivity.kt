@@ -8,6 +8,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.delet_dis.converta.R
 import com.delet_dis.converta.databinding.ActivityOnboardingBinding
+import com.delet_dis.converta.domain.extensions.findPickedFragmentBackgroundState
 import com.delet_dis.converta.presentation.activities.onboardingActivity.viewModel.OnboardingActivityViewModel
 
 class OnboardingActivity : AppCompatActivity() {
@@ -32,6 +33,16 @@ class OnboardingActivity : AppCompatActivity() {
 
         initActivityBackground()
 
+        initNavigationToCommunicationLanguageChooserFragment()
+
+        hostFragment?.findNavController()?.addOnDestinationChangedListener { _, destination, _ ->
+            findPickedFragmentBackgroundState(destination.id)?.let {
+                binding.rootLayout.transitionToState(it.backgroundStateToNavigate)
+            }
+        }
+    }
+
+    private fun initNavigationToCommunicationLanguageChooserFragment() =
         with(onboardingActivityViewModel) {
             initNavigateFromHelloFragmentAvailabilityCountdown()
             isAvailableToNavigateFromHelloFragment.observe(this@OnboardingActivity, {
@@ -41,7 +52,6 @@ class OnboardingActivity : AppCompatActivity() {
                 }
             })
         }
-    }
 
     private fun initActivityBackground() {
         val backgroundGradientDrawable = GradientDrawable(
