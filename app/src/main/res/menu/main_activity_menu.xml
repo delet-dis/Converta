@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+            android:id="@+id/SSTButton"
+            android:icon="@drawable/ic_sst"
+            android:title="@string/SSTTitle" />
+
+    <item
+            android:id="@+id/TTSButton"
+            android:icon="@drawable/ic_tts"
+            android:title="@string/TTSTitle" />
+</menu>

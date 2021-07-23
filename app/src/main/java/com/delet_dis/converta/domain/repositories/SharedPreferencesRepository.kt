@@ -33,8 +33,21 @@ class SharedPreferencesRepository(private val context: Context) {
         }
     }
 
+    fun getOnboardingPassedStatus(): Boolean =
+        getSharedPreferences().getBoolean(onboardingPassedStatus, false)
+
+    fun setOnboardingPassedStatus(status: Boolean) {
+        getSharedPreferences().edit()
+            .putBoolean(
+                onboardingPassedStatus,
+                status
+            )
+            .apply()
+    }
+
     companion object SharedPreferencesConstantsRepository {
         const val appSettings = "APP_SETTINGS"
         const val pickedAppMode = "PICKED_APP_MODE"
+        const val onboardingPassedStatus = "ONBOARDING_STATUS"
     }
 }

@@ -1,5 +1,6 @@
 package com.delet_dis.converta.presentation.activities.onboardingActivity
 
+import android.content.Intent
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -9,6 +10,8 @@ import com.delet_dis.converta.R
 import com.delet_dis.converta.databinding.ActivityOnboardingBinding
 import com.delet_dis.converta.domain.contracts.SettingsGoToTTSContract
 import com.delet_dis.converta.domain.extensions.findPickedFragmentBackgroundState
+import com.delet_dis.converta.domain.extensions.isOnboardingPassed
+import com.delet_dis.converta.presentation.activities.mainActivity.MainActivity
 import com.delet_dis.converta.presentation.activities.onboardingActivity.fragments.communicationLanguageChooserFragment.CommunicationLanguageChooserFragment
 import com.delet_dis.converta.presentation.activities.onboardingActivity.fragments.preferredModeChooserFragment.PreferredModeChooserFragment
 import com.delet_dis.converta.presentation.activities.onboardingActivity.viewModel.OnboardingActivityViewModel
@@ -32,6 +35,8 @@ class OnboardingActivity : AppCompatActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        checkIfOnboardingPassed()
+
         binding = ActivityOnboardingBinding.inflate(layoutInflater)
 
         onboardingActivityViewModel = OnboardingActivityViewModel(application)
@@ -47,6 +52,13 @@ class OnboardingActivity : AppCompatActivity(),
         initNavigationToCommunicationLanguageChooserFragment()
 
         initBackgroundChangerListener()
+    }
+
+    private fun checkIfOnboardingPassed(){
+        if(isOnboardingPassed(applicationContext)){
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
+        }
     }
 
     private fun initBackgroundChangerListener() =

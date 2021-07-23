@@ -1,22 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         package="com.delet_dis.converta">
 
     <application
-            android:allowBackup="true"
+            android:allowBackup="false"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/appName"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/Theme.Converta">
-        <activity android:name=".presentation.activities.onboardingActivity.OnboardingActivity">
+        <activity
+                android:name=".presentation.activities.onboardingActivity.OnboardingActivity"
+                android:screenOrientation="portrait"
+                tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".presentation.activities.mainActivity.MainActivity" />
+        <activity
+                android:name=".presentation.activities.mainActivity.MainActivity"
+                android:screenOrientation="portrait"
+                tools:ignore="LockedOrientationActivity"/>
     </application>
 
 </manifest>

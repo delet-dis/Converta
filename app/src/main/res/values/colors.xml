@@ -2,7 +2,7 @@
 <resources>
     <color name="orange">#FF8F61</color>
     <color name="blue">#445BA0</color>
-    
+
     <color name="gradientSubOrangeOne">#F67578</color>
     <color name="gradientSubOrangeTwo">#DD648F</color>
     <color name="gradientSubBlueThree">#B65EA0</color>
@@ -12,4 +12,6 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="defaultFontColor">@color/black</color>
+
+    <color name="inactiveBottomNavigationBarItemColor">#80FFFFFF</color>
 </resources>

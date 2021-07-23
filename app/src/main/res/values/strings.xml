@@ -8,4 +8,6 @@
     <string name="applicationModeTTSButtonText">Speaking mode</string>
     <string name="applicationModeSSTButtonText">Listening mode</string>
     <string name="finishButtonText">Finish</string>
+    <string name="SSTTitle">Listening mode</string>
+    <string name="TTSTitle">Speaking mode</string>
 </resources>

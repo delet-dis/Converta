@@ -10,10 +10,12 @@ import androidx.navigation.findNavController
 import com.delet_dis.converta.R
 import com.delet_dis.converta.data.model.ApplicationMainModeType
 import com.delet_dis.converta.databinding.FragmentPreferredModeChooserBinding
-import com.delet_dis.converta.domain.repositories.SharedPreferencesRepository
+import com.delet_dis.converta.presentation.activities.onboardingActivity.fragments.preferredModeChooserFragment.viewModel.PreferredModeChooserFragmentViewModel
 
 class PreferredModeChooserFragment : Fragment() {
     private lateinit var binding: FragmentPreferredModeChooserBinding
+
+    private lateinit var preferredModeChooserFragmentViewModel: PreferredModeChooserFragmentViewModel
 
     private lateinit var parentActivityCallback: ParentActivityCallback
 
@@ -26,6 +28,9 @@ class PreferredModeChooserFragment : Fragment() {
     ): View? {
         return if (savedInstanceState == null) {
             binding = FragmentPreferredModeChooserBinding.inflate(layoutInflater)
+
+            preferredModeChooserFragmentViewModel =
+                PreferredModeChooserFragmentViewModel(requireActivity().application)
 
             binding.root
         } else {
@@ -53,10 +58,11 @@ class PreferredModeChooserFragment : Fragment() {
 
     private fun initFinishButtonOnClickListener() = with(binding.finishButton) {
         setOnClickListener {
-            pickedMainMode?.let { it1 ->
-                SharedPreferencesRepository(requireContext()).setMainAppMode(
-                    it1
-                )
+            pickedMainMode?.let { pickedMode ->
+                with(preferredModeChooserFragmentViewModel) {
+                    savePickedModeToSharedPreferences(pickedMode)
+                    setOnboardingPassedStatus(true)
+                }
             }
 
             with(requireActivity()) {

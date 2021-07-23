@@ -1,6 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layoutDescription="@xml/activity_main_scene">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <ImageView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            tools:srcCompat="@tools:sample/backgrounds/scenic"
+            android:id="@+id/backgroundImage"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:contentDescription="@string/onboardingBackgroundImageContentDescription" />
+
+    <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/navigationMainControllerContainerView"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:defaultNavHost="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:elevation="0dp"
+            android:id="@+id/bottomNavigationView"
+            android:layout_width="match_parent"
+            app:itemIconTint="@color/main_activity_bottom_navigation_items_color"
+            android:layout_height="80dp"
+            app:itemIconSize="35dp"
+            app:labelVisibilityMode="unlabeled"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:menu="@menu/main_activity_menu"
+            android:background="@drawable/main_activity_bottom_navigation_transparent_background" />
+
+    <androidx.constraintlayout.widget.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/verticalHalfScreenGuideline"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+
+</androidx.constraintlayout.motion.widget.MotionLayout>
