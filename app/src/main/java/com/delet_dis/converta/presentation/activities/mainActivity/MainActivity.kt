@@ -17,6 +17,22 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         initActivityBackground()
+
+        binding.bottomNavigationView.setOnItemSelectedListener {
+            when (it.itemId) {
+                R.id.TTSButton -> {
+                    binding.rootView.transitionToState(R.id.backgroundImageInMainGoToOrange)
+                    true
+                }
+                R.id.SSTButton -> {
+                    binding.rootView.transitionToState(R.id.backgroundImageInMainGoToBlue)
+                    true
+                }
+                else -> {
+                    false
+                }
+            }
+        }
     }
 
     private fun initActivityBackground() = with(binding.backgroundImage) {

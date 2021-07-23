@@ -16,5 +16,56 @@
 
     <ConstraintSet android:id="@+id/end">
     </ConstraintSet>
-    <ConstraintSet android:id="@+id/backgroundImageGoToOrange" />
+    <ConstraintSet android:id="@+id/backgroundImageInMainGoToOrange" >
+        <Constraint
+                android:id="@+id/backgroundImage"
+                motion:layout_constraintEnd_toEndOf="parent"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                motion:layout_constraintBottom_toBottomOf="parent"
+                motion:layout_constraintTop_toTopOf="parent"
+                motion:layout_constraintStart_toStartOf="@id/verticalHalfScreenGuideline"
+                android:scaleX="20" />
+        <Constraint
+                android:id="@+id/verticalHalfScreenGuideline"
+                motion:layout_constraintGuide_percent="0.9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+    </ConstraintSet>
+    <Transition
+            motion:constraintSetStart="@+id/start"
+            motion:constraintSetEnd="@+id/backgroundImageGoToOrange"
+            motion:motionInterpolator="easeOut"
+            motion:duration="300" />
+    <ConstraintSet android:id="@+id/backgroundImageInMainGoToBlue" >
+        <Constraint
+                android:id="@+id/verticalHalfScreenGuideline"
+                motion:layout_constraintGuide_percent="0.1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        <Constraint
+                android:id="@+id/backgroundImage"
+                motion:layout_constraintEnd_toEndOf="@id/verticalHalfScreenGuideline"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                motion:layout_constraintBottom_toBottomOf="parent"
+                motion:layout_constraintTop_toTopOf="parent"
+                motion:layout_constraintStart_toStartOf="parent"
+                android:scaleX="20" />
+    </ConstraintSet>
+    <Transition
+            motion:constraintSetStart="@+id/start"
+            motion:constraintSetEnd="@+id/backgroundImageGoToBlue"
+            motion:motionInterpolator="easeOut"
+            motion:duration="300" />
+    <Transition
+            motion:constraintSetStart="@+id/backgroundImageGoToOrange"
+            motion:constraintSetEnd="@+id/backgroundImageGoToBlue"
+            motion:motionInterpolator="easeOut"
+            motion:duration="300" />
+    <Transition
+            motion:constraintSetStart="@+id/backgroundImageGoToBlue"
+            motion:constraintSetEnd="@+id/backgroundImageGoToOrange"
+            motion:duration="300"
+            motion:motionInterpolator="easeOut" />
 </MotionScene>

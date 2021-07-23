@@ -97,10 +97,10 @@ class OnboardingActivity : AppCompatActivity(),
 
 
     override fun backgroundImageGoToOrange() =
-        binding.rootLayout.transitionToState(R.id.backgroundImageGoToOrange)
+        binding.rootLayout.transitionToState(R.id.backgroundImageInOnboardingGoToOrange)
 
 
     override fun backgroundImageGoToBlue() =
-        binding.rootLayout.transitionToState(R.id.backgroundImageGoToBlue)
+        binding.rootLayout.transitionToState(R.id.backgroundImageInOnboardingGoToBlue)
 
 }
