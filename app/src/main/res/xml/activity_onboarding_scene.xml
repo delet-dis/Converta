@@ -53,7 +53,7 @@
     <Transition
             motion:constraintSetStart="@+id/backgroundImageRotateEnd"
             motion:constraintSetEnd="@+id/backgroundImageGoToOrange"
-            motion:duration="500"
+            motion:duration="300"
             motion:motionInterpolator="easeOut" />
     <ConstraintSet
             android:id="@+id/backgroundImageGoToBlue" >
@@ -82,10 +82,10 @@
             motion:constraintSetStart="@+id/backgroundImageRotateEnd"
             motion:constraintSetEnd="@+id/backgroundImageGoToBlue"
             motion:motionInterpolator="easeOut"
-            motion:duration="500" />
+            motion:duration="300" />
     <Transition
             motion:constraintSetStart="@+id/backgroundImageGoToOrange"
             motion:constraintSetEnd="@+id/backgroundImageGoToBlue"
             motion:motionInterpolator="easeOut"
-            motion:duration="500" />
+            motion:duration="300" />
 </MotionScene>

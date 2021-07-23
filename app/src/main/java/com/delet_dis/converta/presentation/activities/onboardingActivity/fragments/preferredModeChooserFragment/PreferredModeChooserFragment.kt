@@ -9,13 +9,14 @@ import androidx.fragment.app.Fragment
 import com.delet_dis.converta.R
 import com.delet_dis.converta.data.model.ApplicationMainModeType
 import com.delet_dis.converta.databinding.FragmentPreferredModeChooserBinding
+import com.delet_dis.converta.domain.repositories.SharedPreferencesRepository
 
-class PreferredModeChooserFragment: Fragment() {
+class PreferredModeChooserFragment : Fragment() {
     private lateinit var binding: FragmentPreferredModeChooserBinding
 
     private lateinit var parentActivityCallback: ParentActivityCallback
 
-    private var pickedMainMode:ApplicationMainModeType? = null
+    private var pickedMainMode: ApplicationMainModeType? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,28 +41,48 @@ class PreferredModeChooserFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if(savedInstanceState==null){
-            with(binding){
-                TTSModeCard.setOnClickListener {
-                    parentActivityCallback.backgroundImageGoToOrange()
+        if (savedInstanceState == null) {
+            with(binding) {
+                initTTSModeCardOnClickListener()
 
-                    pickedMainMode = ApplicationMainModeType.TTS_MODE
+                initSSTModeCardOnClickListener()
 
-                    rootView.transitionToState(R.id.pickedOrangeModeState)
-                }
-
-                SSTModeCard.setOnClickListener {
-                    parentActivityCallback.backgroundImageGoToBlue()
-
-                    pickedMainMode = ApplicationMainModeType.SST_MODE
-
-                    rootView.transitionToState(R.id.pickedBlueModeState)
-                }
+                initFinishButtonOnClickListener()
             }
         }
     }
 
-    interface ParentActivityCallback{
+    private fun initFinishButtonOnClickListener() {
+        binding.finishButton.setOnClickListener {
+            pickedMainMode?.let { it1 ->
+                SharedPreferencesRepository(requireContext()).setMainAppMode(
+                    it1
+                )
+            }
+        }
+    }
+
+    private fun FragmentPreferredModeChooserBinding.initSSTModeCardOnClickListener() {
+        SSTModeCard.setOnClickListener {
+            parentActivityCallback.backgroundImageGoToBlue()
+
+            pickedMainMode = ApplicationMainModeType.SST_MODE
+
+            rootView.transitionToState(R.id.pickedBlueModeState)
+        }
+    }
+
+    private fun FragmentPreferredModeChooserBinding.initTTSModeCardOnClickListener() {
+        TTSModeCard.setOnClickListener {
+            parentActivityCallback.backgroundImageGoToOrange()
+
+            pickedMainMode = ApplicationMainModeType.TTS_MODE
+
+            rootView.transitionToState(R.id.pickedOrangeModeState)
+        }
+    }
+
+    interface ParentActivityCallback {
         fun backgroundImageGoToOrange()
         fun backgroundImageGoToBlue()
     }
