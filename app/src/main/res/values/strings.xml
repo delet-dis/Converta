@@ -4,4 +4,8 @@
     <string name="helloText">Hello</string>
     <string name="chooseCommunicationLanguageText">Choose your communication language</string>
     <string name="chooseCommunicationLanguageButtonText">Go to speech synthesizer settings</string>
+    <string name="chooseApplicationModeText">I want the application to open in</string>
+    <string name="applicationModeTTSButtonText">Speaking mode</string>
+    <string name="applicationModeSSTButtonText">Listening mode</string>
+    <string name="finishButtonText">Finish</string>
 </resources>

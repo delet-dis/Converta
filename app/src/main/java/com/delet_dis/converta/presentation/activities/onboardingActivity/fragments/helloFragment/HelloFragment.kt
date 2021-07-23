@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.delet_dis.converta.databinding.FragmentHelloBinding
-import com.delet_dis.converta.presentation.activities.onboardingActivity.viewModel.OnboardingActivityViewModel
 
 class HelloFragment : Fragment() {
     private lateinit var binding: FragmentHelloBinding

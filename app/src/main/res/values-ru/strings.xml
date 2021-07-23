@@ -4,4 +4,8 @@
     <string name="helloText">Привет</string>
     <string name="chooseCommunicationLanguageText">Выбери язык для общения</string>
     <string name="chooseCommunicationLanguageButtonText">Перейти в настройки синтезатора речи</string>
+    <string name="chooseApplicationModeText">Я хочу, чтобы приложение открывалось в</string>
+    <string name="applicationModeTTSButtonText">Режиме говорения</string>
+    <string name="applicationModeSSTButtonText">Режиме прослушивания</string>
+    <string name="finishButtonText">Завершить настройку</string>
 </resources>

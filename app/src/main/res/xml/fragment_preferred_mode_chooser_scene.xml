@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:motion="http://schemas.android.com/apk/res-auto">
+
+    <Transition
+        motion:constraintSetEnd="@+id/end"
+        motion:constraintSetStart="@id/start"
+        motion:duration="1000">
+       <KeyFrameSet>
+       </KeyFrameSet>
+    </Transition>
+
+    <ConstraintSet android:id="@+id/start">
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/end">
+    </ConstraintSet>
+    <ConstraintSet
+            android:id="@+id/pickedOrangeModeState" >
+        <Constraint
+                android:id="@+id/SSTModeCard"
+                motion:layout_constraintEnd_toEndOf="parent"
+                android:layout_width="360dp"
+                motion:layout_constraintBottom_toBottomOf="parent"
+                motion:layout_constraintTop_toBottomOf="@+id/TTSModeCard"
+                motion:layout_constraintStart_toStartOf="parent"
+                android:layout_height="180dp"
+                android:scaleX="0.85"
+                android:scaleY="0.85"
+                android:alpha="0.8" />
+        <Constraint
+                android:id="@+id/finishButton"
+                motion:layout_constraintEnd_toEndOf="parent"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                motion:layout_constraintBottom_toBottomOf="parent"
+                android:visibility="visible"
+                motion:layout_constraintTop_toBottomOf="@+id/SSTModeCard"
+                motion:layout_constraintStart_toStartOf="parent" />
+    </ConstraintSet>
+    <Transition
+            motion:constraintSetStart="@+id/start"
+            motion:constraintSetEnd="@+id/pickedOrangeModeState"
+            motion:motionInterpolator="easeIn"
+            motion:duration="200" />
+    <ConstraintSet android:id="@+id/pickedBlueModeState" >
+        <Constraint
+                android:id="@+id/TTSModeCard"
+                motion:layout_constraintEnd_toEndOf="parent"
+                android:layout_width="360dp"
+                android:layout_height="180dp"
+                motion:layout_constraintBottom_toTopOf="@+id/SSTModeCard"
+                android:layout_marginBottom="40dp"
+                motion:layout_constraintTop_toBottomOf="@+id/preferredModeChooserHint"
+                motion:layout_constraintVertical_chainStyle="packed"
+                motion:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="50dp"
+                android:scaleX="0.85"
+                android:scaleY="0.85"
+                android:alpha="0.8" />
+        <Constraint
+                android:id="@+id/finishButton"
+                motion:layout_constraintEnd_toEndOf="parent"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                motion:layout_constraintBottom_toBottomOf="parent"
+                android:visibility="visible"
+                motion:layout_constraintTop_toBottomOf="@+id/SSTModeCard"
+                motion:layout_constraintStart_toStartOf="parent" />
+    </ConstraintSet>
+    <Transition
+            motion:constraintSetStart="@+id/start"
+            motion:motionInterpolator="easeOut"
+            motion:duration="300" />
+    <Transition
+            motion:constraintSetStart="@+id/pickedOrangeModeState"
+            motion:constraintSetEnd="@+id/pickedBlueModeState"
+            motion:motionInterpolator="easeIn"
+            motion:duration="200" />
+    <Transition
+            motion:constraintSetStart="@+id/pickedBlueModeState"
+            motion:constraintSetEnd="@+id/pickedOrangeModeState"
+            motion:motionInterpolator="easeIn"
+            motion:duration="200" />
+    <Transition
+            motion:constraintSetStart="@+id/start"
+            motion:constraintSetEnd="@+id/pickedBlueModeState"
+            motion:motionInterpolator="easeIn"
+            motion:duration="200" />
+</MotionScene>

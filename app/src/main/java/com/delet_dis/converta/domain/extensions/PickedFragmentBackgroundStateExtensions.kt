@@ -1,8 +1,8 @@
 package com.delet_dis.converta.domain.extensions
 
-import com.delet_dis.converta.data.model.PickedFragmentBackgroundState
+import com.delet_dis.converta.data.model.PickedFragmentBackgroundType
 
-fun findPickedFragmentBackgroundState(searchingFragmentId: Int): PickedFragmentBackgroundState? =
-    PickedFragmentBackgroundState.values().find { pickedFragmentBackgroundState ->
+fun findPickedFragmentBackgroundState(searchingFragmentId: Int): PickedFragmentBackgroundType? =
+    PickedFragmentBackgroundType.values().find { pickedFragmentBackgroundState ->
         pickedFragmentBackgroundState.fragmentId == searchingFragmentId
     }

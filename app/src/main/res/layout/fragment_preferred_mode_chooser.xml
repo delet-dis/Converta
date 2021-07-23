@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layoutDescription="@xml/fragment_preferred_mode_chooser_scene"
+        android:id="@+id/rootView">
+
+    <TextView
+            android:text="@string/chooseApplicationModeText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/preferredModeChooserHint"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textColor="@color/white"
+            android:fontFamily="@font/navigo_medium"
+            android:textSize="30sp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            app:layout_constraintVertical_chainStyle="packed"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toTopOf="@+id/TTSModeCard" />
+
+    <androidx.cardview.widget.CardView
+            android:layout_width="360dp"
+            android:layout_height="180dp"
+            app:layout_constraintTop_toBottomOf="@+id/preferredModeChooserHint"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:id="@+id/TTSModeCard"
+            app:layout_constraintBottom_toTopOf="@+id/SSTModeCard"
+            app:layout_constraintVertical_chainStyle="packed"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="40dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="5dp"
+            android:foreground="?android:attr/selectableItemBackground">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <TextView
+                    android:text="@string/applicationModeTTSButtonText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/TTSText"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:fontFamily="@font/navigo_medium"
+                    android:textSize="30sp"
+                    android:textColor="@color/black" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+            android:id="@+id/SSTModeCard"
+            android:layout_width="360dp"
+            android:layout_height="180dp"
+            app:layout_constraintTop_toBottomOf="@+id/TTSModeCard"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="5dp"
+            android:foreground="?android:attr/selectableItemBackground">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <TextView
+                    android:text="@string/applicationModeSSTButtonText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/SSTText"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:fontFamily="@font/navigo_medium"
+                    android:textSize="30sp"
+                    android:textColor="@color/black" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <Button
+            android:text="@string/finishButtonText"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/finishButton"
+            app:layout_constraintTop_toBottomOf="@+id/SSTModeCard"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            app:cornerRadius="16dp"
+            android:backgroundTint="@color/white"
+            android:fontFamily="@font/navigo_medium"
+            android:textSize="17sp"
+            android:textColor="@color/black"
+            android:textAllCaps="false"
+            android:lineSpacingExtra="4sp"
+            android:paddingTop="8dp"
+            android:paddingBottom="10dp"
+            android:visibility="invisible" />
+
+</androidx.constraintlayout.motion.widget.MotionLayout>

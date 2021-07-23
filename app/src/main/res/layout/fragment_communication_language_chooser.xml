@@ -39,5 +39,7 @@
             android:textSize="17sp"
             android:textColor="@color/black"
             android:textAllCaps="false"
-            android:lineSpacingExtra="4sp" />
+            android:lineSpacingExtra="4sp"
+            android:paddingTop="8dp"
+            android:paddingBottom="10dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
