@@ -4,6 +4,7 @@ import android.graphics.drawable.GradientDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.delet_dis.converta.R
 import com.delet_dis.converta.databinding.ActivityOnboardingBinding
@@ -23,19 +24,23 @@ class OnboardingActivity : AppCompatActivity() {
 
         onboardingActivityViewModel = OnboardingActivityViewModel(application)
 
+        hostFragment =
+            supportFragmentManager
+                .findFragmentById(binding.navigationOnboardingControllerContainerView.id)
+
         setContentView(binding.root)
 
         initActivityBackground()
 
-        with(onboardingActivityViewModel){
+        with(onboardingActivityViewModel) {
             initNavigateFromHelloFragmentAvailabilityCountdown()
             isAvailableToNavigateFromHelloFragment.observe(this@OnboardingActivity, {
-                if (it){
-
+                if (it) {
+                    hostFragment?.findNavController()
+                        ?.navigate(R.id.action_helloFragment_to_communicationLanguageChooser)
                 }
             })
         }
-
     }
 
     private fun initActivityBackground() {
