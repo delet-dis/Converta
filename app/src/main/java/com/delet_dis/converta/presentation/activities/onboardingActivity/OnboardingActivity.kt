@@ -14,7 +14,8 @@ import com.delet_dis.converta.presentation.activities.onboardingActivity.fragmen
 import com.delet_dis.converta.presentation.activities.onboardingActivity.viewModel.OnboardingActivityViewModel
 
 class OnboardingActivity : AppCompatActivity(),
-    CommunicationLanguageChooserFragment.ParentActivityCallback, PreferredModeChooserFragment.ParentActivityCallback {
+    CommunicationLanguageChooserFragment.ParentActivityCallback,
+    PreferredModeChooserFragment.ParentActivityCallback {
     private lateinit var binding: ActivityOnboardingBinding
 
     private lateinit var onboardingActivityViewModel: OnboardingActivityViewModel
@@ -48,13 +49,12 @@ class OnboardingActivity : AppCompatActivity(),
         initBackgroundChangerListener()
     }
 
-    private fun initBackgroundChangerListener() {
+    private fun initBackgroundChangerListener() =
         hostFragment?.findNavController()?.addOnDestinationChangedListener { _, destination, _ ->
             findPickedFragmentBackgroundState(destination.id)?.let {
                 binding.rootLayout.transitionToState(it.backgroundStateToNavigate)
             }
         }
-    }
 
     private fun initNavigationToCommunicationLanguageChooserFragment() =
         with(onboardingActivityViewModel) {
@@ -67,8 +67,8 @@ class OnboardingActivity : AppCompatActivity(),
             })
         }
 
-    private fun initActivityBackground() {
-        val backgroundGradientDrawable = GradientDrawable(
+    private fun initActivityBackground() = with(binding.backgroundImage) {
+        background = GradientDrawable(
             GradientDrawable.Orientation.TL_BR, intArrayOf(
                 getColor(R.color.orange),
                 getColor(R.color.gradientSubOrangeOne),
@@ -78,19 +78,17 @@ class OnboardingActivity : AppCompatActivity(),
                 getColor(R.color.blue)
             )
         )
-
-        binding.backgroundImage.background = backgroundGradientDrawable
     }
 
-    override fun callSettingsIntent() {
+    override fun callSettingsIntent() =
         settingsContract.launch(1)
-    }
 
-    override fun backgroundImageGoToOrange() {
+
+    override fun backgroundImageGoToOrange() =
         binding.rootLayout.transitionToState(R.id.backgroundImageGoToOrange)
-    }
 
-    override fun backgroundImageGoToBlue() {
+
+    override fun backgroundImageGoToBlue() =
         binding.rootLayout.transitionToState(R.id.backgroundImageGoToBlue)
-    }
+
 }

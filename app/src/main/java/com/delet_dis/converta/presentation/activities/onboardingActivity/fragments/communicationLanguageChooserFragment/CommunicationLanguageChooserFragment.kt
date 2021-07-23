@@ -51,11 +51,12 @@ class CommunicationLanguageChooserFragment : Fragment() {
         }
     }
 
-    private fun initGoToSynthesizerSettingsButtonOnClickListener() {
-        binding.goToSynthesizerSettings.setOnClickListener {
-            parentActivityCallback.callSettingsIntent()
+    private fun initGoToSynthesizerSettingsButtonOnClickListener() =
+        with(binding.goToSynthesizerSettings) {
+            setOnClickListener {
+                parentActivityCallback.callSettingsIntent()
+            }
         }
-    }
 
     interface ParentActivityCallback {
         fun callSettingsIntent()

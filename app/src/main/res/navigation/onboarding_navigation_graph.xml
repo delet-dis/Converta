@@ -31,5 +31,13 @@
     <fragment
             android:id="@+id/preferredModeChooserFragment"
             android:name="com.delet_dis.converta.presentation.activities.onboardingActivity.fragments.preferredModeChooserFragment.PreferredModeChooserFragment"
-            android:label="PreferredModeChooserFragment" />
+            android:label="PreferredModeChooserFragment" >
+        <action
+                android:id="@+id/action_preferredModeChooserFragment_to_mainActivity"
+                app:destination="@id/mainActivity" />
+    </fragment>
+    <activity
+            android:id="@+id/mainActivity"
+            android:name="com.delet_dis.converta.presentation.activities.mainActivity.MainActivity"
+            android:label="MainActivity" />
 </navigation>

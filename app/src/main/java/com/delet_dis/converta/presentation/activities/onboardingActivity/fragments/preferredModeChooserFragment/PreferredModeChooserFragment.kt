@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import com.delet_dis.converta.R
 import com.delet_dis.converta.data.model.ApplicationMainModeType
 import com.delet_dis.converta.databinding.FragmentPreferredModeChooserBinding
@@ -42,27 +43,32 @@ class PreferredModeChooserFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         if (savedInstanceState == null) {
-            with(binding) {
-                initTTSModeCardOnClickListener()
+            initTTSModeCardOnClickListener()
 
-                initSSTModeCardOnClickListener()
+            initSSTModeCardOnClickListener()
 
-                initFinishButtonOnClickListener()
-            }
+            initFinishButtonOnClickListener()
         }
     }
 
-    private fun initFinishButtonOnClickListener() {
-        binding.finishButton.setOnClickListener {
+    private fun initFinishButtonOnClickListener() = with(binding.finishButton) {
+        setOnClickListener {
             pickedMainMode?.let { it1 ->
                 SharedPreferencesRepository(requireContext()).setMainAppMode(
                     it1
                 )
             }
+
+            with(requireActivity()) {
+                findNavController(R.id.navigationOnboardingControllerContainerView)
+                    .navigate(R.id.action_preferredModeChooserFragment_to_mainActivity)
+
+                finish()
+            }
         }
     }
 
-    private fun FragmentPreferredModeChooserBinding.initSSTModeCardOnClickListener() {
+    private fun initSSTModeCardOnClickListener() = with(binding) {
         SSTModeCard.setOnClickListener {
             parentActivityCallback.backgroundImageGoToBlue()
 
@@ -72,7 +78,7 @@ class PreferredModeChooserFragment : Fragment() {
         }
     }
 
-    private fun FragmentPreferredModeChooserBinding.initTTSModeCardOnClickListener() {
+    private fun initTTSModeCardOnClickListener() = with(binding) {
         TTSModeCard.setOnClickListener {
             parentActivityCallback.backgroundImageGoToOrange()
 
