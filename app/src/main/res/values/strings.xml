@@ -12,4 +12,5 @@
     <string name="TTSTitle">Speaking mode</string>
     <string name="phrasesCategoriesModeDisplayingText">Saved categories</string>
     <string name="phrasesModeDisplayingText">Saved phrases</string>
+    <string name="addButtonContentDescription">Add button icon</string>
 </resources>
