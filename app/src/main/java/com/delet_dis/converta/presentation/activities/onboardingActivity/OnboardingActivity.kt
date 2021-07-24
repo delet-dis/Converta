@@ -28,7 +28,9 @@ class OnboardingActivity : AppCompatActivity(),
     private var settingsContract = registerForActivityResult(SettingsGoToTTSContract()) {
         if (it) {
             hostFragment?.findNavController()
-                ?.navigate(R.id.action_communicationLanguageChooserFragment_to_preferredModeChooserFragment)
+                ?.navigate(
+                    R.id.action_communicationLanguageChooserFragment_to_preferredModeChooserFragment
+                )
         }
     }
 
@@ -54,8 +56,8 @@ class OnboardingActivity : AppCompatActivity(),
         initBackgroundChangerListener()
     }
 
-    private fun checkIfOnboardingPassed(){
-        if(isOnboardingPassed(applicationContext)){
+    private fun checkIfOnboardingPassed() {
+        if (isOnboardingPassed(applicationContext)) {
             startActivity(Intent(this, MainActivity::class.java))
             finish()
         }

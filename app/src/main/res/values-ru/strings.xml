@@ -10,4 +10,6 @@
     <string name="finishButtonText">Завершить настройку</string>
     <string name="STTTitle">Режим прослушивания</string>
     <string name="TTSTitle">Режим говорения</string>
+    <string name="phrasesCategoriesModeDisplayingText">Сохраненные категории</string>
+    <string name="phrasesModeDisplayingText">Сохраненные фразы</string>
 </resources>

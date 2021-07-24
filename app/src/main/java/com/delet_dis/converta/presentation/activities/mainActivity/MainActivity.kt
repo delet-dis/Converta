@@ -3,9 +3,16 @@ package com.delet_dis.converta.presentation.activities.mainActivity
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.commit
+import androidx.fragment.app.replace
+import androidx.navigation.fragment.findNavController
 import com.delet_dis.converta.R
+import com.delet_dis.converta.data.interfaces.FragmentParentInterface
 import com.delet_dis.converta.data.model.ApplicationMainModeType
 import com.delet_dis.converta.databinding.ActivityMainBinding
+import com.delet_dis.converta.presentation.activities.mainActivity.fragments.sttFragment.STTFragment
+import com.delet_dis.converta.presentation.activities.mainActivity.fragments.ttsFragment.TTSFragment
 import com.delet_dis.converta.presentation.activities.mainActivity.viewModel.MainActivityViewModel
 
 class MainActivity : AppCompatActivity() {
@@ -13,10 +20,16 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var mainActivityViewModel: MainActivityViewModel
 
+    private var hostFragment: Fragment? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
+
+        hostFragment =
+            supportFragmentManager
+                .findFragmentById(binding.navigationMainControllerContainerView.id)
 
         mainActivityViewModel = MainActivityViewModel(application)
 
@@ -57,10 +70,18 @@ class MainActivity : AppCompatActivity() {
         setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.TTSButton -> {
-                    translationToOrangeState()
+                    if (!isTTSFragmentDisplaying()) {
+                        displayTTSFragment()
+                        translationToOrangeState()
+                    }
+                    true
                 }
                 R.id.STTButton -> {
-                    translationToBlueState()
+                    if (!isSTTFragmentDisplaying()) {
+                        displaySTTFragment()
+                        translationToBlueState()
+                    }
+                    true
                 }
                 else -> {
                     false
@@ -87,6 +108,38 @@ class MainActivity : AppCompatActivity() {
 
     private fun makeBottomNavigationViewActiveTTSButton() {
         binding.bottomNavigationView.selectedItemId = R.id.TTSButton
+    }
+
+    private fun displayTTSFragment() =
+        hostFragment?.findNavController()?.navigate(R.id.action_STTFragment_to_TTSFragment)
+
+    private fun displaySTTFragment() =
+        hostFragment?.findNavController()?.navigate(R.id.action_TTSFragment_to_STTFragment)
+
+    private fun displayTTSFragmentWithoutTransition() =
+        supportFragmentManager.commit {
+            setReorderingAllowed(true)
+            replace<TTSFragment>(R.id.navigationMainControllerContainerView)
+        }
+
+    private fun displaySTTFragmentWithoutTransition() =
+        supportFragmentManager.commit {
+            setReorderingAllowed(true)
+            replace<STTFragment>(R.id.navigationMainControllerContainerView)
+        }
+
+    private fun isTTSFragmentDisplaying(): Boolean {
+        return (hostFragment
+            ?.childFragmentManager
+            ?.primaryNavigationFragment as FragmentParentInterface)
+            .getFragmentId() == R.id.TTSFragment
+    }
+
+    private fun isSTTFragmentDisplaying(): Boolean {
+        return (hostFragment
+            ?.childFragmentManager
+            ?.primaryNavigationFragment as FragmentParentInterface)
+            .getFragmentId() == R.id.STTFragment
     }
 
     private fun initActivityBackground() = with(binding.backgroundImage) {

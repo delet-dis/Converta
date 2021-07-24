@@ -10,4 +10,6 @@
     <string name="finishButtonText">Finish</string>
     <string name="STTTitle">Listening mode</string>
     <string name="TTSTitle">Speaking mode</string>
+    <string name="phrasesCategoriesModeDisplayingText">Saved categories</string>
+    <string name="phrasesModeDisplayingText">Saved phrases</string>
 </resources>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/main_navigation_graph"
+        app:startDestination="@id/TTSFragment">
+
+    <fragment
+            android:id="@+id/TTSFragment"
+            android:name="com.delet_dis.converta.presentation.activities.mainActivity.fragments.ttsFragment.TTSFragment"
+            android:label="TTSFragment" >
+        <action
+                android:id="@+id/action_TTSFragment_to_STTFragment"
+                app:destination="@id/STTFragment"
+                app:enterAnim="@anim/slide_in_right"
+                app:exitAnim="@anim/slide_out_left"
+                app:popEnterAnim="@anim/slide_in_left"
+                app:popExitAnim="@anim/slide_out_right"/>
+    </fragment>
+    <fragment
+            android:id="@+id/STTFragment"
+            android:name="com.delet_dis.converta.presentation.activities.mainActivity.fragments.sttFragment.STTFragment"
+            android:label="STTFragment" >
+        <action
+                android:id="@+id/action_STTFragment_to_TTSFragment"
+                app:destination="@id/TTSFragment"
+                app:enterAnim="@anim/slide_in_left"
+                app:exitAnim="@anim/slide_out_right"
+                app:popEnterAnim="@anim/slide_in_left"
+                app:popExitAnim="@anim/slide_out_right"/>
+    </fragment>
+</navigation>
