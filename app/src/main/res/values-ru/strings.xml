@@ -6,8 +6,8 @@
     <string name="chooseCommunicationLanguageButtonText">Перейти в настройки синтезатора речи</string>
     <string name="chooseApplicationModeText">Я хочу, чтобы приложение открывалось в</string>
     <string name="applicationModeTTSButtonText">Режиме говорения</string>
-    <string name="applicationModeSSTButtonText">Режиме прослушивания</string>
+    <string name="applicationModeSTTButtonText">Режиме прослушивания</string>
     <string name="finishButtonText">Завершить настройку</string>
-    <string name="SSTTitle">Режим прослушивания</string>
+    <string name="STTTitle">Режим прослушивания</string>
     <string name="TTSTitle">Режим говорения</string>
 </resources>

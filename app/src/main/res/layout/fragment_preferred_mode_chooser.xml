@@ -31,7 +31,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:id="@+id/TTSModeCard"
-            app:layout_constraintBottom_toTopOf="@+id/SSTModeCard"
+            app:layout_constraintBottom_toTopOf="@+id/STTModeCard"
             app:layout_constraintVertical_chainStyle="packed"
             android:layout_marginTop="50dp"
             android:layout_marginBottom="40dp"
@@ -60,7 +60,7 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
-            android:id="@+id/SSTModeCard"
+            android:id="@+id/STTModeCard"
             android:layout_width="360dp"
             android:layout_height="180dp"
             app:layout_constraintTop_toBottomOf="@+id/TTSModeCard"
@@ -76,10 +76,10 @@
                 android:layout_height="match_parent">
 
             <TextView
-                    android:text="@string/applicationModeSSTButtonText"
+                    android:text="@string/applicationModeSTTButtonText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/SSTText"
+                    android:id="@+id/STTText"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -95,7 +95,7 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:id="@+id/finishButton"
-            app:layout_constraintTop_toBottomOf="@+id/SSTModeCard"
+            app:layout_constraintTop_toBottomOf="@+id/STTModeCard"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

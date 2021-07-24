@@ -50,7 +50,7 @@ class PreferredModeChooserFragment : Fragment() {
         if (savedInstanceState == null) {
             initTTSModeCardOnClickListener()
 
-            initSSTModeCardOnClickListener()
+            initSTTModeCardOnClickListener()
 
             initFinishButtonOnClickListener()
         }
@@ -74,11 +74,11 @@ class PreferredModeChooserFragment : Fragment() {
         }
     }
 
-    private fun initSSTModeCardOnClickListener() = with(binding) {
-        SSTModeCard.setOnClickListener {
+    private fun initSTTModeCardOnClickListener() = with(binding) {
+        STTModeCard.setOnClickListener {
             parentActivityCallback.backgroundImageGoToBlue()
 
-            pickedMainMode = ApplicationMainModeType.SST_MODE
+            pickedMainMode = ApplicationMainModeType.STT_MODE
 
             rootView.transitionToState(R.id.pickedBlueModeState)
         }

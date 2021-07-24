@@ -6,7 +6,7 @@
             android:title="@string/TTSTitle" />
 
     <item
-            android:id="@+id/SSTButton"
-            android:icon="@drawable/ic_sst"
-            android:title="@string/SSTTitle" />
+            android:id="@+id/STTButton"
+            android:icon="@drawable/ic_stt"
+            android:title="@string/STTTitle" />
 </menu>

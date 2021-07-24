@@ -6,8 +6,8 @@
     <string name="chooseCommunicationLanguageButtonText">Go to speech synthesizer settings</string>
     <string name="chooseApplicationModeText">I want the application to open in</string>
     <string name="applicationModeTTSButtonText">Speaking mode</string>
-    <string name="applicationModeSSTButtonText">Listening mode</string>
+    <string name="applicationModeSTTButtonText">Listening mode</string>
     <string name="finishButtonText">Finish</string>
-    <string name="SSTTitle">Listening mode</string>
+    <string name="STTTitle">Listening mode</string>
     <string name="TTSTitle">Speaking mode</string>
 </resources>

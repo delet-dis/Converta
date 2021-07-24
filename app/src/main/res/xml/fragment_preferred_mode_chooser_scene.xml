@@ -19,7 +19,7 @@
     <ConstraintSet
             android:id="@+id/pickedOrangeModeState" >
         <Constraint
-                android:id="@+id/SSTModeCard"
+                android:id="@+id/STTModeCard"
                 motion:layout_constraintEnd_toEndOf="parent"
                 android:layout_width="360dp"
                 motion:layout_constraintBottom_toBottomOf="parent"
@@ -36,7 +36,7 @@
                 android:layout_height="wrap_content"
                 motion:layout_constraintBottom_toBottomOf="parent"
                 android:visibility="visible"
-                motion:layout_constraintTop_toBottomOf="@+id/SSTModeCard"
+                motion:layout_constraintTop_toBottomOf="@+id/STTModeCard"
                 motion:layout_constraintStart_toStartOf="parent" />
     </ConstraintSet>
     <Transition
@@ -50,7 +50,7 @@
                 motion:layout_constraintEnd_toEndOf="parent"
                 android:layout_width="360dp"
                 android:layout_height="180dp"
-                motion:layout_constraintBottom_toTopOf="@+id/SSTModeCard"
+                motion:layout_constraintBottom_toTopOf="@+id/STTModeCard"
                 android:layout_marginBottom="40dp"
                 motion:layout_constraintTop_toBottomOf="@+id/preferredModeChooserHint"
                 motion:layout_constraintVertical_chainStyle="packed"
@@ -66,7 +66,7 @@
                 android:layout_height="wrap_content"
                 motion:layout_constraintBottom_toBottomOf="parent"
                 android:visibility="visible"
-                motion:layout_constraintTop_toBottomOf="@+id/SSTModeCard"
+                motion:layout_constraintTop_toBottomOf="@+id/STTModeCard"
                 motion:layout_constraintStart_toStartOf="parent" />
     </ConstraintSet>
     <Transition

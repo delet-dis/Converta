@@ -14,7 +14,7 @@ class SharedPreferencesRepository(private val context: Context) {
     fun setMainAppMode(modeType: ApplicationMainModeType) {
         val valueToPut: Int = when (modeType) {
             ApplicationMainModeType.TTS_MODE -> 1
-            ApplicationMainModeType.SST_MODE -> 2
+            ApplicationMainModeType.STT_MODE -> 2
         }
 
         getSharedPreferences().edit()
@@ -28,7 +28,7 @@ class SharedPreferencesRepository(private val context: Context) {
     fun getMainAppMode(): ApplicationMainModeType {
         return when (getSharedPreferences().getInt(pickedAppMode, 1)) {
             1 -> ApplicationMainModeType.TTS_MODE
-            2 -> ApplicationMainModeType.SST_MODE
+            2 -> ApplicationMainModeType.STT_MODE
             else -> ApplicationMainModeType.TTS_MODE
         }
     }
