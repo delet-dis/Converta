@@ -11,7 +11,7 @@
             android:id="@+id/currentModeName"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="48dp"
             android:layout_marginStart="25dp"
             android:textColor="@color/white"
             android:fontFamily="@font/navigo_medium"
@@ -22,6 +22,6 @@
             android:layout_height="wrap_content"
             android:id="@+id/horizontalHalfScreenGuideline"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.45" />
+            app:layout_constraintGuide_percent="0.5" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
