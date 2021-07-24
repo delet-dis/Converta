@@ -13,6 +13,8 @@ class AddButtonView @JvmOverloads constructor(
 ) : ConstraintLayout(context, attrs, defStyleAttr) {
     private val binding: ViewAddButtonBinding
 
+    private var parentActivityCallback: ParentActivityCallback
+
     init {
         inflate(
             context,
@@ -20,6 +22,16 @@ class AddButtonView @JvmOverloads constructor(
             this
         ).also { view ->
             binding = ViewAddButtonBinding.bind(view)
+        }
+
+        parentActivityCallback = context as ParentActivityCallback
+
+        initAddButtonCallback()
+    }
+
+    private fun initAddButtonCallback() = with(binding.addButton) {
+        setOnClickListener {
+            parentActivityCallback.displayDialog()
         }
     }
 

@@ -13,4 +13,9 @@
     <string name="phrasesCategoriesModeDisplayingText">Сохраненные категории</string>
     <string name="phrasesModeDisplayingText">Сохраненные фразы</string>
     <string name="addButtonContentDescription">Иконка кнопки добалвения</string>
+    <string name="phraseEditingMode">Редактирование фразы</string>
+    <string name="categoryEditingMode">Редактирование категории</string>
+    <string name="phraseAddingMode">Добавление фразы</string>
+    <string name="categoryAddingMode">Добавление категории</string>
+    <string name="editTextHint">Введите текст</string>
 </resources>

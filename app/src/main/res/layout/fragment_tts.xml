@@ -37,4 +37,12 @@
             android:id="@+id/horizontalHalfScreenGuideline"
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.5" />
+
+    <com.delet_dis.converta.presentation.views.addButtonView.AddButtonView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/savedPhrasesDisplayingMode"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="16dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
