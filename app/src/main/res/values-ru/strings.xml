@@ -18,4 +18,6 @@
     <string name="phraseAddingMode">Добавление фразы</string>
     <string name="categoryAddingMode">Добавление категории</string>
     <string name="editTextHint">Введите текст</string>
+    <string name="discardButtonContentDescription">Кнопка отмены</string>
+    <string name="submitButtonContentDescription">Кнопка принятия</string>
 </resources>

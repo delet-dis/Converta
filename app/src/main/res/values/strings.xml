@@ -18,4 +18,6 @@
     <string name="phraseAddingMode">Phrase adding</string>
     <string name="categoryAddingMode">Category adding</string>
     <string name="editTextHint">Enter text</string>
+    <string name="discardButtonContentDescription">Discard button</string>
+    <string name="submitButtonContentDescription">Submit button</string>
 </resources>

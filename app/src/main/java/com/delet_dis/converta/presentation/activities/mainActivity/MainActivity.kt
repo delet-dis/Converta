@@ -4,18 +4,15 @@ import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.commit
-import androidx.fragment.app.replace
 import androidx.navigation.fragment.findNavController
 import com.delet_dis.converta.R
 import com.delet_dis.converta.data.interfaces.FragmentParentInterface
 import com.delet_dis.converta.data.model.ApplicationMainModeType
 import com.delet_dis.converta.databinding.ActivityMainBinding
-import com.delet_dis.converta.presentation.activities.mainActivity.fragments.sttFragment.STTFragment
-import com.delet_dis.converta.presentation.activities.mainActivity.fragments.ttsFragment.TTSFragment
 import com.delet_dis.converta.presentation.activities.mainActivity.viewModel.MainActivityViewModel
+import com.delet_dis.converta.presentation.views.addButtonView.AddButtonView
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), AddButtonView.ParentActivityCallback {
     private lateinit var binding: ActivityMainBinding
 
     private lateinit var mainActivityViewModel: MainActivityViewModel
@@ -116,18 +113,6 @@ class MainActivity : AppCompatActivity() {
     private fun displaySTTFragment() =
         hostFragment?.findNavController()?.navigate(R.id.action_TTSFragment_to_STTFragment)
 
-    private fun displayTTSFragmentWithoutTransition() =
-        supportFragmentManager.commit {
-            setReorderingAllowed(true)
-            replace<TTSFragment>(R.id.navigationMainControllerContainerView)
-        }
-
-    private fun displaySTTFragmentWithoutTransition() =
-        supportFragmentManager.commit {
-            setReorderingAllowed(true)
-            replace<STTFragment>(R.id.navigationMainControllerContainerView)
-        }
-
     private fun isTTSFragmentDisplaying(): Boolean {
         return (hostFragment
             ?.childFragmentManager
@@ -153,5 +138,9 @@ class MainActivity : AppCompatActivity() {
                 getColor(R.color.blue)
             )
         )
+    }
+
+    override fun displayDialog() {
+        TODO("Not yet implemented")
     }
 }
