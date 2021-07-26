@@ -5,12 +5,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.delet_dis.converta.R
-import com.delet_dis.converta.data.database.entities.Phrase
+import com.delet_dis.converta.data.database.entities.Category
 import com.delet_dis.converta.databinding.RecyclerViewItemDatabaseRecordingsListBinding
 
 class PhrasesPickingAdapter(
-    private val values: MutableList<Phrase>,
-    val clickListener: (Phrase) -> Unit
+    private val values: MutableList<Category>,
+    val clickListener: (Category) -> Unit
 ) : RecyclerView.Adapter<PhrasesPickingAdapter.PhrasesHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhrasesHolder {
@@ -36,7 +36,7 @@ class PhrasesPickingAdapter(
         private val binding: RecyclerViewItemDatabaseRecordingsListBinding =
             RecyclerViewItemDatabaseRecordingsListBinding.bind(view)
 
-        fun bind(data: Phrase) = with(binding) {
+        fun bind(data: Category) = with(binding) {
             itemCard.setOnClickListener {
                 clickListener(data)
             }

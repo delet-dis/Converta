@@ -4,7 +4,7 @@ import android.content.Context
 import com.delet_dis.converta.data.database.PhrasesDatabase
 import com.delet_dis.converta.data.database.daos.CategoryDAO
 import com.delet_dis.converta.data.database.daos.PhraseDAO
-import com.delet_dis.converta.data.database.entities.Phrase
+import com.delet_dis.converta.data.database.entities.Category
 import kotlinx.coroutines.flow.Flow
 
 class DatabaseRepository(val context: Context) {
@@ -30,8 +30,11 @@ class DatabaseRepository(val context: Context) {
         }
     }
 
-    fun getPhrases(): Flow<List<Phrase>> {
-        return getPhraseDao(context).getAllPhrasesAsFlow()
+    fun getCategories(): Flow<List<Category>> {
+        return getCategoryDao(context).getAllCategoriesAsFlow()
     }
 
+    suspend fun addCategory(category: String) {
+        getCategoryDao(context).insert(Category(category))
+    }
 }

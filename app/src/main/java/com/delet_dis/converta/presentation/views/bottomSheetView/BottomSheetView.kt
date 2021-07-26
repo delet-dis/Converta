@@ -9,11 +9,15 @@ import com.delet_dis.converta.R
 import com.delet_dis.converta.data.model.BottomSheetActionType
 import com.delet_dis.converta.databinding.ViewBottomSheetBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import kotlin.reflect.KFunction1
 
 class BottomSheetView : BottomSheetDialogFragment() {
     private lateinit var binding: ViewBottomSheetBinding
 
     var actionType = BottomSheetActionType.CATEGORY_ADDING
+
+    var submitButtonOnClickListener:
+            KFunction1<String, Unit>? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,6 +45,11 @@ class BottomSheetView : BottomSheetDialogFragment() {
             }
 
             currentMode.text = requireContext().getString(actionType.actionStringId)
+            submitButton.setOnClickListener {
+                submitButtonOnClickListener?.invoke(editText.text.toString())
+                dismiss()
+                editText.text.clear()
+            }
         }
     }
 

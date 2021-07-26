@@ -47,9 +47,9 @@ class TTSFragment : Fragment(), FragmentParentInterface {
     }
 
     private fun displayPhrasesRecordings() {
-        ttsFragmentViewModel.phrasesRecordingsLiveData.observe(viewLifecycleOwner, {
-            binding.itemsBottomRecycler.adapter = PhrasesPickingAdapter(it) {
-                Toast.makeText(requireContext(), it.name, Toast.LENGTH_SHORT).show()
+        ttsFragmentViewModel.categoriesRecordingsLiveData.observe(viewLifecycleOwner, {
+            binding.itemsBottomRecycler.adapter = PhrasesPickingAdapter(it) {phrase ->
+                Toast.makeText(requireContext(), phrase.name, Toast.LENGTH_SHORT).show()
             }
         })
     }

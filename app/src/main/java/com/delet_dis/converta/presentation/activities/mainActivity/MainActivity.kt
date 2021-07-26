@@ -152,6 +152,11 @@ class MainActivity : AppCompatActivity(), AddButtonView.ParentActivityCallback {
     private fun showBottomSheet(actionType: BottomSheetActionType) {
         bottomSheetView.show(supportFragmentManager, null)
         bottomSheetView.actionType = actionType
+        bottomSheetView.submitButtonOnClickListener = ::addCategoryToDatabase
+    }
+
+    private fun addCategoryToDatabase(category:String){
+        mainActivityViewModel.addCategoryToDatabase(category)
     }
 
     override fun displayDialog() {

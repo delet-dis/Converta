@@ -39,7 +39,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
                     android:ems="10"
-                    android:id="@+id/phraseEdit"
+                    android:id="@+id/editText"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/currentMode"
@@ -61,9 +61,9 @@
                     android:layout_width="0dp"
                     android:layout_height="3dp"
                     android:id="@+id/borderView"
-                    app:layout_constraintTop_toBottomOf="@+id/phraseEdit"
-                    app:layout_constraintEnd_toEndOf="@+id/phraseEdit"
-                    app:layout_constraintStart_toStartOf="@+id/phraseEdit"
+                    app:layout_constraintTop_toBottomOf="@+id/editText"
+                    app:layout_constraintEnd_toEndOf="@+id/editText"
+                    app:layout_constraintStart_toStartOf="@+id/editText"
                     android:background="@drawable/border_view_rounded_corners"
                     android:layout_marginTop="4dp" />
 
