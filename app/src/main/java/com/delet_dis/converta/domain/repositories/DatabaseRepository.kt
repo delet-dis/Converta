@@ -4,6 +4,8 @@ import android.content.Context
 import com.delet_dis.converta.data.database.PhrasesDatabase
 import com.delet_dis.converta.data.database.daos.CategoryDAO
 import com.delet_dis.converta.data.database.daos.PhraseDAO
+import com.delet_dis.converta.data.database.entities.Phrase
+import kotlinx.coroutines.flow.Flow
 
 class DatabaseRepository(val context: Context) {
     companion object {
@@ -27,4 +29,9 @@ class DatabaseRepository(val context: Context) {
             return phraseDAO!!
         }
     }
+
+    fun getPhrases(): Flow<List<Phrase>> {
+        return getPhraseDao(context).getAllPhrasesAsFlow()
+    }
+
 }
