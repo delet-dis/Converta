@@ -62,7 +62,8 @@
             android:layout_height="wrap_content"
             app:behavior_hideable="true"
             app:behavior_peekHeight="0dp"
-            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+            android:id="@+id/bottomSheetLayout">
 
         <androidx.cardview.widget.CardView
                 android:layout_width="0dp"
