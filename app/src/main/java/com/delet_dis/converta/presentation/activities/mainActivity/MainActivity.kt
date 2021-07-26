@@ -2,7 +2,6 @@ package com.delet_dis.converta.presentation.activities.mainActivity
 
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -12,7 +11,7 @@ import com.delet_dis.converta.data.model.ApplicationMainModeType
 import com.delet_dis.converta.databinding.ActivityMainBinding
 import com.delet_dis.converta.presentation.activities.mainActivity.viewModel.MainActivityViewModel
 import com.delet_dis.converta.presentation.views.addButtonView.AddButtonView
-import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.delet_dis.converta.presentation.views.bottomSheetView.BottomSheetView
 
 class MainActivity : AppCompatActivity(), AddButtonView.ParentActivityCallback {
     private lateinit var binding: ActivityMainBinding
@@ -21,7 +20,7 @@ class MainActivity : AppCompatActivity(), AddButtonView.ParentActivityCallback {
 
     private var hostFragment: Fragment? = null
 
-    private lateinit var bottomSheetBehavior: BottomSheetBehavior<View>
+    private lateinit var bottomSheetView:BottomSheetView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,7 +33,7 @@ class MainActivity : AppCompatActivity(), AddButtonView.ParentActivityCallback {
 
         mainActivityViewModel = MainActivityViewModel(application)
 
-        bottomSheetBehavior = BottomSheetBehavior.from(binding.bottomSheetLayout)
+        bottomSheetView = BottomSheetView()
 
         setContentView(binding.root)
 
@@ -45,32 +44,8 @@ class MainActivity : AppCompatActivity(), AddButtonView.ParentActivityCallback {
         updatePreferredApplicationMode()
 
         initPreferredApplicationModeObserver()
-
-        hideBottomSheet()
-
-        initBottomSheetStateListener()
     }
 
-    private fun initBottomSheetStateListener() = bottomSheetBehavior.addBottomSheetCallback(object :
-        BottomSheetBehavior.BottomSheetCallback() {
-        override fun onStateChanged(bottomSheet: View, newState: Int) {
-            if(newState == BottomSheetBehavior.STATE_COLLAPSED){
-                hideBottomSheet()
-            }
-        }
-
-        override fun onSlide(bottomSheet: View, slideOffset: Float) {
-
-        }
-    })
-
-    private fun hideBottomSheet() = with(bottomSheetBehavior) {
-        state = BottomSheetBehavior.STATE_HIDDEN
-    }
-
-    private fun showBottomSheet() = with(bottomSheetBehavior) {
-        state = BottomSheetBehavior.STATE_EXPANDED
-    }
 
     private fun initPreferredApplicationModeObserver() =
         with(mainActivityViewModel.preferredApplicationMode) {
@@ -169,6 +144,10 @@ class MainActivity : AppCompatActivity(), AddButtonView.ParentActivityCallback {
                 getColor(R.color.blue)
             )
         )
+    }
+
+    private fun showBottomSheet(){
+        bottomSheetView.show(supportFragmentManager, null)
     }
 
     override fun displayDialog() {

@@ -1,164 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
+        android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        app:layoutDescription="@xml/activity_main_scene"
+        android:id="@+id/rootView">
 
-    <androidx.constraintlayout.motion.widget.MotionLayout
-            android:layout_height="match_parent"
+    <ImageView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            tools:srcCompat="@tools:sample/backgrounds/scenic"
+            android:id="@+id/backgroundImage"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:contentDescription="@string/onboardingBackgroundImageContentDescription" />
+
+    <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/navigationMainControllerContainerView"
+            android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
-            app:layoutDescription="@xml/activity_main_scene"
-            android:id="@+id/rootView">
+            android:layout_height="0dp"
+            app:defaultNavHost="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
+            app:navGraph="@navigation/main_navigation_graph" />
 
-        <ImageView
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                tools:srcCompat="@tools:sample/backgrounds/scenic"
-                android:id="@+id/backgroundImage"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:contentDescription="@string/onboardingBackgroundImageContentDescription" />
-
-        <androidx.fragment.app.FragmentContainerView
-                android:id="@+id/navigationMainControllerContainerView"
-                android:name="androidx.navigation.fragment.NavHostFragment"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                app:defaultNavHost="true"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
-                app:navGraph="@navigation/main_navigation_graph" />
-
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-                android:elevation="0dp"
-                android:id="@+id/bottomNavigationView"
-                android:layout_width="match_parent"
-                app:itemIconTint="@color/main_activity_bottom_navigation_items_color"
-                android:layout_height="80dp"
-                app:itemIconSize="35dp"
-                app:labelVisibilityMode="unlabeled"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:menu="@menu/main_activity_menu"
-                android:background="@drawable/main_activity_bottom_navigation_transparent_background" />
-
-        <androidx.constraintlayout.widget.Guideline
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/verticalHalfScreenGuideline"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.5" />
-
-    </androidx.constraintlayout.motion.widget.MotionLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:elevation="0dp"
+            android:id="@+id/bottomNavigationView"
             android:layout_width="match_parent"
+            app:itemIconTint="@color/main_activity_bottom_navigation_items_color"
+            android:layout_height="80dp"
+            app:itemIconSize="35dp"
+            app:labelVisibilityMode="unlabeled"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:menu="@menu/main_activity_menu"
+            android:background="@drawable/main_activity_bottom_navigation_transparent_background" />
+
+    <androidx.constraintlayout.widget.Guideline
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:behavior_hideable="true"
-            app:behavior_peekHeight="0dp"
-            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
-            android:id="@+id/bottomSheetLayout">
+            android:id="@+id/verticalHalfScreenGuideline"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
 
-        <androidx.cardview.widget.CardView
-                android:layout_width="0dp"
-                android:layout_height="300dp"
-                android:id="@+id/bottomSheetDialogCard"
-                app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginStart="17dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginEnd="17dp"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="5dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginBottom="96dp">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                <TextView
-                        android:text="@string/phraseAddingMode"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/currentMode"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginStart="24dp"
-                        android:fontFamily="@font/navigo_regular"
-                        android:textColor="@color/black"
-                        android:textSize="25sp" />
-
-                <EditText
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:inputType="textPersonName"
-                        android:ems="10"
-                        android:id="@+id/phraseEdit"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/currentMode"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintVertical_bias="0.4"
-                        android:layout_marginEnd="48dp"
-                        android:layout_marginStart="48dp"
-                        android:textColor="@color/black"
-                        android:fontFamily="@font/navigo_regular"
-                        android:textSize="17sp"
-                        android:paddingBottom="0dp"
-                        android:paddingLeft="8dp"
-                        android:paddingRight="8dp"
-                        android:hint="@string/editTextHint"
-                        android:background="@null"
-                        android:importantForAutofill="no" />
-
-                <View
-                        android:layout_width="0dp"
-                        android:layout_height="3dp"
-                        android:id="@+id/borderView"
-                        app:layout_constraintTop_toBottomOf="@+id/phraseEdit"
-                        app:layout_constraintEnd_toEndOf="@+id/phraseEdit"
-                        app:layout_constraintStart_toStartOf="@+id/phraseEdit"
-                        android:background="@drawable/border_view_rounded_corners"
-                        android:layout_marginTop="4dp" />
-
-                <ImageButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/discardButton"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        android:src="@drawable/ic_discard"
-                        android:background="@null"
-                        android:layout_marginTop="20dp"
-                        android:padding="5dp"
-                        android:layout_marginEnd="20dp"
-                        android:contentDescription="@string/discardButtonContentDescription" />
-
-                <ImageButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/submitButton"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        android:src="@drawable/ic_submit"
-                        android:background="@null"
-                        android:padding="5dp"
-                        android:layout_marginEnd="20dp"
-                        android:contentDescription="@string/submitButtonContentDescription"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        android:layout_marginBottom="20dp" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.cardview.widget.CardView>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</androidx.constraintlayout.motion.widget.MotionLayout>
