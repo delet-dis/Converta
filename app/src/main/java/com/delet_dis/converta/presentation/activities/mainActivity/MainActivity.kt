@@ -8,6 +8,7 @@ import androidx.navigation.fragment.findNavController
 import com.delet_dis.converta.R
 import com.delet_dis.converta.data.interfaces.FragmentParentInterface
 import com.delet_dis.converta.data.model.ApplicationMainModeType
+import com.delet_dis.converta.data.model.BottomSheetActionType
 import com.delet_dis.converta.databinding.ActivityMainBinding
 import com.delet_dis.converta.presentation.activities.mainActivity.viewModel.MainActivityViewModel
 import com.delet_dis.converta.presentation.views.addButtonView.AddButtonView
@@ -20,7 +21,9 @@ class MainActivity : AppCompatActivity(), AddButtonView.ParentActivityCallback {
 
     private var hostFragment: Fragment? = null
 
-    private lateinit var bottomSheetView:BottomSheetView
+    private lateinit var bottomSheetView: BottomSheetView
+
+    private var currentAddingMode = BottomSheetActionType.PHRASE_ADDING
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -146,11 +149,12 @@ class MainActivity : AppCompatActivity(), AddButtonView.ParentActivityCallback {
         )
     }
 
-    private fun showBottomSheet(){
+    private fun showBottomSheet(actionType: BottomSheetActionType) {
         bottomSheetView.show(supportFragmentManager, null)
+        bottomSheetView.actionType = actionType
     }
 
     override fun displayDialog() {
-        showBottomSheet()
+        showBottomSheet(currentAddingMode)
     }
 }
