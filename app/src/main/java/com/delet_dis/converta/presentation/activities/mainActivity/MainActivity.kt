@@ -10,11 +10,11 @@ import com.delet_dis.converta.data.interfaces.FragmentParentInterface
 import com.delet_dis.converta.data.model.ApplicationMainModeType
 import com.delet_dis.converta.data.model.BottomSheetActionType
 import com.delet_dis.converta.databinding.ActivityMainBinding
+import com.delet_dis.converta.presentation.activities.mainActivity.fragments.ttsFragment.TTSFragment
 import com.delet_dis.converta.presentation.activities.mainActivity.viewModel.MainActivityViewModel
-import com.delet_dis.converta.presentation.views.addButtonView.AddButtonView
 import com.delet_dis.converta.presentation.views.bottomSheetView.BottomSheetView
 
-class MainActivity : AppCompatActivity(), AddButtonView.ParentActivityCallback {
+class MainActivity : AppCompatActivity(), TTSFragment.ParentActivityCallback {
     private lateinit var binding: ActivityMainBinding
 
     private lateinit var mainActivityViewModel: MainActivityViewModel
@@ -159,7 +159,7 @@ class MainActivity : AppCompatActivity(), AddButtonView.ParentActivityCallback {
         mainActivityViewModel.addCategoryToDatabase(category)
     }
 
-    override fun displayDialog() {
+    override fun displayBottomSheet() {
         showBottomSheet(currentAddingMode)
     }
 }

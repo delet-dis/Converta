@@ -16,6 +16,8 @@
             android:background="@drawable/add_button_rounded_corners"
             android:src="@drawable/ic_plus"
             android:scaleType="center"
-            android:contentDescription="@string/addButtonContentDescription" />
+            android:contentDescription="@string/addButtonContentDescription"
+            android:layout_marginBottom="11dp"
+            android:layout_marginEnd="11dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

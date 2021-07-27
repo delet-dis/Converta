@@ -1,5 +1,6 @@
 package com.delet_dis.converta.presentation.activities.mainActivity.fragments.ttsFragment
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +10,7 @@ import androidx.fragment.app.Fragment
 import com.delet_dis.converta.R
 import com.delet_dis.converta.data.interfaces.FragmentParentInterface
 import com.delet_dis.converta.databinding.FragmentTtsBinding
-import com.delet_dis.converta.presentation.activities.mainActivity.fragments.ttsFragment.recyclerViewAdapters.PhrasesPickingAdapter
+import com.delet_dis.converta.presentation.activities.mainActivity.fragments.ttsFragment.recyclerViewAdapters.CategoriesPickingAdapter
 import com.delet_dis.converta.presentation.activities.mainActivity.fragments.ttsFragment.viewModel.TTSFragmentViewModel
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
@@ -19,6 +20,8 @@ class TTSFragment : Fragment(), FragmentParentInterface {
     private lateinit var binding: FragmentTtsBinding
 
     private lateinit var ttsFragmentViewModel: TTSFragmentViewModel
+
+    private lateinit var parentActivityCallback: ParentActivityCallback
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,6 +37,12 @@ class TTSFragment : Fragment(), FragmentParentInterface {
         } else {
             view
         }
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        parentActivityCallback = context as ParentActivityCallback
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -53,15 +62,20 @@ class TTSFragment : Fragment(), FragmentParentInterface {
         itemsBottomRecycler.layoutManager = layoutManager
     }
 
+
     private fun displayCategoriesRecordings() {
         ttsFragmentViewModel.categoriesRecordingsLiveData.observe(viewLifecycleOwner, {
-            binding.itemsBottomRecycler.adapter = PhrasesPickingAdapter(it) { phrase ->
+            binding.itemsBottomRecycler.adapter = CategoriesPickingAdapter(it, { phrase ->
                 Toast.makeText(requireContext(), phrase.name, Toast.LENGTH_SHORT).show()
-            }
+            }, { parentActivityCallback.displayBottomSheet() })
         })
     }
 
     override fun getFragmentId(): Int {
         return R.id.TTSFragment
+    }
+
+    interface ParentActivityCallback {
+        fun displayBottomSheet()
     }
 }
