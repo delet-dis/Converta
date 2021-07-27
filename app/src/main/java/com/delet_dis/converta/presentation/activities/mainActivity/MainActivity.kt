@@ -23,8 +23,6 @@ class MainActivity : AppCompatActivity(), TTSFragment.ParentActivityCallback {
 
     private lateinit var bottomSheetView: BottomSheetView
 
-    private var currentAddingMode = BottomSheetActionType.PHRASE_ADDING
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -155,11 +153,11 @@ class MainActivity : AppCompatActivity(), TTSFragment.ParentActivityCallback {
         bottomSheetView.submitButtonOnClickListener = ::addCategoryToDatabase
     }
 
-    private fun addCategoryToDatabase(category:String){
+    private fun addCategoryToDatabase(category: String) {
         mainActivityViewModel.addCategoryToDatabase(category)
     }
 
-    override fun displayBottomSheet() {
-        showBottomSheet(currentAddingMode)
+    override fun displayBottomSheet(action:BottomSheetActionType) {
+        showBottomSheet(action)
     }
 }

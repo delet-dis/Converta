@@ -5,7 +5,10 @@ import com.delet_dis.converta.data.database.PhrasesDatabase
 import com.delet_dis.converta.data.database.daos.CategoryDAO
 import com.delet_dis.converta.data.database.daos.PhraseDAO
 import com.delet_dis.converta.data.database.entities.Category
+import com.delet_dis.converta.domain.extensions.beautifyString
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+import java.util.*
 
 class DatabaseRepository(val context: Context) {
     companion object {
@@ -30,11 +33,28 @@ class DatabaseRepository(val context: Context) {
         }
     }
 
-    fun getCategories(): Flow<List<Category>> {
-        return getCategoryDao(context).getAllCategoriesAsFlow()
-    }
+    fun getCategories(): Flow<List<Category>> =
+        getCategoryDao(context).getAllCategoriesAsFlow().map {
+            it.forEach { category ->
+                category.name = category.name?.replaceFirstChar { char ->
+                    if (char.isLowerCase()) char.titlecase(
+                        Locale.getDefault()
+                    ) else char.toString()
+                }
+            }
+
+            it
+        }
+
 
     suspend fun addCategory(category: String) {
-        getCategoryDao(context).insert(Category(category))
+        if (category.isNotBlank() and category.isNotEmpty()) {
+            getCategoryDao(context).insert(
+                Category(
+                    category.beautifyString().lowercase(Locale.getDefault())
+                )
+            )
+        }
     }
+
 }

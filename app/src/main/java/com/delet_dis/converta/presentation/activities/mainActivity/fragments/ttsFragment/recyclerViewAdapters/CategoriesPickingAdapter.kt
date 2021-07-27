@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.delet_dis.converta.R
 import com.delet_dis.converta.data.database.entities.Category
+import com.delet_dis.converta.data.model.BottomSheetActionType
 import com.delet_dis.converta.databinding.RecyclerViewBottomListItemBinding
 import com.delet_dis.converta.databinding.ViewAddButtonBinding
 
@@ -13,7 +14,7 @@ import com.delet_dis.converta.databinding.ViewAddButtonBinding
 class CategoriesPickingAdapter(
     private val values: MutableList<Category>,
     val clickListenerForCategory: (Category) -> Unit,
-    val clickListenerForAddButton: () -> Unit
+    val clickListenerForAddButton: (BottomSheetActionType) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
@@ -61,7 +62,7 @@ class CategoriesPickingAdapter(
     inner class AddButtonHolder(private val view: View) : RecyclerView.ViewHolder(view) {
         fun bindAddButton() = with(ViewAddButtonBinding.bind(view)) {
             addButton.setOnClickListener {
-                clickListenerForAddButton()
+                clickListenerForAddButton(BottomSheetActionType.CATEGORY_ADDING)
             }
         }
     }

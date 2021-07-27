@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.delet_dis.converta.R
 import com.delet_dis.converta.data.interfaces.FragmentParentInterface
+import com.delet_dis.converta.data.model.BottomSheetActionType
 import com.delet_dis.converta.databinding.FragmentTtsBinding
 import com.delet_dis.converta.presentation.activities.mainActivity.fragments.ttsFragment.recyclerViewAdapters.CategoriesPickingAdapter
 import com.delet_dis.converta.presentation.activities.mainActivity.fragments.ttsFragment.viewModel.TTSFragmentViewModel
@@ -64,10 +65,14 @@ class TTSFragment : Fragment(), FragmentParentInterface {
 
 
     private fun displayCategoriesRecordings() {
-        ttsFragmentViewModel.categoriesRecordingsLiveData.observe(viewLifecycleOwner, {
-            binding.itemsBottomRecycler.adapter = CategoriesPickingAdapter(it, { phrase ->
-                Toast.makeText(requireContext(), phrase.name, Toast.LENGTH_SHORT).show()
-            }, { parentActivityCallback.displayBottomSheet() })
+        ttsFragmentViewModel.categoriesRecordingsLiveData.observe(viewLifecycleOwner, { list ->
+            binding.itemsBottomRecycler.adapter = CategoriesPickingAdapter(list,
+                { phrase ->
+                    Toast.makeText(requireContext(), phrase.name, Toast.LENGTH_SHORT).show()
+                },
+                { action ->
+                    parentActivityCallback.displayBottomSheet(action)
+                })
         })
     }
 
@@ -76,6 +81,6 @@ class TTSFragment : Fragment(), FragmentParentInterface {
     }
 
     interface ParentActivityCallback {
-        fun displayBottomSheet()
+        fun displayBottomSheet(action: BottomSheetActionType)
     }
 }
