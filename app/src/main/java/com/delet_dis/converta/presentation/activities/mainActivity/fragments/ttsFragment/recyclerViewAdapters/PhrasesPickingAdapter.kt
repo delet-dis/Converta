@@ -1,12 +1,14 @@
-package com.delet_dis.converta.presentation.activities.mainActivity.recyclerViewAdapters
+package com.delet_dis.converta.presentation.activities.mainActivity.fragments.ttsFragment.recyclerViewAdapters
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.updatePadding
 import androidx.recyclerview.widget.RecyclerView
 import com.delet_dis.converta.R
 import com.delet_dis.converta.data.database.entities.Category
-import com.delet_dis.converta.databinding.RecyclerViewItemDatabaseRecordingsListBinding
+import com.delet_dis.converta.databinding.RecyclerViewBottomListItemBinding
+import com.delet_dis.converta.domain.extensions.dpToPx
 
 class PhrasesPickingAdapter(
     private val values: MutableList<Category>,
@@ -17,7 +19,7 @@ class PhrasesPickingAdapter(
         return PhrasesHolder(
             LayoutInflater.from(parent.context)
                 .inflate(
-                    R.layout.recycler_view_item_database_recordings_list,
+                    R.layout.recycler_view_bottom_list_item,
                     parent,
                     false
                 )
@@ -26,17 +28,21 @@ class PhrasesPickingAdapter(
 
     override fun onBindViewHolder(holder: PhrasesHolder, position: Int) {
         with(values[position]) {
-            holder.bind(this)
+            holder.bind(this, position)
         }
     }
 
     override fun getItemCount(): Int = values.size
 
     inner class PhrasesHolder(view: View) : RecyclerView.ViewHolder(view) {
-        private val binding: RecyclerViewItemDatabaseRecordingsListBinding =
-            RecyclerViewItemDatabaseRecordingsListBinding.bind(view)
+        private val binding: RecyclerViewBottomListItemBinding =
+            RecyclerViewBottomListItemBinding.bind(view)
 
-        fun bind(data: Category) = with(binding) {
+        fun bind(data: Category, position: Int) = with(binding) {
+            if (position == 0) {
+                root.updatePadding(left = (61).dpToPx(binding.root.context).toInt())
+            }
+
             itemCard.setOnClickListener {
                 clickListener(data)
             }

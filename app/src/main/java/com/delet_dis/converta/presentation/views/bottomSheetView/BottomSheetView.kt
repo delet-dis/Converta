@@ -45,10 +45,14 @@ class BottomSheetView : BottomSheetDialogFragment() {
             }
 
             currentMode.text = requireContext().getString(actionType.actionStringId)
+
             submitButton.setOnClickListener {
                 submitButtonOnClickListener?.invoke(editText.text.toString())
                 dismiss()
                 editText.text.clear()
+            }
+
+            bottomSheetDialogCard.setOnClickListener {
             }
         }
     }

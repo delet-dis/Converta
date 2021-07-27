@@ -6,12 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.delet_dis.converta.R
 import com.delet_dis.converta.data.interfaces.FragmentParentInterface
 import com.delet_dis.converta.databinding.FragmentTtsBinding
+import com.delet_dis.converta.presentation.activities.mainActivity.fragments.ttsFragment.recyclerViewAdapters.PhrasesPickingAdapter
 import com.delet_dis.converta.presentation.activities.mainActivity.fragments.ttsFragment.viewModel.TTSFragmentViewModel
-import com.delet_dis.converta.presentation.activities.mainActivity.recyclerViewAdapters.PhrasesPickingAdapter
+import com.google.android.flexbox.FlexDirection
+import com.google.android.flexbox.FlexboxLayoutManager
+import com.google.android.flexbox.JustifyContent
 
 class TTSFragment : Fragment(), FragmentParentInterface {
     private lateinit var binding: FragmentTtsBinding
@@ -39,16 +41,21 @@ class TTSFragment : Fragment(), FragmentParentInterface {
 
         initBottomListRecycler()
 
-        displayPhrasesRecordings()
+        displayCategoriesRecordings()
     }
 
     private fun initBottomListRecycler() = with(binding) {
-        itemsBottomRecycler.layoutManager = LinearLayoutManager(requireContext())
+        val layoutManager = FlexboxLayoutManager(requireContext()).apply {
+            flexDirection = FlexDirection.ROW
+            justifyContent = JustifyContent.FLEX_START
+        }
+
+        itemsBottomRecycler.layoutManager = layoutManager
     }
 
-    private fun displayPhrasesRecordings() {
+    private fun displayCategoriesRecordings() {
         ttsFragmentViewModel.categoriesRecordingsLiveData.observe(viewLifecycleOwner, {
-            binding.itemsBottomRecycler.adapter = PhrasesPickingAdapter(it) {phrase ->
+            binding.itemsBottomRecycler.adapter = PhrasesPickingAdapter(it) { phrase ->
                 Toast.makeText(requireContext(), phrase.name, Toast.LENGTH_SHORT).show()
             }
         })

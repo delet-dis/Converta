@@ -37,7 +37,7 @@
             <EditText
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:inputType="textPersonName"
+                    android:inputType="textCapSentences|textMultiLine"
                     android:ems="10"
                     android:id="@+id/editText"
                     app:layout_constraintStart_toStartOf="parent"
