@@ -5,6 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.delet_dis.converta.data.database.entities.Category
 import com.delet_dis.converta.data.model.ApplicationMainModeType
 import com.delet_dis.converta.domain.repositories.DatabaseRepository
 import com.delet_dis.converta.domain.repositories.SharedPreferencesRepository
@@ -26,6 +27,12 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
             DatabaseRepository(getApplication()).addCategory(
                 category
             )
+        }
+    }
+
+    fun renameCategoryInDatabase(category: Category, newCategoryName: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            DatabaseRepository(getApplication()).renameCategory(category, newCategoryName)
         }
     }
 }

@@ -5,9 +5,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.delet_dis.converta.R
+import com.delet_dis.converta.data.database.entities.Category
 import com.delet_dis.converta.data.interfaces.FragmentParentInterface
 import com.delet_dis.converta.data.model.BottomSheetActionType
 import com.delet_dis.converta.databinding.FragmentTtsBinding
@@ -67,13 +67,30 @@ class TTSFragment : Fragment(), FragmentParentInterface {
     private fun displayCategoriesRecordings() {
         ttsFragmentViewModel.categoriesRecordingsLiveData.observe(viewLifecycleOwner, { list ->
             binding.itemsBottomRecycler.adapter = CategoriesPickingAdapter(list,
-                { phrase ->
-                    Toast.makeText(requireContext(), phrase.name, Toast.LENGTH_SHORT).show()
+                { action, category ->
+                    handleBottomRecyclerViewCallback(action, category)
                 },
                 { action ->
-                    parentActivityCallback.displayBottomSheet(action)
+                    parentActivityCallback.displayBottomSheet(action, null)
                 })
         })
+    }
+
+    private fun handleBottomRecyclerViewCallback(
+        action: BottomSheetActionType,
+        category: Category
+    ) {
+        when (action) {
+            BottomSheetActionType.CATEGORY_EDITING -> parentActivityCallback.displayBottomSheet(
+                action, category
+            )
+
+            BottomSheetActionType.CATEGORY_PICKING -> parentActivityCallback.displayPhrasesByCategory(
+                category
+            )
+            else -> {
+            }
+        }
     }
 
     override fun getFragmentId(): Int {
@@ -81,6 +98,7 @@ class TTSFragment : Fragment(), FragmentParentInterface {
     }
 
     interface ParentActivityCallback {
-        fun displayBottomSheet(action: BottomSheetActionType)
+        fun displayBottomSheet(action: BottomSheetActionType, category: Category?)
+        fun displayPhrasesByCategory(category: Category)
     }
 }

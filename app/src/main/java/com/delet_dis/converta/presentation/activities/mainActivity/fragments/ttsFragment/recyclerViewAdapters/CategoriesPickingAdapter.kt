@@ -13,7 +13,7 @@ import com.delet_dis.converta.databinding.ViewAddButtonBinding
 
 class CategoriesPickingAdapter(
     private val values: MutableList<Category>,
-    val clickListenerForCategory: (Category) -> Unit,
+    val clickListenerForCategory: (BottomSheetActionType, Category) -> Unit,
     val clickListenerForAddButton: (BottomSheetActionType) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -48,14 +48,19 @@ class CategoriesPickingAdapter(
         }
 
     inner class CategoriesHolder(private val view: View) : RecyclerView.ViewHolder(view) {
-        fun bindCategory(data: Category) = with(
+        fun bindCategory(category: Category) = with(
             RecyclerViewBottomListItemBinding.bind(view)
         ) {
             itemCard.setOnClickListener {
-                clickListenerForCategory(data)
+                clickListenerForCategory(BottomSheetActionType.CATEGORY_PICKING, category)
             }
 
-            categoryText.text = data.name
+            itemCard.setOnLongClickListener {
+                clickListenerForCategory(BottomSheetActionType.CATEGORY_EDITING, category)
+                true
+            }
+
+            categoryText.text = category.name
         }
     }
 

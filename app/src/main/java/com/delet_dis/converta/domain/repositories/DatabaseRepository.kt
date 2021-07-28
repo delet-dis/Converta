@@ -46,6 +46,9 @@ class DatabaseRepository(val context: Context) {
             it
         }
 
+    suspend fun renameCategory(category: Category, newCategoryName: String) {
+        getCategoryDao(context).insert(Category(newCategoryName, category.id))
+    }
 
     suspend fun addCategory(category: String) {
         if (category.isNotBlank() and category.isNotEmpty()) {

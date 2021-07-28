@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.delet_dis.converta.R
+import com.delet_dis.converta.data.database.entities.Category
 import com.delet_dis.converta.data.interfaces.FragmentParentInterface
 import com.delet_dis.converta.data.model.ApplicationMainModeType
 import com.delet_dis.converta.data.model.BottomSheetActionType
@@ -147,17 +148,34 @@ class MainActivity : AppCompatActivity(), TTSFragment.ParentActivityCallback {
         )
     }
 
-    private fun showBottomSheet(actionType: BottomSheetActionType) {
+    private fun showBottomSheet(actionType: BottomSheetActionType, category: Category?) {
         bottomSheetView.show(supportFragmentManager, null)
         bottomSheetView.actionType = actionType
-        bottomSheetView.submitButtonOnClickListener = ::addCategoryToDatabase
+
+        when (actionType) {
+            BottomSheetActionType.CATEGORY_EDITING -> {
+                bottomSheetView.currentCategory = category
+                bottomSheetView.renameCategorySubmitButtonOnClickListener =
+                    ::renameCategoryInDatabase
+            }
+            BottomSheetActionType.CATEGORY_ADDING -> {
+                bottomSheetView.addCategorySubmitButtonOnClickListener = ::addCategoryToDatabase
+            }
+        }
     }
 
     private fun addCategoryToDatabase(category: String) {
         mainActivityViewModel.addCategoryToDatabase(category)
     }
 
-    override fun displayBottomSheet(action:BottomSheetActionType) {
-        showBottomSheet(action)
+    private fun renameCategoryInDatabase(category: Category, newCategoryName: String) {
+        mainActivityViewModel.renameCategoryInDatabase(category, newCategoryName)
+    }
+
+    override fun displayBottomSheet(action: BottomSheetActionType, category: Category?) {
+        showBottomSheet(action, category)
+    }
+
+    override fun displayPhrasesByCategory(category: Category) {
     }
 }
