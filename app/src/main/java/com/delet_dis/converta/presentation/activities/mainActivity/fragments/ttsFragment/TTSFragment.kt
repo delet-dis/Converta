@@ -14,6 +14,7 @@ import com.delet_dis.converta.data.interfaces.FragmentParentInterface
 import com.delet_dis.converta.data.model.BottomSheetActionType
 import com.delet_dis.converta.databinding.FragmentTtsBinding
 import com.delet_dis.converta.presentation.activities.mainActivity.fragments.ttsFragment.recyclerViewAdapters.CategoriesPickingAdapter
+import com.delet_dis.converta.presentation.activities.mainActivity.fragments.ttsFragment.recyclerViewAdapters.PhrasesPickingAdapter
 import com.delet_dis.converta.presentation.activities.mainActivity.fragments.ttsFragment.viewModel.TTSFragmentViewModel
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
@@ -67,10 +68,12 @@ class TTSFragment : Fragment(), FragmentParentInterface {
 
 
     private fun displayCategoriesRecordings() {
+        binding.currentBottomRecyclerDisplayingMode.text = requireContext().getString(R.string.TTSTitle)
+
         ttsFragmentViewModel.categoriesRecordingsLiveData.observe(viewLifecycleOwner, { list ->
             binding.itemsBottomRecycler.adapter = CategoriesPickingAdapter(list,
-                { action, category ->
-                    Toast.makeText(requireContext(), category.name, Toast.LENGTH_SHORT).show()
+                { category ->
+                    displayPhrasesRecordings(category)
                 },
                 { action, category ->
                     parentActivityCallback.displayBottomSheetForCategoryEditing(action, category)
@@ -79,6 +82,36 @@ class TTSFragment : Fragment(), FragmentParentInterface {
                     parentActivityCallback.displayBottomSheetForCategoryAdding(action)
                 })
         })
+    }
+
+    private fun displayPhrasesRecordings(pickedCategory: Category) {
+        ttsFragmentViewModel.loadPhrasesRecordingsByCategory(pickedCategory)
+
+        binding.currentBottomRecyclerDisplayingMode.text = pickedCategory.name
+
+        ttsFragmentViewModel.phrasesInCategoryRecordingsLiveData.observe(viewLifecycleOwner,
+            { list ->
+                binding.itemsBottomRecycler.adapter = PhrasesPickingAdapter(list,
+                    { action, phrase ->
+                        Toast.makeText(requireContext(), phrase.name, Toast.LENGTH_SHORT).show()
+                    },
+                    { action, phrase ->
+                        parentActivityCallback.displayBottomSheetForPhraseEditing(
+                            action,
+                            pickedCategory,
+                            phrase
+                        )
+                    },
+                    { action ->
+                        parentActivityCallback.displayBottomSheetForPhraseAdding(
+                            action,
+                            pickedCategory
+                        )
+                    },
+                    {
+                        displayCategoriesRecordings()
+                    })
+            })
     }
 
     override fun getFragmentId(): Int {

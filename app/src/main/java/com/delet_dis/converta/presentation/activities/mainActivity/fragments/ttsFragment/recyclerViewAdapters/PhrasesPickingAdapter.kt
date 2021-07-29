@@ -15,6 +15,7 @@ import com.delet_dis.converta.databinding.ViewBackButtonBinding
 class PhrasesPickingAdapter(
     private val values: MutableList<Phrase>,
     val clickListenerForPhrase: (BottomSheetActionType, Phrase) -> Unit,
+    val longClickListenerForPhrase: (BottomSheetActionType, Phrase) -> Unit,
     val clickListenerForAddButton: (BottomSheetActionType) -> Unit,
     val clickListenerForBackButton: () -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
