@@ -1,10 +1,12 @@
 package com.delet_dis.converta.presentation.views.bottomSheetView
 
 import android.app.Dialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.doOnPreDraw
 import com.delet_dis.converta.R
 import com.delet_dis.converta.data.database.entities.Category
 import com.delet_dis.converta.data.database.entities.Phrase
@@ -17,6 +19,12 @@ class BottomSheetView : BottomSheetDialogFragment() {
 
     private lateinit var parentFragmentCallback: ParentFragmentCallback
 
+    private lateinit var currentAction: BottomSheetActionType
+
+    private lateinit var submitButtonOnClickListener: () -> Unit
+
+    private lateinit var editTextContent: String
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -24,6 +32,8 @@ class BottomSheetView : BottomSheetDialogFragment() {
     ): View? {
         return if (savedInstanceState == null) {
             binding = ViewBottomSheetBinding.inflate(layoutInflater)
+
+            parentFragmentCallback = context as ParentFragmentCallback
 
             binding.root
         } else {
@@ -49,54 +59,70 @@ class BottomSheetView : BottomSheetDialogFragment() {
 
             bottomSheetDialogCard.setOnClickListener {
             }
+
+            editText.doOnPreDraw {
+                editText.setText(editTextContent)
+            }
+
+            currentMode.text = currentAction.actionStringId?.let { requireContext().getString(it) }
+
+            submitButton.setOnClickListener {
+                submitButtonOnClickListener.invoke()
+            }
         }
+    }
+
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
+
+        binding.editText.text.clear()
     }
 
     fun setUpBottomSheetInCategoryAddingMode(
         action: BottomSheetActionType
-    ) = with(binding) {
+    ) {
         setUpCurrentModeByAction(action)
 
-        submitButton.setOnClickListener {
+        setSubmitButtonOnClickListener {
             parentFragmentCallback.returnDataFromCategoryAdding(getTextFromEditText())
             afterSubmitOnClickActions()
         }
     }
 
-    fun setUpBottomSheetInCategoryEditingMode(action: BottomSheetActionType, category: Category) =
-        with(binding) {
-            setUpCurrentModeByAction(action)
+    fun setUpBottomSheetInCategoryEditingMode(action: BottomSheetActionType, category: Category) {
+        setUpCurrentModeByAction(action)
+        category.name?.let { setEditTextContent(it) }
 
-            submitButton.setOnClickListener {
-                parentFragmentCallback.returnDataFromCategoryEditing(
-                    category,
-                    getTextFromEditText()
-                )
-                afterSubmitOnClickActions()
-            }
+        setSubmitButtonOnClickListener {
+            parentFragmentCallback.returnDataFromCategoryEditing(
+                category,
+                getTextFromEditText()
+            )
+            afterSubmitOnClickActions()
         }
+    }
 
-    fun setUpBottomSheetInPhraseAddingMode(action: BottomSheetActionType, categoryToAdd: Category) =
-        with(binding) {
-            setUpCurrentModeByAction(action)
+    fun setUpBottomSheetInPhraseAddingMode(action: BottomSheetActionType, categoryToAdd: Category) {
+        setUpCurrentModeByAction(action)
 
-            submitButton.setOnClickListener {
-                parentFragmentCallback.returnDataFromPhraseAdding(
-                    categoryToAdd,
-                    getTextFromEditText()
-                )
-                afterSubmitOnClickActions()
-            }
+        setSubmitButtonOnClickListener {
+            parentFragmentCallback.returnDataFromPhraseAdding(
+                categoryToAdd,
+                getTextFromEditText()
+            )
+            afterSubmitOnClickActions()
         }
+    }
 
     fun setUpBottomSheetInPhraseEditingMode(
         action: BottomSheetActionType,
         category: Category,
         phrase: Phrase
-    ) = with(binding) {
+    ) {
         setUpCurrentModeByAction(action)
+        phrase.name?.let { setEditTextContent(it) }
 
-        submitButton.setOnClickListener {
+        setSubmitButtonOnClickListener {
             parentFragmentCallback.returnDataFromPhraseEditing(
                 category,
                 phrase,
@@ -104,12 +130,19 @@ class BottomSheetView : BottomSheetDialogFragment() {
             )
             afterSubmitOnClickActions()
         }
+
     }
 
-    private fun setUpCurrentModeByAction(
-        action: BottomSheetActionType
-    ) = with(binding) {
-        currentMode.text = action.actionStringId?.let { requireContext().getString(it) }
+    private fun setSubmitButtonOnClickListener(function: () -> Unit) {
+        submitButtonOnClickListener = function
+    }
+
+    private fun setUpCurrentModeByAction(action: BottomSheetActionType) {
+        currentAction = action
+    }
+
+    private fun setEditTextContent(string: String) {
+        editTextContent = string
     }
 
     private fun getTextFromEditText() = with(binding) {

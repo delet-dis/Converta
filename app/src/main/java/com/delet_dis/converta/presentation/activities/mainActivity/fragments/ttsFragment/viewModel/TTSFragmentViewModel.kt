@@ -40,26 +40,4 @@ class TTSFragmentViewModel(application: Application) : AndroidViewModel(applicat
             }
         }
     }
-
-    fun addCategoryToDatabase(category: String) =
-        viewModelScope.launch(Dispatchers.IO) {
-            DatabaseRepository(getApplication()).addCategory(
-                category
-            )
-        }
-
-    fun renameCategoryInDatabase(category: Category, newCategoryName: String) =
-        viewModelScope.launch(Dispatchers.IO) {
-            DatabaseRepository(getApplication()).renameCategory(category, newCategoryName)
-        }
-
-    fun addPhraseToDatabaseByCategory(category: Category, newPhraseName: String) =
-        viewModelScope.launch(Dispatchers.IO) {
-            DatabaseRepository(getApplication()).addPhraseInCategory(category, newPhraseName)
-        }
-
-    fun renamePhraseInDatabase(category: Category, phrase: Phrase, newPhraseName: String) =
-        viewModelScope.launch(Dispatchers.IO) {
-            DatabaseRepository(getApplication()).renamePhrase(category, phrase, newPhraseName)
-        }
 }

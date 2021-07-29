@@ -15,12 +15,11 @@ import com.delet_dis.converta.data.model.BottomSheetActionType
 import com.delet_dis.converta.databinding.FragmentTtsBinding
 import com.delet_dis.converta.presentation.activities.mainActivity.fragments.ttsFragment.recyclerViewAdapters.CategoriesPickingAdapter
 import com.delet_dis.converta.presentation.activities.mainActivity.fragments.ttsFragment.viewModel.TTSFragmentViewModel
-import com.delet_dis.converta.presentation.views.bottomSheetView.BottomSheetView
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
 
-class TTSFragment : Fragment(), FragmentParentInterface, BottomSheetView.ParentFragmentCallback {
+class TTSFragment : Fragment(), FragmentParentInterface {
     private lateinit var binding: FragmentTtsBinding
 
     private lateinit var ttsFragmentViewModel: TTSFragmentViewModel
@@ -95,25 +94,5 @@ class TTSFragment : Fragment(), FragmentParentInterface, BottomSheetView.ParentF
             category: Category,
             phrase: Phrase
         )
-    }
-
-    override fun returnDataFromCategoryAdding(newCategoryName: String) {
-        ttsFragmentViewModel.addCategoryToDatabase(newCategoryName)
-    }
-
-    override fun returnDataFromCategoryEditing(category: Category, newCategoryName: String) {
-        ttsFragmentViewModel.renameCategoryInDatabase(category, newCategoryName)
-    }
-
-    override fun returnDataFromPhraseAdding(categoryToAdd: Category, newPhraseName: String) {
-        ttsFragmentViewModel.addPhraseToDatabaseByCategory(categoryToAdd, newPhraseName)
-    }
-
-    override fun returnDataFromPhraseEditing(
-        category: Category,
-        phrase: Phrase,
-        newPhraseName: String
-    ) {
-        ttsFragmentViewModel.renamePhraseInDatabase(category, phrase, newPhraseName)
     }
 }

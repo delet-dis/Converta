@@ -48,7 +48,7 @@ class DatabaseRepository(val context: Context) {
         }
 
     suspend fun renameCategory(category: Category, newCategoryName: String) {
-        getCategoryDao(context).insert(Category(newCategoryName, category.id))
+        getCategoryDao(context).insert(Category(newCategoryName.beautifyString(), category.id))
     }
 
     suspend fun addCategory(category: String) {
@@ -65,12 +65,12 @@ class DatabaseRepository(val context: Context) {
         getPhraseDao(context).getAllPhrasesByCategory(category.id)
 
     suspend fun addPhraseInCategory(category: Category, newPhraseName: String) =
-        getPhraseDao(context).insert(Phrase(newPhraseName, category.id))
+        getPhraseDao(context).insert(Phrase(newPhraseName.beautifyString(), category.id))
 
     suspend fun renamePhrase(category: Category, phrase: Phrase, newPhraseName: String) {
         getPhraseDao(context).insert(
             Phrase(
-                newPhraseName,
+                newPhraseName.beautifyString(),
                 category.id,
                 phrase.id
             )

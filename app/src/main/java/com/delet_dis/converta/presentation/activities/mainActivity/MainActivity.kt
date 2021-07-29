@@ -16,7 +16,7 @@ import com.delet_dis.converta.presentation.activities.mainActivity.fragments.tts
 import com.delet_dis.converta.presentation.activities.mainActivity.viewModel.MainActivityViewModel
 import com.delet_dis.converta.presentation.views.bottomSheetView.BottomSheetView
 
-class MainActivity : AppCompatActivity(), TTSFragment.ParentActivityCallback {
+class MainActivity : AppCompatActivity(), TTSFragment.ParentActivityCallback, BottomSheetView.ParentFragmentCallback {
     private lateinit var binding: ActivityMainBinding
 
     private lateinit var mainActivityViewModel: MainActivityViewModel
@@ -153,24 +153,24 @@ class MainActivity : AppCompatActivity(), TTSFragment.ParentActivityCallback {
 
 
     override fun displayBottomSheetForCategoryAdding(action: BottomSheetActionType) {
-        showBottomSheet()
         bottomSheetView.setUpBottomSheetInCategoryAddingMode(action)
+        showBottomSheet()
     }
 
     override fun displayBottomSheetForCategoryEditing(
         action: BottomSheetActionType,
         category: Category
     ) {
-        showBottomSheet()
         bottomSheetView.setUpBottomSheetInCategoryEditingMode(action, category)
+        showBottomSheet()
     }
 
     override fun displayBottomSheetForPhraseAdding(
         action: BottomSheetActionType,
         category: Category
     ) {
-        showBottomSheet()
         bottomSheetView.setUpBottomSheetInPhraseAddingMode(action, category)
+        showBottomSheet()
     }
 
     override fun displayBottomSheetForPhraseEditing(
@@ -178,7 +178,27 @@ class MainActivity : AppCompatActivity(), TTSFragment.ParentActivityCallback {
         category: Category,
         phrase: Phrase
     ) {
-        showBottomSheet()
         bottomSheetView.setUpBottomSheetInPhraseEditingMode(action, category, phrase)
+        showBottomSheet()
+    }
+
+    override fun returnDataFromCategoryAdding(newCategoryName: String) {
+        mainActivityViewModel.addCategoryToDatabase(newCategoryName)
+    }
+
+    override fun returnDataFromCategoryEditing(category: Category, newCategoryName: String) {
+        mainActivityViewModel.renameCategoryInDatabase(category, newCategoryName)
+    }
+
+    override fun returnDataFromPhraseAdding(categoryToAdd: Category, newPhraseName: String) {
+        mainActivityViewModel.addPhraseToDatabaseByCategory(categoryToAdd, newPhraseName)
+    }
+
+    override fun returnDataFromPhraseEditing(
+        category: Category,
+        phrase: Phrase,
+        newPhraseName: String
+    ) {
+        mainActivityViewModel.renamePhraseInDatabase(category, phrase, newPhraseName)
     }
 }
