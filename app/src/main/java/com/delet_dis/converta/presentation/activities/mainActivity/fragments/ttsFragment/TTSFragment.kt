@@ -5,19 +5,22 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.delet_dis.converta.R
 import com.delet_dis.converta.data.database.entities.Category
+import com.delet_dis.converta.data.database.entities.Phrase
 import com.delet_dis.converta.data.interfaces.FragmentParentInterface
 import com.delet_dis.converta.data.model.BottomSheetActionType
 import com.delet_dis.converta.databinding.FragmentTtsBinding
 import com.delet_dis.converta.presentation.activities.mainActivity.fragments.ttsFragment.recyclerViewAdapters.CategoriesPickingAdapter
 import com.delet_dis.converta.presentation.activities.mainActivity.fragments.ttsFragment.viewModel.TTSFragmentViewModel
+import com.delet_dis.converta.presentation.views.bottomSheetView.BottomSheetView
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
 
-class TTSFragment : Fragment(), FragmentParentInterface {
+class TTSFragment : Fragment(), FragmentParentInterface, BottomSheetView.ParentFragmentCallback {
     private lateinit var binding: FragmentTtsBinding
 
     private lateinit var ttsFragmentViewModel: TTSFragmentViewModel
@@ -68,29 +71,15 @@ class TTSFragment : Fragment(), FragmentParentInterface {
         ttsFragmentViewModel.categoriesRecordingsLiveData.observe(viewLifecycleOwner, { list ->
             binding.itemsBottomRecycler.adapter = CategoriesPickingAdapter(list,
                 { action, category ->
-                    handleBottomRecyclerViewCallback(action, category)
+                    Toast.makeText(requireContext(), category.name, Toast.LENGTH_SHORT).show()
+                },
+                { action, category ->
+                    parentActivityCallback.displayBottomSheetForCategoryEditing(action, category)
                 },
                 { action ->
-                    parentActivityCallback.displayBottomSheet(action, null)
+                    parentActivityCallback.displayBottomSheetForCategoryAdding(action)
                 })
         })
-    }
-
-    private fun handleBottomRecyclerViewCallback(
-        action: BottomSheetActionType,
-        category: Category
-    ) {
-        when (action) {
-            BottomSheetActionType.CATEGORY_EDITING -> parentActivityCallback.displayBottomSheet(
-                action, category
-            )
-
-            BottomSheetActionType.CATEGORY_PICKING -> parentActivityCallback.displayPhrasesByCategory(
-                category
-            )
-            else -> {
-            }
-        }
     }
 
     override fun getFragmentId(): Int {
@@ -98,7 +87,33 @@ class TTSFragment : Fragment(), FragmentParentInterface {
     }
 
     interface ParentActivityCallback {
-        fun displayBottomSheet(action: BottomSheetActionType, category: Category?)
-        fun displayPhrasesByCategory(category: Category)
+        fun displayBottomSheetForCategoryAdding(action: BottomSheetActionType)
+        fun displayBottomSheetForCategoryEditing(action: BottomSheetActionType, category: Category)
+        fun displayBottomSheetForPhraseAdding(action: BottomSheetActionType, category: Category)
+        fun displayBottomSheetForPhraseEditing(
+            action: BottomSheetActionType,
+            category: Category,
+            phrase: Phrase
+        )
+    }
+
+    override fun returnDataFromCategoryAdding(newCategoryName: String) {
+        ttsFragmentViewModel.addCategoryToDatabase(newCategoryName)
+    }
+
+    override fun returnDataFromCategoryEditing(category: Category, newCategoryName: String) {
+        ttsFragmentViewModel.renameCategoryInDatabase(category, newCategoryName)
+    }
+
+    override fun returnDataFromPhraseAdding(categoryToAdd: Category, newPhraseName: String) {
+        ttsFragmentViewModel.addPhraseToDatabaseByCategory(categoryToAdd, newPhraseName)
+    }
+
+    override fun returnDataFromPhraseEditing(
+        category: Category,
+        phrase: Phrase,
+        newPhraseName: String
+    ) {
+        ttsFragmentViewModel.renamePhraseInDatabase(category, phrase, newPhraseName)
     }
 }

@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.delet_dis.converta.R
 import com.delet_dis.converta.data.database.entities.Category
+import com.delet_dis.converta.data.database.entities.Phrase
 import com.delet_dis.converta.data.interfaces.FragmentParentInterface
 import com.delet_dis.converta.data.model.ApplicationMainModeType
 import com.delet_dis.converta.data.model.BottomSheetActionType
@@ -121,19 +122,18 @@ class MainActivity : AppCompatActivity(), TTSFragment.ParentActivityCallback {
     private fun displaySTTFragment() =
         hostFragment?.findNavController()?.navigate(R.id.action_TTSFragment_to_STTFragment)
 
-    private fun isTTSFragmentDisplaying(): Boolean {
-        return (hostFragment
-            ?.childFragmentManager
-            ?.primaryNavigationFragment as FragmentParentInterface)
-            .getFragmentId() == R.id.TTSFragment
-    }
+    private fun isTTSFragmentDisplaying(): Boolean = (hostFragment
+        ?.childFragmentManager
+        ?.primaryNavigationFragment as FragmentParentInterface)
+        .getFragmentId() == R.id.TTSFragment
 
-    private fun isSTTFragmentDisplaying(): Boolean {
-        return (hostFragment
+
+    private fun isSTTFragmentDisplaying(): Boolean =
+        (hostFragment
             ?.childFragmentManager
             ?.primaryNavigationFragment as FragmentParentInterface)
             .getFragmentId() == R.id.STTFragment
-    }
+
 
     private fun initActivityBackground() = with(binding.backgroundImage) {
         background = GradientDrawable(
@@ -148,34 +148,37 @@ class MainActivity : AppCompatActivity(), TTSFragment.ParentActivityCallback {
         )
     }
 
-    private fun showBottomSheet(actionType: BottomSheetActionType, category: Category?) {
+    private fun showBottomSheet() =
         bottomSheetView.show(supportFragmentManager, null)
-        bottomSheetView.actionType = actionType
 
-        when (actionType) {
-            BottomSheetActionType.CATEGORY_EDITING -> {
-                bottomSheetView.currentCategory = category
-                bottomSheetView.renameCategorySubmitButtonOnClickListener =
-                    ::renameCategoryInDatabase
-            }
-            BottomSheetActionType.CATEGORY_ADDING -> {
-                bottomSheetView.addCategorySubmitButtonOnClickListener = ::addCategoryToDatabase
-            }
-        }
+
+    override fun displayBottomSheetForCategoryAdding(action: BottomSheetActionType) {
+        showBottomSheet()
+        bottomSheetView.setUpBottomSheetInCategoryAddingMode(action)
     }
 
-    private fun addCategoryToDatabase(category: String) {
-        mainActivityViewModel.addCategoryToDatabase(category)
+    override fun displayBottomSheetForCategoryEditing(
+        action: BottomSheetActionType,
+        category: Category
+    ) {
+        showBottomSheet()
+        bottomSheetView.setUpBottomSheetInCategoryEditingMode(action, category)
     }
 
-    private fun renameCategoryInDatabase(category: Category, newCategoryName: String) {
-        mainActivityViewModel.renameCategoryInDatabase(category, newCategoryName)
+    override fun displayBottomSheetForPhraseAdding(
+        action: BottomSheetActionType,
+        category: Category
+    ) {
+        showBottomSheet()
+        bottomSheetView.setUpBottomSheetInPhraseAddingMode(action, category)
     }
 
-    override fun displayBottomSheet(action: BottomSheetActionType, category: Category?) {
-        showBottomSheet(action, category)
-    }
-
-    override fun displayPhrasesByCategory(category: Category) {
+    override fun displayBottomSheetForPhraseEditing(
+        action: BottomSheetActionType,
+        category: Category,
+        phrase: Phrase
+    ) {
+        showBottomSheet()
+        bottomSheetView.setUpBottomSheetInPhraseEditingMode(action, category, phrase)
     }
 }

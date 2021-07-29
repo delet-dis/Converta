@@ -5,6 +5,7 @@ import com.delet_dis.converta.data.database.PhrasesDatabase
 import com.delet_dis.converta.data.database.daos.CategoryDAO
 import com.delet_dis.converta.data.database.daos.PhraseDAO
 import com.delet_dis.converta.data.database.entities.Category
+import com.delet_dis.converta.data.database.entities.Phrase
 import com.delet_dis.converta.domain.extensions.beautifyString
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -60,4 +61,19 @@ class DatabaseRepository(val context: Context) {
         }
     }
 
+    fun getPhrasesByCategory(category: Category): Flow<List<Phrase>> =
+        getPhraseDao(context).getAllPhrasesByCategory(category.id)
+
+    suspend fun addPhraseInCategory(category: Category, newPhraseName: String) =
+        getPhraseDao(context).insert(Phrase(newPhraseName, category.id))
+
+    suspend fun renamePhrase(category: Category, phrase: Phrase, newPhraseName: String) {
+        getPhraseDao(context).insert(
+            Phrase(
+                newPhraseName,
+                category.id,
+                phrase.id
+            )
+        )
+    }
 }

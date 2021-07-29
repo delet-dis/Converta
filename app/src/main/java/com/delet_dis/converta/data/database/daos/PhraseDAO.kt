@@ -12,8 +12,10 @@ interface PhraseDAO {
     @Query("SELECT * FROM Phrase")
     fun getAllPhrasesAsFlow(): Flow<List<Phrase>>
 
+    @Query("SELECT * FROM Phrase WHERE associatedCategoryId = :categoryId")
+    fun getAllPhrasesByCategory(categoryId:Int):Flow<List<Phrase>>
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(phrase: Phrase)
 
     @Update
@@ -21,7 +23,4 @@ interface PhraseDAO {
 
     @Delete
     suspend fun delete(phrase: Phrase)
-
-    @Query("DELETE FROM phrase WHERE associatedCategoryId = :categoryId")
-    suspend fun removePhraseByCategoryId(categoryId: Int)
 }
