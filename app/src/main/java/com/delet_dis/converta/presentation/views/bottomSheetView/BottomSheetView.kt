@@ -23,7 +23,7 @@ class BottomSheetView : BottomSheetDialogFragment() {
 
     private lateinit var submitButtonOnClickListener: () -> Unit
 
-    private lateinit var editTextContent: String
+    private var editTextContent: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -60,8 +60,10 @@ class BottomSheetView : BottomSheetDialogFragment() {
             bottomSheetDialogCard.setOnClickListener {
             }
 
-            editText.doOnPreDraw {
-                editText.setText(editTextContent)
+            editTextContent?.let { text ->
+                editText.doOnPreDraw {
+                    editText.setText(text)
+                }
             }
 
             currentMode.text = currentAction.actionStringId?.let { requireContext().getString(it) }
@@ -76,6 +78,7 @@ class BottomSheetView : BottomSheetDialogFragment() {
         super.onDismiss(dialog)
 
         binding.editText.text.clear()
+        editTextContent = null
     }
 
     fun setUpBottomSheetInCategoryAddingMode(
@@ -151,7 +154,6 @@ class BottomSheetView : BottomSheetDialogFragment() {
 
     private fun afterSubmitOnClickActions() = with(binding) {
         dismiss()
-        editText.text.clear()
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
