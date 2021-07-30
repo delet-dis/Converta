@@ -81,7 +81,7 @@ class PhrasesPickingAdapter(
             }
 
             itemCard.setOnLongClickListener {
-                clickListenerForPhrase(BottomSheetActionType.PHRASE_EDITING, phrase)
+                longClickListenerForPhrase(BottomSheetActionType.PHRASE_EDITING, phrase)
                 true
             }
 

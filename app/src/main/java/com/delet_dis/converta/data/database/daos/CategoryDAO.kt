@@ -21,4 +21,7 @@ interface CategoryDAO {
 
     @Delete
     suspend fun delete(category: Category)
+
+    @Query("DELETE FROM Category WHERE id = :id")
+    suspend fun deleteById(id: Int)
 }

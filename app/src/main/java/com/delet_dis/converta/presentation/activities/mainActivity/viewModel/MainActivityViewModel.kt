@@ -43,4 +43,14 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         viewModelScope.launch(Dispatchers.IO) {
             DatabaseRepository(getApplication()).renamePhrase(category, phrase, newPhraseName)
         }
+
+    fun deletePhraseInDatabase(phrase: Phrase) =
+        viewModelScope.launch(Dispatchers.IO) {
+            DatabaseRepository(getApplication()).deletePhrase(phrase)
+        }
+
+    fun deleteCategoryInDatabase(category: Category) =
+        viewModelScope.launch(Dispatchers.IO) {
+            DatabaseRepository(getApplication()).deleteCategory(category)
+        }
 }

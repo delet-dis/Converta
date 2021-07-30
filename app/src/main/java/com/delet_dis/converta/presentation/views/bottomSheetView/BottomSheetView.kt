@@ -25,6 +25,10 @@ class BottomSheetView : BottomSheetDialogFragment() {
 
     private var editTextContent: String? = null
 
+    private var isDeleteButtonVisible: Boolean? = null
+
+    private var deleteButtonOnClickListener: (() -> Unit)? = null
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -71,6 +75,21 @@ class BottomSheetView : BottomSheetDialogFragment() {
             submitButton.setOnClickListener {
                 submitButtonOnClickListener.invoke()
             }
+
+            isDeleteButtonVisible?.let {
+                deleteButton.visibility = if (it) {
+                    View.VISIBLE
+                } else {
+                    View.INVISIBLE
+                }
+            }
+
+            deleteButtonOnClickListener?.let { onClick ->
+                deleteButton.setOnClickListener {
+                    onClick.invoke()
+                    dismiss()
+                }
+            }
         }
     }
 
@@ -90,6 +109,8 @@ class BottomSheetView : BottomSheetDialogFragment() {
             parentFragmentCallback.returnDataFromCategoryAdding(getTextFromEditText())
             afterSubmitOnClickActions()
         }
+
+        isDeleteButtonVisible(false)
     }
 
     fun setUpBottomSheetInCategoryEditingMode(action: BottomSheetActionType, category: Category) {
@@ -103,6 +124,11 @@ class BottomSheetView : BottomSheetDialogFragment() {
             )
             afterSubmitOnClickActions()
         }
+
+        isDeleteButtonVisible(true)
+        setDeleteButtonOnClickListener {
+            parentFragmentCallback.returnCategoryForDeleting(category)
+        }
     }
 
     fun setUpBottomSheetInPhraseAddingMode(action: BottomSheetActionType, categoryToAdd: Category) {
@@ -115,6 +141,8 @@ class BottomSheetView : BottomSheetDialogFragment() {
             )
             afterSubmitOnClickActions()
         }
+
+        isDeleteButtonVisible(false)
     }
 
     fun setUpBottomSheetInPhraseEditingMode(
@@ -134,6 +162,18 @@ class BottomSheetView : BottomSheetDialogFragment() {
             afterSubmitOnClickActions()
         }
 
+        isDeleteButtonVisible(true)
+        setDeleteButtonOnClickListener {
+            parentFragmentCallback.returnPhraseForDeleting(phrase)
+        }
+    }
+
+    private fun isDeleteButtonVisible(isVisible: Boolean) {
+        isDeleteButtonVisible = isVisible
+    }
+
+    private fun setDeleteButtonOnClickListener(function: () -> Unit) {
+        deleteButtonOnClickListener = function
     }
 
     private fun setSubmitButtonOnClickListener(function: () -> Unit) {
@@ -152,7 +192,7 @@ class BottomSheetView : BottomSheetDialogFragment() {
         editText.text.toString()
     }
 
-    private fun afterSubmitOnClickActions() = with(binding) {
+    private fun afterSubmitOnClickActions() {
         dismiss()
     }
 
@@ -166,5 +206,7 @@ class BottomSheetView : BottomSheetDialogFragment() {
         fun returnDataFromCategoryEditing(category: Category, newCategoryName: String)
         fun returnDataFromPhraseAdding(categoryToAdd: Category, newPhraseName: String)
         fun returnDataFromPhraseEditing(category: Category, phrase: Phrase, newPhraseName: String)
+        fun returnCategoryForDeleting(category: Category)
+        fun returnPhraseForDeleting(phrase: Phrase)
     }
 }

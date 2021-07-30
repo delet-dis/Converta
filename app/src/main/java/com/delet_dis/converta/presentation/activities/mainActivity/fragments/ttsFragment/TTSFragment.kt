@@ -68,7 +68,8 @@ class TTSFragment : Fragment(), FragmentParentInterface {
 
 
     private fun displayCategoriesRecordings() {
-        binding.currentBottomRecyclerDisplayingMode.text = requireContext().getString(R.string.TTSTitle)
+        binding.currentBottomRecyclerDisplayingMode.text =
+            requireContext().getString(R.string.phrasesCategoriesModeDisplayingText)
 
         ttsFragmentViewModel.categoriesRecordingsLiveData.observe(viewLifecycleOwner, { list ->
             binding.itemsBottomRecycler.adapter = CategoriesPickingAdapter(list,

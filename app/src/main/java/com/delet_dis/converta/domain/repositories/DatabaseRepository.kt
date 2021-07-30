@@ -47,9 +47,8 @@ class DatabaseRepository(val context: Context) {
             it
         }
 
-    suspend fun renameCategory(category: Category, newCategoryName: String) {
+    suspend fun renameCategory(category: Category, newCategoryName: String) =
         getCategoryDao(context).insert(Category(newCategoryName.beautifyString(), category.id))
-    }
 
     suspend fun addCategory(category: String) {
         if (category.isNotBlank() and category.isNotEmpty()) {
@@ -67,7 +66,7 @@ class DatabaseRepository(val context: Context) {
     suspend fun addPhraseInCategory(category: Category, newPhraseName: String) =
         getPhraseDao(context).insert(Phrase(newPhraseName.beautifyString(), category.id))
 
-    suspend fun renamePhrase(category: Category, phrase: Phrase, newPhraseName: String) {
+    suspend fun renamePhrase(category: Category, phrase: Phrase, newPhraseName: String) =
         getPhraseDao(context).insert(
             Phrase(
                 newPhraseName.beautifyString(),
@@ -75,5 +74,20 @@ class DatabaseRepository(val context: Context) {
                 phrase.id
             )
         )
+
+    suspend fun deleteCategory(category: Category) {
+        deletePhrasesByCategory(category)
+        getCategoryDao(context).deleteById(category.id)
+    }
+
+    suspend fun deletePhrase(phrase: Phrase) =
+        getPhraseDao(context).deleteById(phrase.id)
+
+    private fun deletePhrasesByCategory(category: Category) {
+        getPhrasesByCategory(category).map {
+            it.forEach { phrase ->
+                deletePhrase(phrase)
+            }
+        }
     }
 }

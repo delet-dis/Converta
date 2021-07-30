@@ -16,7 +16,8 @@ import com.delet_dis.converta.presentation.activities.mainActivity.fragments.tts
 import com.delet_dis.converta.presentation.activities.mainActivity.viewModel.MainActivityViewModel
 import com.delet_dis.converta.presentation.views.bottomSheetView.BottomSheetView
 
-class MainActivity : AppCompatActivity(), TTSFragment.ParentActivityCallback, BottomSheetView.ParentFragmentCallback {
+class MainActivity : AppCompatActivity(), TTSFragment.ParentActivityCallback,
+    BottomSheetView.ParentFragmentCallback {
     private lateinit var binding: ActivityMainBinding
 
     private lateinit var mainActivityViewModel: MainActivityViewModel
@@ -200,5 +201,13 @@ class MainActivity : AppCompatActivity(), TTSFragment.ParentActivityCallback, Bo
         newPhraseName: String
     ) {
         mainActivityViewModel.renamePhraseInDatabase(category, phrase, newPhraseName)
+    }
+
+    override fun returnCategoryForDeleting(category: Category) {
+        mainActivityViewModel.deleteCategoryInDatabase(category)
+    }
+
+    override fun returnPhraseForDeleting(phrase: Phrase) {
+        mainActivityViewModel.deletePhraseInDatabase(phrase)
     }
 }
