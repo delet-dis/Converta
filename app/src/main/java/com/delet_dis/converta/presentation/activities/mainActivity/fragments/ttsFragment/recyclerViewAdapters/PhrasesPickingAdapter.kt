@@ -7,9 +7,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.delet_dis.converta.R
 import com.delet_dis.converta.data.database.entities.Phrase
 import com.delet_dis.converta.data.model.BottomSheetActionType
+import com.delet_dis.converta.databinding.RecyclerViewAddButtonBinding
+import com.delet_dis.converta.databinding.RecyclerViewBackButtonBinding
 import com.delet_dis.converta.databinding.RecyclerViewBottomListItemBinding
-import com.delet_dis.converta.databinding.ViewAddButtonBinding
-import com.delet_dis.converta.databinding.ViewBackButtonBinding
 
 
 class PhrasesPickingAdapter(
@@ -57,7 +57,7 @@ class PhrasesPickingAdapter(
         }
 
     private inner class BackButtonHolder(private val view: View) : RecyclerView.ViewHolder(view) {
-        fun bindBackButton() = with(ViewBackButtonBinding.bind(view)) {
+        fun bindBackButton() = with(RecyclerViewBackButtonBinding.bind(view)) {
             backButton.setOnClickListener {
                 clickListenerForBackButton()
             }
@@ -65,7 +65,7 @@ class PhrasesPickingAdapter(
     }
 
     private inner class AddButtonHolder(private val view: View) : RecyclerView.ViewHolder(view) {
-        fun bindAddButton() = with(ViewAddButtonBinding.bind(view)) {
+        fun bindAddButton() = with(RecyclerViewAddButtonBinding.bind(view)) {
             addButton.setOnClickListener {
                 clickListenerForAddButton(BottomSheetActionType.PHRASE_ADDING)
             }

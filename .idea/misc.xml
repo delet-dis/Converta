@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/delet-dis/Documents/projects/Android/Converta/app/src/main/res/drawable-v24/ic_discard_white.xml" value="0.3175925925925926" />
         <entry key="..\:/Users/delet-dis/Documents/projects/Android/Converta/app/src/main/res/drawable/ic_discard.xml" value="0.3194444444444444" />
         <entry key="..\:/Users/delet-dis/Documents/projects/Android/Converta/app/src/main/res/drawable/ic_submit.xml" value="0.3194444444444444" />
         <entry key="..\:/Users/delet-dis/Documents/projects/Android/Converta/app/src/main/res/drawable/ic_trash.xml" value="0.3194444444444444" />
@@ -14,8 +15,10 @@
         <entry key="..\:/Users/delet-dis/Documents/projects/Android/Converta/app/src/main/res/layout/fragment_stt.xml" value="0.3625" />
         <entry key="..\:/Users/delet-dis/Documents/projects/Android/Converta/app/src/main/res/layout/fragment_tts.xml" value="0.34692028985507245" />
         <entry key="..\:/Users/delet-dis/Documents/projects/Android/Converta/app/src/main/res/layout/recycler_view_bottom_list_item.xml" value="0.3625" />
+        <entry key="..\:/Users/delet-dis/Documents/projects/Android/Converta/app/src/main/res/layout/recycler_view_picked_phrases_list_item.xml" value="0.3605072463768116" />
         <entry key="..\:/Users/delet-dis/Documents/projects/Android/Converta/app/src/main/res/layout/view_add_button.xml" value="0.3625" />
         <entry key="..\:/Users/delet-dis/Documents/projects/Android/Converta/app/src/main/res/layout/view_bottom_sheet.xml" value="0.3625" />
+        <entry key="..\:/Users/delet-dis/Documents/projects/Android/Converta/app/src/main/res/layout/view_picked_phrases_card.xml" value="0.5" />
       </map>
     </option>
   </component>

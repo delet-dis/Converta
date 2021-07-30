@@ -13,7 +13,7 @@ interface CategoryDAO {
     fun getAllCategoriesAsFlow(): Flow<List<Category>>
 
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(category: Category)
 
     @Update

@@ -75,14 +75,14 @@
                     android:id="@+id/discardButton"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:src="@drawable/ic_discard"
+                    android:src="@drawable/ic_discard_orange"
                     android:background="@null"
-                    android:layout_marginTop="10dp"
                     android:padding="5dp"
-                    android:layout_marginEnd="10dp"
                     android:contentDescription="@string/discardButtonContentDescription"
                     android:minWidth="48dp"
-                    android:minHeight="48dp" />
+                    android:minHeight="48dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp" />
 
             <ImageButton
                     android:layout_width="wrap_content"
@@ -92,12 +92,12 @@
                     android:src="@drawable/ic_submit"
                     android:background="@null"
                     android:padding="5dp"
-                    android:layout_marginEnd="10dp"
                     android:contentDescription="@string/submitButtonContentDescription"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    android:layout_marginBottom="10dp"
                     android:minWidth="48dp"
-                    android:minHeight="48dp" />
+                    android:minHeight="48dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="5dp" />
 
             <ImageButton
                     android:layout_width="wrap_content"
@@ -108,12 +108,12 @@
                     android:padding="5dp"
                     android:contentDescription="@string/deleteButtonContentDescription"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    android:layout_marginBottom="10dp"
                     android:minWidth="48dp"
                     android:minHeight="48dp"
                     app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginStart="10dp"
-                    android:visibility="invisible" />
+                    android:visibility="invisible"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginBottom="5dp" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

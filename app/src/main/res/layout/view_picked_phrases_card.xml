@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <androidx.cardview.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            app:cardElevation="5dp"
+            app:cardCornerRadius="16dp">
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/submitButton"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:src="@drawable/ic_submit"
+                    android:background="@null"
+                    android:padding="5dp"
+                    android:contentDescription="@string/submitButtonContentDescription"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:minWidth="48dp"
+                    android:minHeight="48dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginEnd="5dp" />
+
+            <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/discardButton"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:src="@drawable/ic_discard_orange"
+                    android:background="@null"
+                    android:padding="5dp"
+                    android:contentDescription="@string/discardButtonContentDescription"
+                    android:minWidth="48dp"
+                    android:minHeight="48dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp" />
+
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                    android:progress="60"
+                    app:trackCornerRadius="5dp"
+                    app:trackThickness="2dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginBottom="15dp"
+                    app:indicatorSize="20dp"
+                    android:id="@+id/progressIndicator"
+                    android:visibility="invisible" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintEnd_toStartOf="@+id/discardButton"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginStart="10dp"
+                    android:id="@+id/itemsRecyclerView" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>
