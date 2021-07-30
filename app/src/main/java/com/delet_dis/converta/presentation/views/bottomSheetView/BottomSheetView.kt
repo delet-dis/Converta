@@ -17,7 +17,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 class BottomSheetView : BottomSheetDialogFragment() {
     private lateinit var binding: ViewBottomSheetBinding
 
-    private lateinit var parentFragmentCallback: ParentFragmentCallback
+    private lateinit var parentActivityCallback: ParentActivityCallback
 
     private lateinit var currentAction: BottomSheetActionType
 
@@ -37,7 +37,7 @@ class BottomSheetView : BottomSheetDialogFragment() {
         return if (savedInstanceState == null) {
             binding = ViewBottomSheetBinding.inflate(layoutInflater)
 
-            parentFragmentCallback = context as ParentFragmentCallback
+            parentActivityCallback = context as ParentActivityCallback
 
             binding.root
         } else {
@@ -106,7 +106,7 @@ class BottomSheetView : BottomSheetDialogFragment() {
         setUpCurrentModeByAction(action)
 
         setSubmitButtonOnClickListener {
-            parentFragmentCallback.returnDataFromCategoryAdding(getTextFromEditText())
+            parentActivityCallback.returnDataFromCategoryAdding(getTextFromEditText())
             afterSubmitOnClickActions()
         }
 
@@ -118,7 +118,7 @@ class BottomSheetView : BottomSheetDialogFragment() {
         category.name?.let { setEditTextContent(it) }
 
         setSubmitButtonOnClickListener {
-            parentFragmentCallback.returnDataFromCategoryEditing(
+            parentActivityCallback.returnDataFromCategoryEditing(
                 category,
                 getTextFromEditText()
             )
@@ -127,7 +127,7 @@ class BottomSheetView : BottomSheetDialogFragment() {
 
         isDeleteButtonVisible(true)
         setDeleteButtonOnClickListener {
-            parentFragmentCallback.returnCategoryForDeleting(category)
+            parentActivityCallback.returnCategoryForDeleting(category)
         }
     }
 
@@ -135,7 +135,7 @@ class BottomSheetView : BottomSheetDialogFragment() {
         setUpCurrentModeByAction(action)
 
         setSubmitButtonOnClickListener {
-            parentFragmentCallback.returnDataFromPhraseAdding(
+            parentActivityCallback.returnDataFromPhraseAdding(
                 categoryToAdd,
                 getTextFromEditText()
             )
@@ -154,7 +154,7 @@ class BottomSheetView : BottomSheetDialogFragment() {
         phrase.name?.let { setEditTextContent(it) }
 
         setSubmitButtonOnClickListener {
-            parentFragmentCallback.returnDataFromPhraseEditing(
+            parentActivityCallback.returnDataFromPhraseEditing(
                 category,
                 phrase,
                 getTextFromEditText()
@@ -164,7 +164,7 @@ class BottomSheetView : BottomSheetDialogFragment() {
 
         isDeleteButtonVisible(true)
         setDeleteButtonOnClickListener {
-            parentFragmentCallback.returnPhraseForDeleting(phrase)
+            parentActivityCallback.returnPhraseForDeleting(phrase)
         }
     }
 
@@ -201,7 +201,7 @@ class BottomSheetView : BottomSheetDialogFragment() {
         return super.onCreateDialog(savedInstanceState)
     }
 
-    interface ParentFragmentCallback {
+    interface ParentActivityCallback {
         fun returnDataFromCategoryAdding(newCategoryName: String)
         fun returnDataFromCategoryEditing(category: Category, newCategoryName: String)
         fun returnDataFromPhraseAdding(categoryToAdd: Category, newPhraseName: String)

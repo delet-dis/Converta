@@ -14,7 +14,7 @@ import com.delet_dis.converta.databinding.RecyclerViewBottomListItemBinding
 
 class PhrasesPickingAdapter(
     private val values: MutableList<Phrase>,
-    val clickListenerForPhrase: (BottomSheetActionType, Phrase) -> Unit,
+    val clickListenerForPhrase: (Phrase) -> Unit,
     val longClickListenerForPhrase: (BottomSheetActionType, Phrase) -> Unit,
     val clickListenerForAddButton: (BottomSheetActionType) -> Unit,
     val clickListenerForBackButton: () -> Unit
@@ -77,7 +77,7 @@ class PhrasesPickingAdapter(
             RecyclerViewBottomListItemBinding.bind(view)
         ) {
             itemCard.setOnClickListener {
-                clickListenerForPhrase(BottomSheetActionType.PHRASE_PICKING, phrase)
+                clickListenerForPhrase(phrase)
             }
 
             itemCard.setOnLongClickListener {

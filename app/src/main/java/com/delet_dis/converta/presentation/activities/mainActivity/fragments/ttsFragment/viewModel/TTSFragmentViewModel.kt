@@ -21,6 +21,12 @@ class TTSFragmentViewModel(application: Application) : AndroidViewModel(applicat
     val phrasesInCategoryRecordingsLiveData: LiveData<MutableList<Phrase>>
         get() = _phrasesInCategoryRecordingsLiveData
 
+    private val _pickedPhrasesLiveData = MutableLiveData<MutableList<Phrase>>()
+    val pickedPhrasesLiveData: LiveData<MutableList<Phrase>>
+        get() = _pickedPhrasesLiveData
+
+    private val _pickedPhrasesList = ArrayList<Phrase>()
+
     init {
         loadCategoriesRecordings()
     }
@@ -38,6 +44,20 @@ class TTSFragmentViewModel(application: Application) : AndroidViewModel(applicat
             DatabaseRepository(getApplication()).getPhrasesByCategory(category).collect {
                 _phrasesInCategoryRecordingsLiveData.postValue(it.toMutableList())
             }
+        }
+    }
+
+    fun addPickedPhraseRecording(phrase: Phrase) {
+        viewModelScope.launch(Dispatchers.IO) {
+            _pickedPhrasesList.add(phrase)
+            _pickedPhrasesLiveData.postValue(_pickedPhrasesList)
+        }
+    }
+
+    fun deletePhraseFromListOfPicked(phrase: Phrase) {
+        viewModelScope.launch(Dispatchers.IO) {
+            _pickedPhrasesList.remove(phrase)
+            _pickedPhrasesLiveData.postValue(_pickedPhrasesList)
         }
     }
 }

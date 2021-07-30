@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.delet_dis.converta.R
 import com.delet_dis.converta.data.database.entities.Category
@@ -55,6 +54,8 @@ class TTSFragment : Fragment(), FragmentParentInterface {
         initBottomListRecycler()
 
         displayCategoriesRecordings()
+
+        initPickedPhrasesObserver()
     }
 
     private fun initBottomListRecycler() = with(binding) {
@@ -66,6 +67,11 @@ class TTSFragment : Fragment(), FragmentParentInterface {
         itemsBottomRecycler.layoutManager = layoutManager
     }
 
+    private fun initPickedPhrasesObserver() =
+        ttsFragmentViewModel.pickedPhrasesLiveData.observe(viewLifecycleOwner, {
+            binding.pickedPhrasesCardView.pickedPhrases = it as ArrayList<Phrase>
+            binding.pickedPhrasesCardView.phrasesFromPickedListDeleteFunction = ::deletePhraseFromListOfPicked
+        })
 
     private fun displayCategoriesRecordings() {
         binding.currentBottomRecyclerDisplayingMode.text =
@@ -93,8 +99,8 @@ class TTSFragment : Fragment(), FragmentParentInterface {
         ttsFragmentViewModel.phrasesInCategoryRecordingsLiveData.observe(viewLifecycleOwner,
             { list ->
                 binding.itemsBottomRecycler.adapter = PhrasesPickingAdapter(list,
-                    { action, phrase ->
-                        Toast.makeText(requireContext(), phrase.name, Toast.LENGTH_SHORT).show()
+                    { phrase ->
+                        ttsFragmentViewModel.addPickedPhraseRecording(phrase)
                     },
                     { action, phrase ->
                         parentActivityCallback.displayBottomSheetForPhraseEditing(
@@ -128,5 +134,9 @@ class TTSFragment : Fragment(), FragmentParentInterface {
             category: Category,
             phrase: Phrase
         )
+    }
+
+    private fun deletePhraseFromListOfPicked(phrase: Phrase) {
+        ttsFragmentViewModel.deletePhraseFromListOfPicked(phrase)
     }
 }

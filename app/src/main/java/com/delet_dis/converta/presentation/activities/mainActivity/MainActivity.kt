@@ -17,7 +17,7 @@ import com.delet_dis.converta.presentation.activities.mainActivity.viewModel.Mai
 import com.delet_dis.converta.presentation.views.bottomSheetView.BottomSheetView
 
 class MainActivity : AppCompatActivity(), TTSFragment.ParentActivityCallback,
-    BottomSheetView.ParentFragmentCallback {
+    BottomSheetView.ParentActivityCallback {
     private lateinit var binding: ActivityMainBinding
 
     private lateinit var mainActivityViewModel: MainActivityViewModel
