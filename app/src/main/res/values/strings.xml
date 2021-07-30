@@ -12,12 +12,13 @@
     <string name="TTSTitle">Speaking mode</string>
     <string name="phrasesCategoriesModeDisplayingText">Saved categories</string>
     <string name="phrasesModeDisplayingText">Saved phrases</string>
-    <string name="addButtonContentDescription">Add button icon</string>
+    <string name="addButtonContentDescription">Add icon</string>
     <string name="phraseEditingMode">Phrase editing</string>
     <string name="categoryEditingMode">Category editing</string>
     <string name="phraseAddingMode">Phrase adding</string>
     <string name="categoryAddingMode">Category adding</string>
     <string name="editTextHint">Enter text</string>
-    <string name="discardButtonContentDescription">Discard button</string>
-    <string name="submitButtonContentDescription">Submit button</string>
+    <string name="discardButtonContentDescription">Discard</string>
+    <string name="submitButtonContentDescription">Submit</string>
+    <string name="deleteButtonContentDescription">Delete</string>
 </resources>

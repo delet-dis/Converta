@@ -3,7 +3,19 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/delet-dis/Documents/projects/Android/Converta/app/src/main/res/drawable/ic_discard.xml" value="0.3194444444444444" />
+        <entry key="..\:/Users/delet-dis/Documents/projects/Android/Converta/app/src/main/res/drawable/ic_submit.xml" value="0.3194444444444444" />
+        <entry key="..\:/Users/delet-dis/Documents/projects/Android/Converta/app/src/main/res/drawable/ic_trash.xml" value="0.3194444444444444" />
+        <entry key="..\:/Users/delet-dis/Documents/projects/Android/Converta/app/src/main/res/layout/activity_main.xml" value="0.1762917933130699" />
+        <entry key="..\:/Users/delet-dis/Documents/projects/Android/Converta/app/src/main/res/layout/activity_onboarding.xml" value="0.1762917933130699" />
+        <entry key="..\:/Users/delet-dis/Documents/projects/Android/Converta/app/src/main/res/layout/fragment_communication_language_chooser.xml" value="0.3625" />
+        <entry key="..\:/Users/delet-dis/Documents/projects/Android/Converta/app/src/main/res/layout/fragment_hello.xml" value="0.3625" />
+        <entry key="..\:/Users/delet-dis/Documents/projects/Android/Converta/app/src/main/res/layout/fragment_preferred_mode_chooser.xml" value="0.1762917933130699" />
+        <entry key="..\:/Users/delet-dis/Documents/projects/Android/Converta/app/src/main/res/layout/fragment_stt.xml" value="0.3625" />
         <entry key="..\:/Users/delet-dis/Documents/projects/Android/Converta/app/src/main/res/layout/fragment_tts.xml" value="0.34692028985507245" />
+        <entry key="..\:/Users/delet-dis/Documents/projects/Android/Converta/app/src/main/res/layout/recycler_view_bottom_list_item.xml" value="0.3625" />
+        <entry key="..\:/Users/delet-dis/Documents/projects/Android/Converta/app/src/main/res/layout/view_add_button.xml" value="0.3625" />
+        <entry key="..\:/Users/delet-dis/Documents/projects/Android/Converta/app/src/main/res/layout/view_bottom_sheet.xml" value="0.3625" />
       </map>
     </option>
   </component>
