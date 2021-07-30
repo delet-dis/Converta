@@ -24,7 +24,7 @@ class PhrasesPickingAdapter(
             0 -> BackButtonHolder(
                 LayoutInflater.from(parent.context)
                     .inflate(
-                        R.layout.view_back_button,
+                        R.layout.recycler_view_back_button,
                         parent,
                         false
                     )
@@ -32,7 +32,7 @@ class PhrasesPickingAdapter(
             1 -> AddButtonHolder(
                 LayoutInflater.from(parent.context)
                     .inflate(
-                        R.layout.view_add_button,
+                        R.layout.recycler_view_add_button,
                         parent,
                         false
                     )

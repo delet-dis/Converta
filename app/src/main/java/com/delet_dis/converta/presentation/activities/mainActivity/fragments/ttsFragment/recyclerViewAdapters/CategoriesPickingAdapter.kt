@@ -24,7 +24,7 @@ class CategoriesPickingAdapter(
                 AddButtonHolder(
                     LayoutInflater.from(parent.context)
                         .inflate(
-                            R.layout.view_add_button,
+                            R.layout.recycler_view_add_button,
                             parent,
                             false
                         )
