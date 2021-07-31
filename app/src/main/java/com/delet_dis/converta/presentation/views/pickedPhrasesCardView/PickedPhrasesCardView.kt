@@ -24,9 +24,11 @@ class PickedPhrasesCardView @JvmOverloads constructor(
 
     private val pickedPhrasesCardViewViewModel: PickedPhrasesCardViewViewModel
 
-    var phrasesFromPickedListDeleteFunction: KFunction1<Phrase, Unit>? = null
+    var deletePhraseFromListOfPicked: KFunction1<Phrase, Unit>? = null
 
-    var phrasesFromPickedListDeleteAllFunction: (() -> Unit)? = null
+    var deleteAllPhrasesFromListOfPicked: (() -> Unit)? = null
+
+    var addPhraseToListOfPicked: KFunction1<Phrase, Unit>? = null
 
     var pickedPhrases = ArrayList<Phrase>()
         set(value) = setPickedPhrasesList(value)
@@ -56,10 +58,10 @@ class PickedPhrasesCardView @JvmOverloads constructor(
     private fun setPickedPhrasesList(list: ArrayList<Phrase>) = with(binding) {
         itemsRecyclerView.adapter = PickedPhrasesRecyclerViewAdapter(list,
             {
-                phrasesFromPickedListDeleteFunction?.invoke(it)
+                deletePhraseFromListOfPicked?.invoke(it)
             },
             {
-
+                addPhraseToListOfPicked?.invoke(it)
             }
         )
 
@@ -85,7 +87,7 @@ class PickedPhrasesCardView @JvmOverloads constructor(
     private fun initDiscardButtonOnClickListener() =
         with(binding) {
             discardButton.setOnClickListener {
-                phrasesFromPickedListDeleteAllFunction?.invoke()
+                deleteAllPhrasesFromListOfPicked?.invoke()
             }
         }
 

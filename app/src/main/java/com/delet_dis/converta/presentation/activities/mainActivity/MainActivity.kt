@@ -97,6 +97,10 @@ class MainActivity : AppCompatActivity(), TTSFragment.ParentActivityCallback,
         }
     }
 
+    override fun onBackPressed() {
+        finish()
+    }
+
     private fun translationToBlueState(): Boolean {
         binding.rootView.transitionToState(R.id.backgroundImageInMainGoToBlue)
 

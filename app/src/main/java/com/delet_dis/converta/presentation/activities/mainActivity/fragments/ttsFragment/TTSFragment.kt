@@ -70,11 +70,15 @@ class TTSFragment : Fragment(), FragmentParentInterface {
     }
 
     private fun initPickedPhrasesObserver() = with(binding) {
+        pickedPhrasesCardView.apply {
+            deletePhraseFromListOfPicked = ::deletePhraseFromListOfPicked
+            deleteAllPhrasesFromListOfPicked = { deleteAllPhrasesFromListOfPicked() }
+            addPhraseToListOfPicked = ::addPhraseToListOfPicked
+        }
+
         ttsFragmentViewModel.pickedPhrasesLiveData.observe(viewLifecycleOwner, {
             pickedPhrasesCardView.apply {
                 pickedPhrases = it as ArrayList<Phrase>
-                phrasesFromPickedListDeleteFunction = ::deletePhraseFromListOfPicked
-                phrasesFromPickedListDeleteAllFunction = { deleteAllPhrasesFromListOfPicked() }
             }
         })
     }
@@ -142,11 +146,12 @@ class TTSFragment : Fragment(), FragmentParentInterface {
         )
     }
 
-    private fun deletePhraseFromListOfPicked(phrase: Phrase) {
+    private fun deletePhraseFromListOfPicked(phrase: Phrase) =
         ttsFragmentViewModel.deletePhraseFromListOfPicked(phrase)
-    }
 
-    private fun deleteAllPhrasesFromListOfPicked() {
+    private fun deleteAllPhrasesFromListOfPicked() =
         ttsFragmentViewModel.deleteAllPhrasesFromListOfPicked()
-    }
+
+    private fun addPhraseToListOfPicked(phrase: Phrase) =
+        ttsFragmentViewModel.addPhraseToListOfPicked(phrase)
 }

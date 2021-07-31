@@ -1,11 +1,9 @@
 package com.delet_dis.converta.presentation.views.pickedPhrasesCardView.recyclerViewAdapters
 
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import android.view.inputmethod.EditorInfo
 import androidx.recyclerview.widget.RecyclerView
 import com.delet_dis.converta.R
 import com.delet_dis.converta.data.database.entities.Phrase
@@ -14,8 +12,8 @@ import com.delet_dis.converta.databinding.RecyclerViewPickedPhrasesListItemBindi
 
 class PickedPhrasesRecyclerViewAdapter(
     private val values: MutableList<Phrase>,
-    val clickListener: (Phrase) -> Unit,
-    val addToPickedPhrasesFunction: (Phrase) -> Unit
+    val deletePhraseClickListener: (Phrase) -> Unit,
+    val addPhraseClickListener: (Phrase) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(
@@ -68,7 +66,7 @@ class PickedPhrasesRecyclerViewAdapter(
             itemText.text = phrase.name
 
             itemCard.setOnClickListener {
-                clickListener.invoke(phrase)
+                deletePhraseClickListener.invoke(phrase)
             }
         }
     }
@@ -77,8 +75,26 @@ class PickedPhrasesRecyclerViewAdapter(
         private val binding: RecyclerViewNewPhraseListItemBinding =
             RecyclerViewNewPhraseListItemBinding.bind(view)
 
-        fun bind() = with(binding) {
-            itemText.setOnFocusChangeListener { v, hasFocus ->
+        fun bind() {
+            initOnFocusChangeListener()
+
+            initOnDoneListener()
+        }
+
+        private fun initOnDoneListener() = with(binding) {
+            itemText.setOnEditorActionListener { _, actionId, _ ->
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    splitAndAddToPickedPhrasesString(itemText.text.toString())
+                }
+
+                itemText.clearFocus()
+
+                true
+            }
+        }
+
+        private fun initOnFocusChangeListener() = with(binding) {
+            itemText.setOnFocusChangeListener { _, hasFocus ->
                 itemCard.apply {
                     alpha = if (hasFocus) {
                         1f
@@ -87,30 +103,31 @@ class PickedPhrasesRecyclerViewAdapter(
                     }
                 }
             }
+        }
 
-            itemText.addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(
-                    s: CharSequence?,
-                    start: Int,
-                    count: Int,
-                    after: Int
-                ) {
-                }
+        private fun splitAndAddToPickedPhrasesString(string: CharSequence?) {
+            if (string.toString().contains(" ")) {
+                val splittedString = string?.split(" ")
 
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                    if (s.toString().contains(" ")) {
-                        Toast.makeText(
-                            binding.root.context,
-                            s?.split(" ")?.get(0),
-                            Toast.LENGTH_SHORT
-                        ).show()
+                splittedString?.forEach {
+                    if (it.isNotEmpty()) {
+                        if (it.contains(",") or it.contains(".")) {
+                            if (it.contains(",")) {
+                                addPhraseClickListener.invoke(Phrase(it.split(",")[0]))
+                                addPhraseClickListener.invoke(Phrase(","))
+                            }
+                            if (it.contains(".")) {
+                                addPhraseClickListener.invoke(Phrase(it.split(".")[0]))
+                                addPhraseClickListener.invoke(Phrase("."))
+                            }
+                        } else {
+                            addPhraseClickListener.invoke(Phrase(it))
+                        }
                     }
                 }
-
-                override fun afterTextChanged(s: Editable?) {
-                }
+            } else if (!string.isNullOrEmpty()) {
+                addPhraseClickListener.invoke(Phrase(string.toString()))
             }
-            )
         }
     }
 }

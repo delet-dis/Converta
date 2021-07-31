@@ -67,4 +67,11 @@ class TTSFragmentViewModel(application: Application) : AndroidViewModel(applicat
             _pickedPhrasesLiveData.postValue(_pickedPhrasesList)
         }
     }
+
+    fun addPhraseToListOfPicked(phrase: Phrase) {
+        viewModelScope.launch(Dispatchers.IO) {
+            _pickedPhrasesList.add(phrase)
+            _pickedPhrasesLiveData.postValue(_pickedPhrasesList)
+        }
+    }
 }
