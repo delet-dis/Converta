@@ -51,11 +51,13 @@ class TTSFragment : Fragment(), FragmentParentInterface {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initBottomListRecycler()
+        if (savedInstanceState == null) {
+            initBottomListRecycler()
 
-        displayCategoriesRecordings()
+            displayCategoriesRecordings()
 
-        initPickedPhrasesObserver()
+            initPickedPhrasesObserver()
+        }
     }
 
     private fun initBottomListRecycler() = with(binding) {
@@ -67,11 +69,15 @@ class TTSFragment : Fragment(), FragmentParentInterface {
         itemsBottomRecycler.layoutManager = layoutManager
     }
 
-    private fun initPickedPhrasesObserver() =
+    private fun initPickedPhrasesObserver() = with(binding) {
         ttsFragmentViewModel.pickedPhrasesLiveData.observe(viewLifecycleOwner, {
-            binding.pickedPhrasesCardView.pickedPhrases = it as ArrayList<Phrase>
-            binding.pickedPhrasesCardView.phrasesFromPickedListDeleteFunction = ::deletePhraseFromListOfPicked
+            pickedPhrasesCardView.apply {
+                pickedPhrases = it as ArrayList<Phrase>
+                phrasesFromPickedListDeleteFunction = ::deletePhraseFromListOfPicked
+                phrasesFromPickedListDeleteAllFunction = { deleteAllPhrasesFromListOfPicked() }
+            }
         })
+    }
 
     private fun displayCategoriesRecordings() {
         binding.currentBottomRecyclerDisplayingMode.text =
@@ -138,5 +144,9 @@ class TTSFragment : Fragment(), FragmentParentInterface {
 
     private fun deletePhraseFromListOfPicked(phrase: Phrase) {
         ttsFragmentViewModel.deletePhraseFromListOfPicked(phrase)
+    }
+
+    private fun deleteAllPhrasesFromListOfPicked() {
+        ttsFragmentViewModel.deleteAllPhrasesFromListOfPicked()
     }
 }

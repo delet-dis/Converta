@@ -26,6 +26,8 @@ class PickedPhrasesCardView @JvmOverloads constructor(
 
     var phrasesFromPickedListDeleteFunction: KFunction1<Phrase, Unit>? = null
 
+    var phrasesFromPickedListDeleteAllFunction: (() -> Unit)? = null
+
     var pickedPhrases = ArrayList<Phrase>()
         set(value) = setPickedPhrasesList(value)
 
@@ -50,13 +52,16 @@ class PickedPhrasesCardView @JvmOverloads constructor(
     }
 
     private fun setPickedPhrasesList(list: ArrayList<Phrase>) = with(binding) {
+        itemsRecyclerView.adapter = PickedPhrasesRecyclerViewAdapter(list) {
+            phrasesFromPickedListDeleteFunction?.invoke(it)
+        }
+
+        initDiscardButtonOnClickListener()
+
         if (list.size == 0) {
             hideControlElements()
         } else {
             showControlElements()
-            itemsRecyclerView.adapter = PickedPhrasesRecyclerViewAdapter(list) {
-                phrasesFromPickedListDeleteFunction?.invoke(it)
-            }
         }
     }
 
@@ -69,4 +74,11 @@ class PickedPhrasesCardView @JvmOverloads constructor(
         discardButton.visibility = View.VISIBLE
         submitButton.visibility = View.VISIBLE
     }
+
+    private fun initDiscardButtonOnClickListener() =
+        with(binding) {
+            discardButton.setOnClickListener {
+                phrasesFromPickedListDeleteAllFunction?.invoke()
+            }
+        }
 }

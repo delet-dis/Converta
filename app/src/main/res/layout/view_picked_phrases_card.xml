@@ -79,7 +79,8 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
                     android:layout_marginStart="10dp"
-                    android:id="@+id/itemsRecyclerView" />
+                    android:id="@+id/itemsRecyclerView"
+                    android:overScrollMode="ifContentScrolls" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>
