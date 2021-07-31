@@ -40,6 +40,8 @@ class PickedPhrasesCardView @JvmOverloads constructor(
             PickedPhrasesCardViewViewModel(context.applicationContext as Application)
 
         initRecyclerView()
+
+        setPickedPhrasesList(ArrayList())
     }
 
     private fun initRecyclerView() = with(binding) {
@@ -52,9 +54,14 @@ class PickedPhrasesCardView @JvmOverloads constructor(
     }
 
     private fun setPickedPhrasesList(list: ArrayList<Phrase>) = with(binding) {
-        itemsRecyclerView.adapter = PickedPhrasesRecyclerViewAdapter(list) {
-            phrasesFromPickedListDeleteFunction?.invoke(it)
-        }
+        itemsRecyclerView.adapter = PickedPhrasesRecyclerViewAdapter(list,
+            {
+                phrasesFromPickedListDeleteFunction?.invoke(it)
+            },
+            {
+
+            }
+        )
 
         initDiscardButtonOnClickListener()
 
@@ -79,6 +86,13 @@ class PickedPhrasesCardView @JvmOverloads constructor(
         with(binding) {
             discardButton.setOnClickListener {
                 phrasesFromPickedListDeleteAllFunction?.invoke()
+            }
+        }
+
+    private fun initSubmitButtonOnClickListener() =
+        with(binding) {
+            submitButton.setOnClickListener {
+
             }
         }
 }

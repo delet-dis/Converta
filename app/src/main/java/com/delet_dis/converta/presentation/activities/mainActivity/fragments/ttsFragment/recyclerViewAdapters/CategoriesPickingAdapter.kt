@@ -20,8 +20,7 @@ class CategoriesPickingAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
         when (viewType) {
-            0 ->
-                AddButtonHolder(
+            0 -> AddButtonHolder(
                     LayoutInflater.from(parent.context)
                         .inflate(
                             R.layout.recycler_view_add_button,
