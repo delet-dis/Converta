@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.delet_dis.converta.R
 import com.delet_dis.converta.data.database.entities.Category
@@ -13,7 +12,6 @@ import com.delet_dis.converta.data.database.entities.Phrase
 import com.delet_dis.converta.data.interfaces.FragmentParentInterface
 import com.delet_dis.converta.data.model.BottomSheetActionType
 import com.delet_dis.converta.databinding.FragmentTtsBinding
-import com.delet_dis.converta.domain.extensions.observeOnce
 import com.delet_dis.converta.presentation.activities.mainActivity.fragments.ttsFragment.recyclerViewAdapters.CategoriesPickingAdapter
 import com.delet_dis.converta.presentation.activities.mainActivity.fragments.ttsFragment.recyclerViewAdapters.PhrasesPickingAdapter
 import com.delet_dis.converta.presentation.activities.mainActivity.fragments.ttsFragment.viewModel.TTSFragmentViewModel
@@ -76,7 +74,7 @@ class TTSFragment : Fragment(), FragmentParentInterface {
             deletePhraseFromListOfPicked = ::deletePhraseFromListOfPicked
             deleteAllPhrasesFromListOfPicked = { deleteAllPhrasesFromListOfPicked() }
             addPhraseToListOfPicked = ::addPhraseToListOfPicked
-            submitPickedPhrases = { convertArrayOfPhrasesToSpeech() }
+            submitPickedPhrases = { convertPickedPhrasesToSpeech() }
         }
 
         ttsFragmentViewModel.pickedPhrasesLiveData.observe(viewLifecycleOwner, {
@@ -152,10 +150,8 @@ class TTSFragment : Fragment(), FragmentParentInterface {
     private fun addPhraseToListOfPicked(phrase: Phrase) =
         ttsFragmentViewModel.addPhraseToListOfPicked(phrase)
 
-    private fun convertArrayOfPhrasesToSpeech() =
-        ttsFragmentViewModel.pickedPhrasesLiveData.observeOnce(viewLifecycleOwner, {
-            Toast.makeText(requireContext(), it.toString(), Toast.LENGTH_SHORT).show()
-        })
+    private fun convertPickedPhrasesToSpeech() =
+        ttsFragmentViewModel.speakPickedPhrases()
 
     override fun getFragmentId(): Int {
         return R.id.TTSFragment

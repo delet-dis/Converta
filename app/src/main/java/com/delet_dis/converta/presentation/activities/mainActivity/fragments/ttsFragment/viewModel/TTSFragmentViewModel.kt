@@ -7,7 +7,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.delet_dis.converta.data.database.entities.Category
 import com.delet_dis.converta.data.database.entities.Phrase
+import com.delet_dis.converta.domain.extensions.splitBySentences
 import com.delet_dis.converta.domain.repositories.DatabaseRepository
+import com.delet_dis.converta.domain.repositories.TextToSpeechEngineRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -73,5 +75,18 @@ class TTSFragmentViewModel(application: Application) : AndroidViewModel(applicat
             _pickedPhrasesList.add(phrase)
             _pickedPhrasesLiveData.postValue(_pickedPhrasesList)
         }
+    }
+
+    fun speakPickedPhrases() {
+        viewModelScope.launch(Dispatchers.IO) {
+            var resultString = ""
+
+            _pickedPhrasesList.forEach {
+                resultString += " " + it.name
+            }
+
+            TextToSpeechEngineRepository(getApplication()).speakString(resultString.splitBySentences())
+        }
+
     }
 }

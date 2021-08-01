@@ -3,6 +3,12 @@
         xmlns:tools="http://schemas.android.com/tools"
         package="com.delet_dis.converta">
 
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.TTS_SERVICE" />
+        </intent>
+    </queries>
+
     <application
             android:allowBackup="false"
             android:icon="@mipmap/ic_launcher"
