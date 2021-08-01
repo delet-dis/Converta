@@ -65,6 +65,8 @@ class PickedPhrasesCardView @JvmOverloads constructor(
             }
         )
 
+        itemsRecyclerView.smoothScrollToPosition(0)
+
         initDiscardButtonOnClickListener()
 
         if (list.size == 0) {

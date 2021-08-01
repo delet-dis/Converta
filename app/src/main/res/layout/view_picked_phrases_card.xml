@@ -28,7 +28,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/submitButton"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:src="@drawable/ic_submit"
+                    android:src="@drawable/ic_submit_orange"
                     android:background="@null"
                     android:padding="5dp"
                     android:contentDescription="@string/submitButtonContentDescription"

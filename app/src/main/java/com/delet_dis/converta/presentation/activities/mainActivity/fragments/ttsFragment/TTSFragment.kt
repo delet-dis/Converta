@@ -83,21 +83,28 @@ class TTSFragment : Fragment(), FragmentParentInterface {
         })
     }
 
-    private fun displayCategoriesRecordings() {
-        binding.currentBottomRecyclerDisplayingMode.text =
+    private fun displayCategoriesRecordings() = with(binding) {
+        currentBottomRecyclerDisplayingMode.text =
             requireContext().getString(R.string.phrasesCategoriesModeDisplayingText)
 
         ttsFragmentViewModel.categoriesRecordingsLiveData.observe(viewLifecycleOwner, { list ->
-            binding.itemsBottomRecycler.adapter = CategoriesPickingAdapter(list,
-                { category ->
-                    displayPhrasesRecordings(category)
-                },
-                { action, category ->
-                    parentActivityCallback.displayBottomSheetForCategoryEditing(action, category)
-                },
-                { action ->
-                    parentActivityCallback.displayBottomSheetForCategoryAdding(action)
-                })
+            requireActivity().runOnUiThread {
+                itemsBottomRecycler.adapter = CategoriesPickingAdapter(list,
+                    { category: Category ->
+                        displayPhrasesRecordings(category)
+                    },
+                    { action, category ->
+                        parentActivityCallback.displayBottomSheetForCategoryEditing(
+                            action,
+                            category
+                        )
+                    },
+                    { action ->
+                        parentActivityCallback.displayBottomSheetForCategoryAdding(action)
+                    })
+
+                itemsBottomRecycler.smoothScrollToPosition(0)
+            }
         })
     }
 
@@ -128,6 +135,8 @@ class TTSFragment : Fragment(), FragmentParentInterface {
                     {
                         displayCategoriesRecordings()
                     })
+
+                binding.itemsBottomRecycler.smoothScrollToPosition(0)
             })
     }
 

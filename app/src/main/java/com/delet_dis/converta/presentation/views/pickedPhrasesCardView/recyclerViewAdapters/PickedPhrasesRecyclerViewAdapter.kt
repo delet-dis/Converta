@@ -4,11 +4,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.RecyclerView
 import com.delet_dis.converta.R
 import com.delet_dis.converta.data.database.entities.Phrase
 import com.delet_dis.converta.databinding.RecyclerViewNewPhraseListItemBinding
 import com.delet_dis.converta.databinding.RecyclerViewPickedPhrasesListItemBinding
+
 
 class PickedPhrasesRecyclerViewAdapter(
     private val values: MutableList<Phrase>,
@@ -76,9 +78,19 @@ class PickedPhrasesRecyclerViewAdapter(
             RecyclerViewNewPhraseListItemBinding.bind(view)
 
         fun bind() {
+            initOnTextChangedListener()
+
             initOnFocusChangeListener()
 
             initOnDoneListener()
+
+            initSubmitButtonOnClickListener()
+        }
+
+        private fun initSubmitButtonOnClickListener() = with(binding) {
+            submitButton.setOnClickListener {
+                splitAndAddToPickedPhrasesString(itemText.text.toString())
+            }
         }
 
         private fun initOnDoneListener() = with(binding) {
@@ -90,6 +102,18 @@ class PickedPhrasesRecyclerViewAdapter(
                 itemText.clearFocus()
 
                 true
+            }
+        }
+
+        private fun initOnTextChangedListener() = with(binding) {
+            itemText.doOnTextChanged { text, _, _, _ ->
+                text?.let {
+                    if (it.isNotBlank()) {
+                        binding.submitButton.visibility = View.VISIBLE
+                    } else {
+                        binding.submitButton.visibility = View.INVISIBLE
+                    }
+                }
             }
         }
 
@@ -105,29 +129,9 @@ class PickedPhrasesRecyclerViewAdapter(
             }
         }
 
-        private fun splitAndAddToPickedPhrasesString(string: CharSequence?) {
-            if (string.toString().contains(" ")) {
-                val splittedString = string?.split(" ")
-
-                splittedString?.forEach {
-                    if (it.isNotEmpty()) {
-                        if (it.contains(",") or it.contains(".")) {
-                            if (it.contains(",")) {
-                                addPhraseClickListener.invoke(Phrase(it.split(",")[0]))
-                                addPhraseClickListener.invoke(Phrase(","))
-                            }
-                            if (it.contains(".")) {
-                                addPhraseClickListener.invoke(Phrase(it.split(".")[0]))
-                                addPhraseClickListener.invoke(Phrase("."))
-                            }
-                        } else {
-                            addPhraseClickListener.invoke(Phrase(it))
-                        }
-                    }
-                }
-            } else if (!string.isNullOrEmpty()) {
-                addPhraseClickListener.invoke(Phrase(string.toString()))
+        private fun splitAndAddToPickedPhrasesString(charSequence: CharSequence?) =
+            with(addPhraseClickListener) {
+                invoke(Phrase(charSequence?.trim().toString().replace("\\s+", " ")))
             }
-        }
     }
 }
