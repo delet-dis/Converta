@@ -30,6 +30,8 @@ class PickedPhrasesCardView @JvmOverloads constructor(
 
     var addPhraseToListOfPicked: KFunction1<Phrase, Unit>? = null
 
+    var submitPickedPhrases: (() -> Unit)? = null
+
     var pickedPhrases = ArrayList<Phrase>()
         set(value) = setPickedPhrasesList(value)
 
@@ -44,6 +46,8 @@ class PickedPhrasesCardView @JvmOverloads constructor(
         initRecyclerView()
 
         setPickedPhrasesList(ArrayList())
+
+        initSubmitButtonOnClickListener()
     }
 
     private fun initRecyclerView() = with(binding) {
@@ -65,7 +69,10 @@ class PickedPhrasesCardView @JvmOverloads constructor(
             }
         )
 
-        itemsRecyclerView.smoothScrollToPosition(0)
+        itemsRecyclerView.smoothScrollToPosition(
+            (itemsRecyclerView.adapter
+                    as PickedPhrasesRecyclerViewAdapter).itemCount - 1
+        )
 
         initDiscardButtonOnClickListener()
 
@@ -96,7 +103,7 @@ class PickedPhrasesCardView @JvmOverloads constructor(
     private fun initSubmitButtonOnClickListener() =
         with(binding) {
             submitButton.setOnClickListener {
-
+                submitPickedPhrases?.invoke()
             }
         }
 }

@@ -10,6 +10,7 @@ import com.delet_dis.converta.R
 import com.delet_dis.converta.data.database.entities.Phrase
 import com.delet_dis.converta.databinding.RecyclerViewNewPhraseListItemBinding
 import com.delet_dis.converta.databinding.RecyclerViewPickedPhrasesListItemBinding
+import com.delet_dis.converta.domain.extensions.beautifyString
 
 
 class PickedPhrasesRecyclerViewAdapter(
@@ -90,6 +91,7 @@ class PickedPhrasesRecyclerViewAdapter(
         private fun initSubmitButtonOnClickListener() = with(binding) {
             submitButton.setOnClickListener {
                 splitAndAddToPickedPhrasesString(itemText.text.toString())
+                itemText.clearFocus()
             }
         }
 
@@ -131,7 +133,7 @@ class PickedPhrasesRecyclerViewAdapter(
 
         private fun splitAndAddToPickedPhrasesString(charSequence: CharSequence?) =
             with(addPhraseClickListener) {
-                invoke(Phrase(charSequence?.trim().toString().replace("\\s+", " ")))
+                invoke(Phrase(charSequence?.toString()?.beautifyString()))
             }
     }
 }
