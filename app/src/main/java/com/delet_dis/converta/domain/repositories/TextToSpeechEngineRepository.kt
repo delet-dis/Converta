@@ -29,9 +29,8 @@ class TextToSpeechEngineRepository(val context: Context) {
     val ttsState: Flow<TTSState>
         get() = _ttsState
 
-    fun initTTSEngine() {
+    fun initTTSEngine() =
         getTextToSpeechEngine(context)
-    }
 
     fun speakString(stringToSpeak: String) {
         val params = Bundle()
@@ -47,7 +46,7 @@ class TextToSpeechEngineRepository(val context: Context) {
         )
     }
 
-    private fun initTTSUtteranceProgressListener() {
+    private fun initTTSUtteranceProgressListener() =
         getTextToSpeechEngine(context).setOnUtteranceProgressListener(object :
             UtteranceProgressListener() {
             override fun onStart(utteranceId: String?) {
@@ -68,5 +67,12 @@ class TextToSpeechEngineRepository(val context: Context) {
                 }
             }
         })
-    }
+
+    fun stopEngine() =
+        getTextToSpeechEngine(context).stop()
+
+
+    fun shutdownEngine() =
+        getTextToSpeechEngine(context).shutdown()
+
 }

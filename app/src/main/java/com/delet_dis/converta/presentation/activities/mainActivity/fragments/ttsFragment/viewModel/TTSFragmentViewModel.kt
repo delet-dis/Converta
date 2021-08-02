@@ -39,51 +39,45 @@ class TTSFragmentViewModel(application: Application) : AndroidViewModel(applicat
         initTTSEngine()
     }
 
-    private fun loadCategoriesRecordings() {
+    private fun loadCategoriesRecordings() =
         viewModelScope.launch(Dispatchers.IO) {
             DatabaseRepository(getApplication()).getCategories().collect {
                 _categoriesRecordingsLiveData.postValue(it.toMutableList())
             }
         }
-    }
 
-    fun loadPhrasesRecordingsByCategory(category: Category) {
+    fun loadPhrasesRecordingsByCategory(category: Category) =
         viewModelScope.launch(Dispatchers.IO) {
             DatabaseRepository(getApplication()).getPhrasesByCategory(category).collect {
                 _phrasesInCategoryRecordingsLiveData.postValue(it.toMutableList())
             }
         }
-    }
 
-    fun addPickedPhraseRecording(phrase: Phrase) {
+    fun addPickedPhraseRecording(phrase: Phrase) =
         viewModelScope.launch(Dispatchers.IO) {
             _pickedPhrasesList.add(phrase)
             _pickedPhrasesLiveData.postValue(_pickedPhrasesList)
         }
-    }
 
-    fun deletePhraseFromListOfPicked(phrase: Phrase) {
+    fun deletePhraseFromListOfPicked(phrase: Phrase) =
         viewModelScope.launch(Dispatchers.IO) {
             _pickedPhrasesList.remove(phrase)
             _pickedPhrasesLiveData.postValue(_pickedPhrasesList)
         }
-    }
 
-    fun deleteAllPhrasesFromListOfPicked() {
+    fun deleteAllPhrasesFromListOfPicked() =
         viewModelScope.launch(Dispatchers.IO) {
             _pickedPhrasesList.clear()
             _pickedPhrasesLiveData.postValue(_pickedPhrasesList)
         }
-    }
 
-    fun addPhraseToListOfPicked(phrase: Phrase) {
+    fun addPhraseToListOfPicked(phrase: Phrase) =
         viewModelScope.launch(Dispatchers.IO) {
             _pickedPhrasesList.add(phrase)
             _pickedPhrasesLiveData.postValue(_pickedPhrasesList)
         }
-    }
 
-    fun speakPickedPhrases() {
+    fun speakPickedPhrases() =
         viewModelScope.launch(Dispatchers.IO) {
             _ttsStateLiveData.postValue(TTSState.LOADING)
 
@@ -101,9 +95,7 @@ class TTSFragmentViewModel(application: Application) : AndroidViewModel(applicat
                 _ttsStateLiveData.postValue(it)
             }
         }
-    }
 
-    fun initTTSEngine() {
+    private fun initTTSEngine() =
         TextToSpeechEngineRepository(getApplication()).initTTSEngine()
-    }
 }

@@ -10,6 +10,7 @@ import com.delet_dis.converta.data.database.entities.Phrase
 import com.delet_dis.converta.data.model.ApplicationMainModeType
 import com.delet_dis.converta.domain.repositories.DatabaseRepository
 import com.delet_dis.converta.domain.repositories.SharedPreferencesRepository
+import com.delet_dis.converta.domain.repositories.TextToSpeechEngineRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -53,4 +54,10 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         viewModelScope.launch(Dispatchers.IO) {
             DatabaseRepository(getApplication()).deleteCategory(category)
         }
+
+    fun shutdownTTSEngine() =
+        TextToSpeechEngineRepository(getApplication()).shutdownEngine()
+
+    fun stopTTSEngine() =
+        TextToSpeechEngineRepository(getApplication()).stopEngine()
 }

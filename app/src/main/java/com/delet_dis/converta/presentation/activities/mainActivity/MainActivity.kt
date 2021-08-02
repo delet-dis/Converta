@@ -214,4 +214,14 @@ class MainActivity : AppCompatActivity(), TTSFragment.ParentActivityCallback,
     override fun returnPhraseForDeleting(phrase: Phrase) {
         mainActivityViewModel.deletePhraseInDatabase(phrase)
     }
+
+    override fun onPause() {
+        mainActivityViewModel.stopTTSEngine()
+        super.onPause()
+    }
+
+    override fun onDestroy() {
+        mainActivityViewModel.shutdownTTSEngine()
+        super.onDestroy()
+    }
 }
