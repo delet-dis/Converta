@@ -59,11 +59,12 @@ class TTSFragmentViewModel(application: Application) : AndroidViewModel(applicat
             _pickedPhrasesLiveData.postValue(_pickedPhrasesList)
         }
 
-    fun deletePhraseFromListOfPicked(phrase: Phrase) =
+    fun deletePhraseFromListOfPicked(phrase: Phrase) {
         viewModelScope.launch(Dispatchers.IO) {
             _pickedPhrasesList.remove(phrase)
             _pickedPhrasesLiveData.postValue(_pickedPhrasesList)
         }
+    }
 
     fun deleteAllPhrasesFromListOfPicked() =
         viewModelScope.launch(Dispatchers.IO) {
@@ -71,11 +72,12 @@ class TTSFragmentViewModel(application: Application) : AndroidViewModel(applicat
             _pickedPhrasesLiveData.postValue(_pickedPhrasesList)
         }
 
-    fun addPhraseToListOfPicked(phrase: Phrase) =
+    fun addPhraseToListOfPicked(phrase: Phrase) {
         viewModelScope.launch(Dispatchers.IO) {
             _pickedPhrasesList.add(phrase)
             _pickedPhrasesLiveData.postValue(_pickedPhrasesList)
         }
+    }
 
     fun speakPickedPhrases() =
         viewModelScope.launch(Dispatchers.IO) {
