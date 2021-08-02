@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.delet_dis.converta.data.database.entities.Category
 import com.delet_dis.converta.data.database.entities.Phrase
+import com.delet_dis.converta.data.model.TTSState
 import com.delet_dis.converta.domain.extensions.splitBySentences
 import com.delet_dis.converta.domain.repositories.DatabaseRepository
 import com.delet_dis.converta.domain.repositories.TextToSpeechEngineRepository
@@ -29,8 +30,13 @@ class TTSFragmentViewModel(application: Application) : AndroidViewModel(applicat
 
     private val _pickedPhrasesList = ArrayList<Phrase>()
 
+    private val _ttsStateLiveData = MutableLiveData<TTSState>()
+    val ttsStateLiveData: LiveData<TTSState>
+        get() = _ttsStateLiveData
+
     init {
         loadCategoriesRecordings()
+        initTTSEngine()
     }
 
     private fun loadCategoriesRecordings() {
@@ -79,14 +85,25 @@ class TTSFragmentViewModel(application: Application) : AndroidViewModel(applicat
 
     fun speakPickedPhrases() {
         viewModelScope.launch(Dispatchers.IO) {
+            _ttsStateLiveData.postValue(TTSState.LOADING)
+
             var resultString = ""
 
             _pickedPhrasesList.forEach {
                 resultString += " " + it.name
             }
 
-            TextToSpeechEngineRepository(getApplication()).speakString(resultString.splitBySentences())
-        }
+            val ttsRepository = TextToSpeechEngineRepository(getApplication())
 
+            ttsRepository.speakString(resultString.splitBySentences())
+
+            ttsRepository.ttsState.collect {
+                _ttsStateLiveData.postValue(it)
+            }
+        }
+    }
+
+    fun initTTSEngine() {
+        TextToSpeechEngineRepository(getApplication()).initTTSEngine()
     }
 }

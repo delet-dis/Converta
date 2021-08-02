@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.delet_dis.converta.R
 import com.delet_dis.converta.data.database.entities.Category
@@ -57,6 +58,8 @@ class TTSFragment : Fragment(), FragmentParentInterface {
             displayCategoriesRecordings()
 
             initPickedPhrasesObserver()
+
+            initTTSStateObserver()
         }
     }
 
@@ -81,6 +84,12 @@ class TTSFragment : Fragment(), FragmentParentInterface {
             pickedPhrasesCardView.apply {
                 pickedPhrases = it as ArrayList<Phrase>
             }
+        })
+    }
+
+    private fun initTTSStateObserver() = with(binding) {
+        ttsFragmentViewModel.ttsStateLiveData.observe(viewLifecycleOwner, {
+            Toast.makeText(requireContext(), it.name, Toast.LENGTH_SHORT).show()
         })
     }
 
