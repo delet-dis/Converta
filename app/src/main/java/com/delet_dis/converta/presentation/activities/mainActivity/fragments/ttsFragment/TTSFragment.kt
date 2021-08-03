@@ -75,6 +75,7 @@ class TTSFragment : Fragment(), FragmentParentInterface {
 
     private fun initPickedPhrasesObserver() = with(binding) {
         pickedPhrasesCardView.apply {
+            isNewPhrasesHolderDisplayed = true
             deletePhraseFromListOfPicked = ::deletePhraseFromListOfPicked
             deleteAllPhrasesFromListOfPicked = { deleteAllPhrasesFromListOfPicked() }
             addPhraseToListOfPicked = ::addPhraseToListOfPicked

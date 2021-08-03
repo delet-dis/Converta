@@ -4,6 +4,18 @@
         android:layout_height="match_parent"
         xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <com.delet_dis.converta.presentation.views.pickedPhrasesCardView.PickedPhrasesCardView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="11dp"
+            app:layout_constraintTop_toBottomOf="@+id/currentModeName"
+            app:layout_constraintBottom_toTopOf="@+id/horizontalHalfScreenGuideline"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="13dp"
+            android:layout_marginEnd="13dp"
+            android:id="@+id/pickedPhrasesCardView" />
+
     <TextView
             android:text="@string/STTTitle"
             android:layout_width="wrap_content"
@@ -17,11 +29,33 @@
             android:fontFamily="@font/navigo_medium"
             android:textSize="30sp" />
 
+    <Button
+            android:text="@string/startSTTRecognition"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/synthesizingButton"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            app:cornerRadius="16dp"
+            android:backgroundTint="@color/white"
+            android:fontFamily="@font/navigo_medium"
+            android:textSize="17sp"
+            android:textColor="@color/black"
+            android:textAllCaps="false"
+            android:lineSpacingExtra="4sp"
+            android:paddingTop="8dp"
+            android:paddingBottom="10dp"
+            app:layout_constraintTop_toTopOf="@+id/horizontalHalfScreenGuideline"
+            app:layout_constraintVertical_bias="0.55" />
+
     <androidx.constraintlayout.widget.Guideline
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/horizontalHalfScreenGuideline"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.5" />
+            app:layout_constraintGuide_percent="0.55" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

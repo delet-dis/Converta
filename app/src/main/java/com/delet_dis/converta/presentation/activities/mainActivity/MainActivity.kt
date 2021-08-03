@@ -101,17 +101,12 @@ class MainActivity : AppCompatActivity(), TTSFragment.ParentActivityCallback,
         finish()
     }
 
-    private fun translationToBlueState(): Boolean {
+    private fun translationToBlueState() =
         binding.rootView.transitionToState(R.id.backgroundImageInMainGoToBlue)
 
-        return true
-    }
-
-    private fun translationToOrangeState(): Boolean {
+    private fun translationToOrangeState() =
         binding.rootView.transitionToState(R.id.backgroundImageInMainGoToOrange)
 
-        return true
-    }
 
     private fun makeBottomNavigationViewActiveSTTButton() {
         binding.bottomNavigationView.selectedItemId = R.id.STTButton

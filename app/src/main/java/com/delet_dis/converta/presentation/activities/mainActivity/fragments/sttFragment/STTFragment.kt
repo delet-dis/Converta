@@ -9,7 +9,7 @@ import com.delet_dis.converta.R
 import com.delet_dis.converta.data.interfaces.FragmentParentInterface
 import com.delet_dis.converta.databinding.FragmentSttBinding
 
-class STTFragment:Fragment(), FragmentParentInterface {
+class STTFragment : Fragment(), FragmentParentInterface {
     private lateinit var binding: FragmentSttBinding
 
     override fun onCreateView(
@@ -26,7 +26,19 @@ class STTFragment:Fragment(), FragmentParentInterface {
         }
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        if (savedInstanceState == null) {
+            iniPickedPhrasesCardViewParameters()
+        }
+    }
+
     override fun getFragmentId(): Int {
         return R.id.STTFragment
+    }
+
+    private fun iniPickedPhrasesCardViewParameters() = binding.pickedPhrasesCardView.apply {
+        isNewPhrasesHolderDisplayed = false
     }
 }

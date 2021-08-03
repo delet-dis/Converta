@@ -21,6 +21,8 @@
     <string name="discardButtonContentDescription">Отменить</string>
     <string name="submitButtonContentDescription">Принять</string>
     <string name="deleteButtonContentDescription">Удалить</string>
-    <string name="enterPhraseHint">Введите фразу...</string>
+    <string name="enterPhraseHint">Введите фразу…</string>
     <string name="ttsErrorText">Произошла ошибка</string>
+    <string name="startSTTRecognition">Начать распознавание</string>
+    <string name="stopSTTRecognition">Знакончить распознавание</string>
 </resources>

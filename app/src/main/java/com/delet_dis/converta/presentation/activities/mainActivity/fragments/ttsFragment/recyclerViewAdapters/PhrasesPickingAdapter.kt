@@ -14,10 +14,10 @@ import com.delet_dis.converta.databinding.RecyclerViewBottomListItemBinding
 
 class PhrasesPickingAdapter(
     private val values: MutableList<Phrase>,
-    val clickListenerForPhrase: (Phrase) -> Unit,
-    val longClickListenerForPhrase: (BottomSheetActionType, Phrase) -> Unit,
-    val clickListenerForAddButton: (BottomSheetActionType) -> Unit,
-    val clickListenerForBackButton: () -> Unit
+    private val clickListenerForPhrase: (Phrase) -> Unit,
+    private val longClickListenerForPhrase: (BottomSheetActionType, Phrase) -> Unit,
+    private val clickListenerForAddButton: (BottomSheetActionType) -> Unit,
+    private val clickListenerForBackButton: () -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
         when (viewType) {

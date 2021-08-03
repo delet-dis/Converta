@@ -15,8 +15,9 @@ import com.delet_dis.converta.domain.extensions.beautifyString
 
 class PickedPhrasesRecyclerViewAdapter(
     private val values: MutableList<Phrase>,
-    val deletePhraseClickListener: (Phrase) -> Unit,
-    val addPhraseClickListener: (Phrase) -> Unit
+    private val isNewPhraseHolderDisplayed: Boolean,
+    private val deletePhraseClickListener: ((Phrase) -> Unit)?,
+    private val addPhraseClickListener: ((Phrase) -> Unit)?
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(
@@ -69,7 +70,7 @@ class PickedPhrasesRecyclerViewAdapter(
             itemText.text = phrase.name
 
             itemCard.setOnClickListener {
-                deletePhraseClickListener.invoke(phrase)
+                deletePhraseClickListener?.invoke(phrase)
             }
         }
     }
@@ -79,13 +80,17 @@ class PickedPhrasesRecyclerViewAdapter(
             RecyclerViewNewPhraseListItemBinding.bind(view)
 
         fun bind() {
-            initOnTextChangedListener()
+            if (isNewPhraseHolderDisplayed) {
+                initOnTextChangedListener()
 
-            initOnFocusChangeListener()
+                initOnFocusChangeListener()
 
-            initOnDoneListener()
+                initOnDoneListener()
 
-            initSubmitButtonOnClickListener()
+                initSubmitButtonOnClickListener()
+            } else {
+                binding.root.visibility = View.GONE
+            }
         }
 
         private fun initSubmitButtonOnClickListener() = with(binding) {
@@ -133,7 +138,7 @@ class PickedPhrasesRecyclerViewAdapter(
 
         private fun splitAndAddToPickedPhrasesString(charSequence: CharSequence?) =
             with(addPhraseClickListener) {
-                invoke(Phrase(charSequence?.toString()?.beautifyString()))
+                this?.invoke(Phrase(charSequence?.toString()?.beautifyString()))
             }
     }
 }

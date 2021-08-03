@@ -35,6 +35,12 @@ class PickedPhrasesCardView @JvmOverloads constructor(
     var pickedPhrases = ArrayList<Phrase>()
         set(value) = setPickedPhrasesList(value)
 
+    var isNewPhrasesHolderDisplayed: Boolean? = null
+        set(value){
+            field = value
+            initRecyclerViewList(value)
+        }
+
     init {
         inflate(context, R.layout.view_picked_phrases_card, this).also {
             binding = ViewPickedPhrasesCardBinding.bind(this)
@@ -44,8 +50,6 @@ class PickedPhrasesCardView @JvmOverloads constructor(
             PickedPhrasesCardViewViewModel(context.applicationContext as Application)
 
         initRecyclerView()
-
-        setPickedPhrasesList(ArrayList())
 
         initSubmitButtonOnClickListener()
     }
@@ -60,19 +64,24 @@ class PickedPhrasesCardView @JvmOverloads constructor(
     }
 
     private fun setPickedPhrasesList(list: ArrayList<Phrase>) = with(binding) {
-        itemsRecyclerView.adapter = PickedPhrasesRecyclerViewAdapter(list,
-            {
-                deletePhraseFromListOfPicked?.invoke(it)
-            },
-            {
-                addPhraseToListOfPicked?.invoke(it)
-            }
-        )
+        itemsRecyclerView.adapter = isNewPhrasesHolderDisplayed?.let { value ->
+            PickedPhrasesRecyclerViewAdapter(list,
+                value,
+                {
+                    deletePhraseFromListOfPicked?.invoke(it)
+                },
+                {
+                    addPhraseToListOfPicked?.invoke(it)
+                }
+            )
+        }
 
-        itemsRecyclerView.smoothScrollToPosition(
-            (itemsRecyclerView.adapter
-                    as PickedPhrasesRecyclerViewAdapter).itemCount - 1
-        )
+        if (isNewPhrasesHolderDisplayed == true) {
+            itemsRecyclerView.smoothScrollToPosition(
+                (itemsRecyclerView.adapter
+                        as PickedPhrasesRecyclerViewAdapter).itemCount - 1
+            )
+        }
 
         initDiscardButtonOnClickListener()
 
@@ -131,5 +140,11 @@ class PickedPhrasesCardView @JvmOverloads constructor(
     fun showTTSDone() = with(binding) {
         stopButton.visibility = View.INVISIBLE
         submitButton.visibility = View.VISIBLE
+    }
+
+    private fun initRecyclerViewList(value: Boolean?) {
+        if (value == true) {
+            setPickedPhrasesList(ArrayList())
+        }
     }
 }

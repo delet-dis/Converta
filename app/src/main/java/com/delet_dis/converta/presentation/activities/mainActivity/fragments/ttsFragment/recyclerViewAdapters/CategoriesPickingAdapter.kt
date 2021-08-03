@@ -13,9 +13,9 @@ import com.delet_dis.converta.databinding.RecyclerViewBottomListItemBinding
 
 class CategoriesPickingAdapter(
     private val values: MutableList<Category>,
-    val clickListenerForCategory: (Category) -> Unit,
-    val longClickListenerForCategory: (BottomSheetActionType, Category) -> Unit,
-    val clickListenerForAddButton: (BottomSheetActionType) -> Unit
+    private val clickListenerForCategory: (Category) -> Unit,
+    private val longClickListenerForCategory: (BottomSheetActionType, Category) -> Unit,
+    private val clickListenerForAddButton: (BottomSheetActionType) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =

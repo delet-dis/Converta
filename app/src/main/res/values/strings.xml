@@ -23,4 +23,6 @@
     <string name="deleteButtonContentDescription">Delete</string>
     <string name="enterPhraseHint">Enter phrase…</string>
     <string name="ttsErrorText">An error has occurred</string>
+    <string name="startSTTRecognition">Start recognition</string>
+    <string name="stopSTTRecognition">Stop recognition</string>
 </resources>
