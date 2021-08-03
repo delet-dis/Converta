@@ -56,7 +56,6 @@
                     android:visibility="invisible" />
 
             <com.google.android.material.progressindicator.CircularProgressIndicator
-                    android:progress="60"
                     app:trackCornerRadius="5dp"
                     app:trackThickness="2dp"
                     android:layout_width="20dp"
@@ -65,9 +64,25 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     android:layout_marginEnd="15dp"
                     android:layout_marginBottom="15dp"
-                    app:indicatorSize="20dp"
+                    app:indicatorSize="23dp"
                     android:id="@+id/progressIndicator"
                     android:visibility="invisible" />
+
+            <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/stopButton"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:src="@drawable/ic_stop"
+                    android:background="@null"
+                    android:padding="5dp"
+                    android:contentDescription="@string/discardButtonContentDescription"
+                    android:minWidth="48dp"
+                    android:minHeight="48dp"
+                    android:layout_marginEnd="5dp"
+                    android:visibility="invisible"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginBottom="5dp" />
 
             <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="0dp"

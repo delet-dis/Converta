@@ -12,6 +12,7 @@ import com.delet_dis.converta.data.database.entities.Category
 import com.delet_dis.converta.data.database.entities.Phrase
 import com.delet_dis.converta.data.interfaces.FragmentParentInterface
 import com.delet_dis.converta.data.model.BottomSheetActionType
+import com.delet_dis.converta.data.model.TTSStateType
 import com.delet_dis.converta.databinding.FragmentTtsBinding
 import com.delet_dis.converta.presentation.activities.mainActivity.fragments.ttsFragment.recyclerViewAdapters.CategoriesPickingAdapter
 import com.delet_dis.converta.presentation.activities.mainActivity.fragments.ttsFragment.recyclerViewAdapters.PhrasesPickingAdapter
@@ -87,11 +88,22 @@ class TTSFragment : Fragment(), FragmentParentInterface {
         })
     }
 
-    private fun initTTSStateObserver() = with(binding) {
-        ttsFragmentViewModel.ttsStateLiveData.observe(viewLifecycleOwner, {
-            Toast.makeText(requireContext(), it.name, Toast.LENGTH_SHORT).show()
+    private fun initTTSStateObserver() =
+        ttsFragmentViewModel.ttsStateTypeLiveData.observe(viewLifecycleOwner, {
+            when (it) {
+                TTSStateType.ERROR -> Toast.makeText(
+                    requireContext(),
+                    requireContext().getString(R.string.ttsErrorText),
+                    Toast.LENGTH_LONG
+                ).show()
+
+                TTSStateType.LOADING -> showTTSLoading()
+
+                TTSStateType.START -> showTTSStart()
+
+                TTSStateType.DONE -> showTTSDone()
+            }
         })
-    }
 
     private fun displayCategoriesRecordings() = with(binding) {
         currentBottomRecyclerDisplayingMode.text =
@@ -149,6 +161,15 @@ class TTSFragment : Fragment(), FragmentParentInterface {
                 binding.itemsBottomRecycler.smoothScrollToPosition(0)
             })
     }
+
+    private fun showTTSDone() =
+        binding.pickedPhrasesCardView.showTTSDone()
+
+    private fun showTTSLoading() =
+        binding.pickedPhrasesCardView.showTTSLoading()
+
+    private fun showTTSStart() =
+        binding.pickedPhrasesCardView.showTTSStart()
 
     private fun deletePhraseFromListOfPicked(phrase: Phrase) =
         ttsFragmentViewModel.deletePhraseFromListOfPicked(phrase)

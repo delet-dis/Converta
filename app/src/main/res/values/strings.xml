@@ -22,4 +22,5 @@
     <string name="submitButtonContentDescription">Submit</string>
     <string name="deleteButtonContentDescription">Delete</string>
     <string name="enterPhraseHint">Enter phrase…</string>
+    <string name="ttsErrorText">An error has occurred</string>
 </resources>

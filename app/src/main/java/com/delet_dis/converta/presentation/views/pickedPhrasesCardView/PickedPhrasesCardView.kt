@@ -106,4 +106,30 @@ class PickedPhrasesCardView @JvmOverloads constructor(
                 submitPickedPhrases?.invoke()
             }
         }
+
+    fun showTTSLoading() = with(binding) {
+        submitButton.visibility = View.INVISIBLE
+        progressIndicator.setProgressCompat(0, false)
+        progressIndicator.visibility = View.VISIBLE
+        progressIndicator.setProgressCompat(75, true)
+    }
+
+    fun showTTSStart() = with(binding) {
+        submitButton.visibility = View.INVISIBLE
+        progressIndicator.setProgressCompat(100, true)
+        stopButton.apply {
+            visibility = View.VISIBLE
+
+            setOnClickListener {
+                pickedPhrasesCardViewViewModel.stopTTSEngine()
+                showTTSDone()
+            }
+        }
+        progressIndicator.visibility = View.INVISIBLE
+    }
+
+    fun showTTSDone() = with(binding) {
+        stopButton.visibility = View.INVISIBLE
+        submitButton.visibility = View.VISIBLE
+    }
 }

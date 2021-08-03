@@ -4,7 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
 import android.speech.tts.UtteranceProgressListener
-import com.delet_dis.converta.data.model.TTSState
+import com.delet_dis.converta.data.model.TTSStateType
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.Flow
@@ -25,8 +25,8 @@ class TextToSpeechEngineRepository(val context: Context) {
         }
     }
 
-    private val _ttsState = MutableStateFlow(TTSState.DONE)
-    val ttsState: Flow<TTSState>
+    private val _ttsState = MutableStateFlow(TTSStateType.DONE)
+    val ttsStateType: Flow<TTSStateType>
         get() = _ttsState
 
     fun initTTSEngine() =
@@ -51,19 +51,19 @@ class TextToSpeechEngineRepository(val context: Context) {
             UtteranceProgressListener() {
             override fun onStart(utteranceId: String?) {
                 GlobalScope.launch(Dispatchers.IO) {
-                    _ttsState.emit(TTSState.START)
+                    _ttsState.emit(TTSStateType.START)
                 }
             }
 
             override fun onDone(utteranceId: String?) {
                 GlobalScope.launch(Dispatchers.IO) {
-                    _ttsState.emit(TTSState.DONE)
+                    _ttsState.emit(TTSStateType.DONE)
                 }
             }
 
             override fun onError(utteranceId: String?) {
                 GlobalScope.launch(Dispatchers.IO) {
-                    _ttsState.emit(TTSState.ERROR)
+                    _ttsState.emit(TTSStateType.ERROR)
                 }
             }
         })

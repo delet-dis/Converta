@@ -22,4 +22,5 @@
     <string name="submitButtonContentDescription">Принять</string>
     <string name="deleteButtonContentDescription">Удалить</string>
     <string name="enterPhraseHint">Введите фразу...</string>
+    <string name="ttsErrorText">Произошла ошибка</string>
 </resources>

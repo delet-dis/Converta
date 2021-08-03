@@ -2,10 +2,8 @@ package com.delet_dis.converta.presentation.views.pickedPhrasesCardView.viewMode
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import com.delet_dis.converta.data.database.entities.Phrase
+import com.delet_dis.converta.domain.repositories.TextToSpeechEngineRepository
 
 class PickedPhrasesCardViewViewModel(application: Application) : AndroidViewModel(application) {
-    fun translatePhrasesIntoSentences(list: ArrayList<Phrase>) {
-
-    }
+    fun stopTTSEngine() = TextToSpeechEngineRepository(getApplication()).stopEngine()
 }

@@ -7,7 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.delet_dis.converta.data.database.entities.Category
 import com.delet_dis.converta.data.database.entities.Phrase
-import com.delet_dis.converta.data.model.TTSState
+import com.delet_dis.converta.data.model.TTSStateType
 import com.delet_dis.converta.domain.extensions.splitBySentences
 import com.delet_dis.converta.domain.repositories.DatabaseRepository
 import com.delet_dis.converta.domain.repositories.TextToSpeechEngineRepository
@@ -30,8 +30,8 @@ class TTSFragmentViewModel(application: Application) : AndroidViewModel(applicat
 
     private val _pickedPhrasesList = ArrayList<Phrase>()
 
-    private val _ttsStateLiveData = MutableLiveData<TTSState>()
-    val ttsStateLiveData: LiveData<TTSState>
+    private val _ttsStateLiveData = MutableLiveData<TTSStateType>()
+    val ttsStateTypeLiveData: LiveData<TTSStateType>
         get() = _ttsStateLiveData
 
     init {
@@ -81,7 +81,7 @@ class TTSFragmentViewModel(application: Application) : AndroidViewModel(applicat
 
     fun speakPickedPhrases() =
         viewModelScope.launch(Dispatchers.IO) {
-            _ttsStateLiveData.postValue(TTSState.LOADING)
+            _ttsStateLiveData.postValue(TTSStateType.LOADING)
 
             var resultString = ""
 
@@ -93,11 +93,14 @@ class TTSFragmentViewModel(application: Application) : AndroidViewModel(applicat
 
             ttsRepository.speakString(resultString.splitBySentences())
 
-            ttsRepository.ttsState.collect {
+            ttsRepository.ttsStateType.collect {
                 _ttsStateLiveData.postValue(it)
             }
         }
 
     private fun initTTSEngine() =
         TextToSpeechEngineRepository(getApplication()).initTTSEngine()
+
+    fun stopTTSEngine() =
+        TextToSpeechEngineRepository(getApplication()).stopEngine()
 }
