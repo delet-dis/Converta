@@ -14,6 +14,7 @@ import java.util.*
 class DatabaseRepository(val context: Context) {
     companion object {
         private var categoryDAO: CategoryDAO? = null
+
         fun getCategoryDao(context: Context): CategoryDAO {
             if (categoryDAO == null) {
                 synchronized(CategoryDAO::class) {
@@ -24,6 +25,7 @@ class DatabaseRepository(val context: Context) {
         }
 
         private var phraseDAO: PhraseDAO? = null
+
         fun getPhraseDao(context: Context): PhraseDAO {
             if (phraseDAO == null) {
                 synchronized(CategoryDAO::class) {

@@ -15,6 +15,7 @@ import kotlinx.coroutines.launch
 class TextToSpeechEngineRepository(val context: Context) {
     companion object {
         private var textToSpeechEngine: TextToSpeech? = null
+
         fun getTextToSpeechEngine(context: Context): TextToSpeech {
             if (textToSpeechEngine == null) {
                 textToSpeechEngine = TextToSpeech(
@@ -75,4 +76,6 @@ class TextToSpeechEngineRepository(val context: Context) {
     fun shutdownEngine() =
         getTextToSpeechEngine(context).shutdown()
 
+    fun getDefaultLanguage() =
+        getTextToSpeechEngine(context).voice.locale
 }
