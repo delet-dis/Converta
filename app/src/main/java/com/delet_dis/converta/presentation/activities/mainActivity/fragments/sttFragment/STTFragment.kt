@@ -3,9 +3,11 @@ package com.delet_dis.converta.presentation.activities.mainActivity.fragments.st
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -21,7 +23,11 @@ class STTFragment : Fragment(), FragmentParentInterface {
 
     private val requestMicrophonePermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
-    ) {}
+    ) {
+        if (it) {
+            sttFragmentViewModel.startSTTListening()
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,6 +52,10 @@ class STTFragment : Fragment(), FragmentParentInterface {
             iniPickedPhrasesCardViewParameters()
 
             initListenButtonOnClickListener()
+
+            initSTTStateObserver()
+
+            initRecognizedPhrasesObserver()
         }
     }
 
@@ -57,19 +67,28 @@ class STTFragment : Fragment(), FragmentParentInterface {
         pickedPhrasesCardView.isNewPhrasesHolderDisplayed = false
     }
 
+    private fun initSTTStateObserver() =
+        sttFragmentViewModel.sttStateLiveData.observe(viewLifecycleOwner, {
+            Toast.makeText(requireContext(), it.name, Toast.LENGTH_SHORT).show()
+        })
+
+    private fun initRecognizedPhrasesObserver() =
+        sttFragmentViewModel.recognizedPhrasesLiveData.observe(viewLifecycleOwner, {
+            Log.d("test", it.toString())
+            binding.pickedPhrasesCardView.pickedPhrases = it
+        })
+
     private fun initListenButtonOnClickListener() = with(binding) {
         synthesizingButton.setOnClickListener {
-            checkForMicrophonePermission()
-        }
-    }
-
-    private fun checkForMicrophonePermission() {
-        if (ContextCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.RECORD_AUDIO
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            requestMicrophonePermissionLauncher.launch(Manifest.permission.RECORD_AUDIO)
+            if (ContextCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.RECORD_AUDIO
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                requestMicrophonePermissionLauncher.launch(Manifest.permission.RECORD_AUDIO)
+            } else {
+                sttFragmentViewModel.startSTTListening()
+            }
         }
     }
 }

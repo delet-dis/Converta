@@ -33,14 +33,19 @@ class SpeechRecognizerRepository(val context: Context) {
     private var _recognizedPhrasesArray = ArrayList<String>()
 
     private val _recognizedPhrases = MutableStateFlow(_recognizedPhrasesArray)
-    val recognizedPhrases: Flow<MutableList<String>>
+    val recognizedPhrases: Flow<List<String>>
         get() = _recognizedPhrases
+
+    fun initSTTEngine() = getSpeechRecognizer(context)
 
     fun startListening() {
         getSpeechRecognizer(context).startListening(createRecognizerIntent())
 
         initRecognitionListener()
     }
+
+    fun stopListening() =
+        getSpeechRecognizer(context).stopListening()
 
     private fun createRecognizerIntent() =
         Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
@@ -80,13 +85,18 @@ class SpeechRecognizerRepository(val context: Context) {
             override fun onResults(results: Bundle?) {}
 
             override fun onPartialResults(partialResults: Bundle?) {
-                _recognizedPhrasesArray =
-                    partialResults?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
-                            as ArrayList<String>
+                changeState(STTStateType.PROCESSING_OF_SPEECH)
+
+                val tempArray = ArrayList<String>()
+
+                partialResults?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
+                    ?.get(0)?.split(" ")?.forEach {
+                        tempArray.add(it)
+                    }
+
+                _recognizedPhrasesArray = tempArray
 
                 emitRecognizedPhrases(_recognizedPhrasesArray)
-
-                changeState(STTStateType.PROCESSING_OF_SPEECH)
             }
 
             override fun onEvent(eventType: Int, params: Bundle?) {}
