@@ -92,17 +92,24 @@ class TTSFragment : Fragment(), FragmentParentInterface {
     private fun initTTSStateObserver() =
         ttsFragmentViewModel.ttsStateTypeLiveData.observe(viewLifecycleOwner, {
             when (it) {
-                TTSStateType.ERROR -> Toast.makeText(
-                    requireContext(),
-                    requireContext().getString(R.string.ttsErrorText),
-                    Toast.LENGTH_LONG
-                ).show()
+                TTSStateType.ERROR -> {
+                    Toast.makeText(
+                        requireContext(),
+                        requireContext().getString(R.string.ttsErrorText),
+                        Toast.LENGTH_LONG
+                    ).show()
+
+                    showTTSError()
+                }
 
                 TTSStateType.LOADING -> showTTSLoading()
 
                 TTSStateType.START -> showTTSStart()
 
                 TTSStateType.DONE -> showTTSDone()
+
+                else -> {
+                }
             }
         })
 
@@ -171,6 +178,9 @@ class TTSFragment : Fragment(), FragmentParentInterface {
 
     private fun showTTSStart() =
         binding.pickedPhrasesCardView.showTTSStart()
+
+    private fun showTTSError() =
+        binding.pickedPhrasesCardView.showTTSError()
 
     private fun deletePhraseFromListOfPicked(phrase: Phrase) =
         ttsFragmentViewModel.deletePhraseFromListOfPicked(phrase)

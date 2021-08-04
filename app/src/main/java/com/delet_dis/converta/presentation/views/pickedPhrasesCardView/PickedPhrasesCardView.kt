@@ -33,10 +33,13 @@ class PickedPhrasesCardView @JvmOverloads constructor(
     var submitPickedPhrases: (() -> Unit)? = null
 
     var pickedPhrases = ArrayList<Phrase>()
-        set(value) = setPickedPhrasesList(value)
+        set(value) {
+            field = value
+            setPickedPhrasesList(value)
+        }
 
     var isNewPhrasesHolderDisplayed: Boolean? = null
-        set(value){
+        set(value) {
             field = value
             initRecyclerViewList(value)
         }
@@ -85,7 +88,11 @@ class PickedPhrasesCardView @JvmOverloads constructor(
 
         initDiscardButtonOnClickListener()
 
-        if (list.size == 0) {
+        checkListLength()
+    }
+
+    private fun checkListLength() {
+        if (pickedPhrases.size == 0) {
             hideControlElements()
         } else {
             showControlElements()
@@ -117,9 +124,9 @@ class PickedPhrasesCardView @JvmOverloads constructor(
         }
 
     fun showTTSLoading() = with(binding) {
-        submitButton.visibility = View.INVISIBLE
         progressIndicator.setProgressCompat(0, false)
         progressIndicator.visibility = View.VISIBLE
+        submitButton.visibility = View.INVISIBLE
         progressIndicator.setProgressCompat(75, true)
     }
 
@@ -138,9 +145,14 @@ class PickedPhrasesCardView @JvmOverloads constructor(
     }
 
     fun showTTSDone() = with(binding) {
+        progressIndicator.visibility = View.INVISIBLE
         stopButton.visibility = View.INVISIBLE
         submitButton.visibility = View.VISIBLE
+
+        checkListLength()
     }
+
+    fun showTTSError() = showTTSDone()
 
     private fun initRecyclerViewList(value: Boolean?) {
         if (value == true) {

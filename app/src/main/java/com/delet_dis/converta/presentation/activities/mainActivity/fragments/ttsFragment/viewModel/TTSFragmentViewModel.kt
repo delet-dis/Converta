@@ -100,7 +100,4 @@ class TTSFragmentViewModel(application: Application) : AndroidViewModel(applicat
 
     private fun initTTSEngine() =
         TextToSpeechEngineRepository(getApplication()).initTTSEngine()
-
-    fun stopTTSEngine() =
-        TextToSpeechEngineRepository(getApplication()).stopEngine()
 }

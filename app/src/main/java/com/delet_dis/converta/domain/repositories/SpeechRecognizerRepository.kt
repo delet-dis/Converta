@@ -6,6 +6,13 @@ import android.os.Bundle
 import android.speech.RecognitionListener
 import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
+import com.delet_dis.converta.data.model.STTStateType
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.launch
+
 
 class SpeechRecognizerRepository(val context: Context) {
     companion object {
@@ -19,12 +26,29 @@ class SpeechRecognizerRepository(val context: Context) {
         }
     }
 
+    private val _sttState = MutableStateFlow(STTStateType.READY_FOR_SPEECH)
+    val sttState: Flow<STTStateType>
+        get() = _sttState
+
+    private var _recognizedPhrasesArray = ArrayList<String>()
+
+    private val _recognizedPhrases = MutableStateFlow(_recognizedPhrasesArray)
+    val recognizedPhrases: Flow<MutableList<String>>
+        get() = _recognizedPhrases
+
+    fun startListening() {
+        getSpeechRecognizer(context).startListening(createRecognizerIntent())
+
+        initRecognitionListener()
+    }
+
     private fun createRecognizerIntent() =
         Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
             putExtra(
                 RecognizerIntent.EXTRA_LANGUAGE_MODEL,
                 RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
             )
+            putExtra(RecognizerIntent.EXTRA_PARTIAL_RESULTS, true)
             putExtra(
                 RecognizerIntent.EXTRA_LANGUAGE,
                 TextToSpeechEngineRepository(context).getDefaultLanguage()
@@ -34,11 +58,11 @@ class SpeechRecognizerRepository(val context: Context) {
     private fun initRecognitionListener() =
         getSpeechRecognizer(context).setRecognitionListener(object : RecognitionListener {
             override fun onReadyForSpeech(params: Bundle?) {
-
+                changeState(STTStateType.READY_FOR_SPEECH)
             }
 
             override fun onBeginningOfSpeech() {
-
+                changeState(STTStateType.BEGINNING_OF_SPEECH)
             }
 
             override fun onRmsChanged(rmsdB: Float) {}
@@ -46,20 +70,36 @@ class SpeechRecognizerRepository(val context: Context) {
             override fun onBufferReceived(buffer: ByteArray?) {}
 
             override fun onEndOfSpeech() {
-
+                changeState(STTStateType.END_OF_SPEECH)
             }
 
             override fun onError(error: Int) {
-
+                changeState(STTStateType.ERROR)
             }
 
             override fun onResults(results: Bundle?) {}
 
             override fun onPartialResults(partialResults: Bundle?) {
+                _recognizedPhrasesArray =
+                    partialResults?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
+                            as ArrayList<String>
 
+                emitRecognizedPhrases(_recognizedPhrasesArray)
+
+                changeState(STTStateType.PROCESSING_OF_SPEECH)
             }
 
             override fun onEvent(eventType: Int, params: Bundle?) {}
 
         })
+
+    private fun changeState(state: STTStateType) =
+        GlobalScope.launch(Dispatchers.IO) {
+            _sttState.emit(state)
+        }
+
+    private fun emitRecognizedPhrases(phrases: ArrayList<String>) =
+        GlobalScope.launch(Dispatchers.IO) {
+            _recognizedPhrases.emit(phrases)
+        }
 }

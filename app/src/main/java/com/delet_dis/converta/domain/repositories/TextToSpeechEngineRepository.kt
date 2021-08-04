@@ -10,6 +10,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
+import java.util.*
 
 
 class TextToSpeechEngineRepository(val context: Context) {
@@ -51,31 +52,29 @@ class TextToSpeechEngineRepository(val context: Context) {
         getTextToSpeechEngine(context).setOnUtteranceProgressListener(object :
             UtteranceProgressListener() {
             override fun onStart(utteranceId: String?) {
-                GlobalScope.launch(Dispatchers.IO) {
-                    _ttsState.emit(TTSStateType.START)
-                }
+                changeState(TTSStateType.START)
             }
 
             override fun onDone(utteranceId: String?) {
-                GlobalScope.launch(Dispatchers.IO) {
-                    _ttsState.emit(TTSStateType.DONE)
-                }
+                changeState(TTSStateType.DONE)
             }
 
             override fun onError(utteranceId: String?) {
-                GlobalScope.launch(Dispatchers.IO) {
-                    _ttsState.emit(TTSStateType.ERROR)
-                }
+                changeState(TTSStateType.ERROR)
             }
         })
 
     fun stopEngine() =
         getTextToSpeechEngine(context).stop()
 
-
     fun shutdownEngine() =
         getTextToSpeechEngine(context).shutdown()
 
-    fun getDefaultLanguage() =
+    fun getDefaultLanguage(): Locale =
         getTextToSpeechEngine(context).voice.locale
+
+    private fun changeState(state:TTSStateType) =
+        GlobalScope.launch(Dispatchers.IO) {
+            _ttsState.emit(state)
+        }
 }
