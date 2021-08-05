@@ -5,8 +5,10 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.res.ResourcesCompat
 import com.delet_dis.converta.R
 import com.delet_dis.converta.data.database.entities.Phrase
+import com.delet_dis.converta.data.model.CardModeType
 import com.delet_dis.converta.databinding.ViewPickedPhrasesCardBinding
 import com.delet_dis.converta.presentation.views.pickedPhrasesCardView.recyclerViewAdapters.PickedPhrasesRecyclerViewAdapter
 import com.delet_dis.converta.presentation.views.pickedPhrasesCardView.viewModel.PickedPhrasesCardViewViewModel
@@ -42,6 +44,12 @@ class PickedPhrasesCardView @JvmOverloads constructor(
         set(value) {
             field = value
             initRecyclerViewList(value)
+        }
+
+    var cardMode: CardModeType? = null
+        set(value) {
+            field = value
+            changeCardMode(value)
         }
 
     init {
@@ -106,7 +114,10 @@ class PickedPhrasesCardView @JvmOverloads constructor(
 
     private fun showControlElements() = with(binding) {
         discardButton.visibility = View.VISIBLE
-        submitButton.visibility = View.VISIBLE
+
+        if (cardMode != CardModeType.BLUE) {
+            submitButton.visibility = View.VISIBLE
+        }
     }
 
     private fun initDiscardButtonOnClickListener() =
@@ -157,6 +168,24 @@ class PickedPhrasesCardView @JvmOverloads constructor(
     private fun initRecyclerViewList(value: Boolean?) {
         if (value == true) {
             setPickedPhrasesList(ArrayList())
+        }
+    }
+
+    private fun changeCardMode(modeType: CardModeType?) = with(binding) {
+        when (modeType) {
+            CardModeType.BLUE -> {
+                submitButton.visibility = View.INVISIBLE
+
+                discardButton.setImageDrawable(
+                    ResourcesCompat.getDrawable(
+                        context.resources,
+                        R.drawable.ic_discard_blue,
+                        context.theme
+                    )
+                )
+            }
+            else -> {
+            }
         }
     }
 }

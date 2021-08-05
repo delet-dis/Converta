@@ -3,16 +3,15 @@ package com.delet_dis.converta.presentation.activities.mainActivity.fragments.st
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.delet_dis.converta.R
 import com.delet_dis.converta.data.interfaces.FragmentParentInterface
+import com.delet_dis.converta.data.model.CardModeType
 import com.delet_dis.converta.databinding.FragmentSttBinding
 import com.delet_dis.converta.presentation.activities.mainActivity.fragments.sttFragment.viewModel.STTFragmentViewModel
 
@@ -49,7 +48,7 @@ class STTFragment : Fragment(), FragmentParentInterface {
         super.onViewCreated(view, savedInstanceState)
 
         if (savedInstanceState == null) {
-            iniPickedPhrasesCardViewParameters()
+            initPickedPhrasesCardViewParameters()
 
             initListenButtonOnClickListener()
 
@@ -63,18 +62,22 @@ class STTFragment : Fragment(), FragmentParentInterface {
         return R.id.STTFragment
     }
 
-    private fun iniPickedPhrasesCardViewParameters() = with(binding) {
-        pickedPhrasesCardView.isNewPhrasesHolderDisplayed = false
+    private fun initPickedPhrasesCardViewParameters() = binding.pickedPhrasesCardView.apply {
+        isNewPhrasesHolderDisplayed = false
+        cardMode = CardModeType.BLUE
+        deleteAllPhrasesFromListOfPicked = { deleteAllPhrasesFromListOfPicked() }
     }
+
+    private fun deleteAllPhrasesFromListOfPicked() =
+        sttFragmentViewModel.deleteAllPhrasesFromListOfPicked()
 
     private fun initSTTStateObserver() =
         sttFragmentViewModel.sttStateLiveData.observe(viewLifecycleOwner, {
-            Toast.makeText(requireContext(), it.name, Toast.LENGTH_SHORT).show()
+
         })
 
     private fun initRecognizedPhrasesObserver() =
         sttFragmentViewModel.recognizedPhrasesLiveData.observe(viewLifecycleOwner, {
-            Log.d("test", it.toString())
             binding.pickedPhrasesCardView.pickedPhrases = it
         })
 

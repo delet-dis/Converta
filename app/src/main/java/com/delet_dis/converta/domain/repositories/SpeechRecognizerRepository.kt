@@ -90,7 +90,7 @@ class SpeechRecognizerRepository(val context: Context) {
                 val tempArray = ArrayList<String>()
 
                 partialResults?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
-                    ?.get(0)?.split(" ")?.forEach {
+                    ?.get(0)?.let {
                         tempArray.add(it)
                     }
 

@@ -89,7 +89,7 @@ class PickedPhrasesRecyclerViewAdapter(
 
                 initSubmitButtonOnClickListener()
             } else {
-                binding.root.visibility = View.GONE
+                binding.itemCard.visibility = View.INVISIBLE
             }
         }
 

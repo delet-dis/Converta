@@ -42,14 +42,22 @@ class STTFragmentViewModel(application: Application) : AndroidViewModel(applicat
     }
 
     private fun collectRecognizedPhrases() = viewModelScope.launch(Dispatchers.IO) {
-        sttRepository.recognizedPhrases.collect {
+        sttRepository.recognizedPhrases.collect { list ->
             val arrayListOfPhrases = ArrayList<Phrase>()
 
-            it.forEach { string ->
+            list.filter {
+                it.count() > 0
+            }
+
+            list.forEach { string ->
                 arrayListOfPhrases.add(Phrase((string)))
             }
 
             _recognizedPhrasesLiveData.postValue(arrayListOfPhrases)
         }
+    }
+
+    fun deleteAllPhrasesFromListOfPicked() = viewModelScope.launch(Dispatchers.IO) {
+        _recognizedPhrasesLiveData.postValue(ArrayList())
     }
 }
