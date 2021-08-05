@@ -82,7 +82,9 @@ class SpeechRecognizerRepository(val context: Context) {
                 changeState(STTStateType.ERROR)
             }
 
-            override fun onResults(results: Bundle?) {}
+            override fun onResults(results: Bundle?) {
+                changeState(STTStateType.RESULTS)
+            }
 
             override fun onPartialResults(partialResults: Bundle?) {
                 changeState(STTStateType.PROCESSING_OF_SPEECH)

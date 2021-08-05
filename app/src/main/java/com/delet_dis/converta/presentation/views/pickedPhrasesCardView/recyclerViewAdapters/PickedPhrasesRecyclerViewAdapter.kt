@@ -72,6 +72,10 @@ class PickedPhrasesRecyclerViewAdapter(
             itemCard.setOnClickListener {
                 deletePhraseClickListener?.invoke(phrase)
             }
+
+            if(!isNewPhraseHolderDisplayed){
+                deleteButton.visibility = View.INVISIBLE
+            }
         }
     }
 

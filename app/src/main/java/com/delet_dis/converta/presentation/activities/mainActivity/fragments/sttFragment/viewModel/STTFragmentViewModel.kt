@@ -23,6 +23,7 @@ class STTFragmentViewModel(application: Application) : AndroidViewModel(applicat
 
     private val sttRepository = SpeechRecognizerRepository(application)
 
+
     init {
         initSTTEngine()
         collectSTTState()
