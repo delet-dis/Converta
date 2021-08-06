@@ -6,12 +6,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.doOnPreDraw
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.delet_dis.converta.R
 import com.delet_dis.converta.data.database.entities.Category
 import com.delet_dis.converta.data.database.entities.Phrase
 import com.delet_dis.converta.data.model.BottomSheetActionType
+import com.delet_dis.converta.data.model.ColorModeType
+import com.delet_dis.converta.data.model.SettingsActionType
 import com.delet_dis.converta.databinding.ViewBottomSheetBinding
+import com.delet_dis.converta.presentation.views.bottomSheetView.recyclerViewAdapters.SettingsListRecyclerViewAdapter
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class BottomSheetView : BottomSheetDialogFragment() {
@@ -19,15 +24,19 @@ class BottomSheetView : BottomSheetDialogFragment() {
 
     private lateinit var parentActivityCallback: ParentActivityCallback
 
-    private lateinit var currentAction: BottomSheetActionType
-
     private lateinit var submitButtonOnClickListener: () -> Unit
+
+    private var currentAction: BottomSheetActionType? = null
 
     private var editTextContent: String? = null
 
     private var isDeleteButtonVisible: Boolean? = null
 
     private var deleteButtonOnClickListener: (() -> Unit)? = null
+
+    private var arrayOfSettingsActions: Array<SettingsActionType>? = null
+
+    private var currentColor: ColorModeType? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -70,7 +79,17 @@ class BottomSheetView : BottomSheetDialogFragment() {
                 }
             }
 
-            currentMode.text = currentAction.actionStringId?.let { requireContext().getString(it) }
+            currentMode.text = currentAction?.actionStringId?.let { requireContext().getString(it) }
+
+            currentAction?.let {
+                if (it == BottomSheetActionType.DISPLAYING_SETTINGS) {
+                    showSettingsElements()
+                    initRecyclerView()
+                    initRecyclerViewAdapter()
+                } else {
+                    showPhrasesElements()
+                }
+            }
 
             submitButton.setOnClickListener {
                 submitButtonOnClickListener.invoke()
@@ -90,6 +109,20 @@ class BottomSheetView : BottomSheetDialogFragment() {
                     dismiss()
                 }
             }
+
+            when (currentColor) {
+                ColorModeType.BLUE -> binding.discardButton.setImageDrawable(context?.let {
+                    ResourcesCompat.getDrawable(it.resources, R.drawable.ic_discard_blue, it.theme)
+                })
+
+                ColorModeType.ORANGE -> binding.discardButton.setImageDrawable(context?.let {
+                    ResourcesCompat.getDrawable(
+                        it.resources,
+                        R.drawable.ic_discard_orange,
+                        it.theme
+                    )
+                })
+            }
         }
     }
 
@@ -103,21 +136,21 @@ class BottomSheetView : BottomSheetDialogFragment() {
     fun setUpBottomSheetInCategoryAddingMode(
         action: BottomSheetActionType
     ) {
-        setUpCurrentModeByAction(action)
+        currentAction = action
 
-        setSubmitButtonOnClickListener {
+        submitButtonOnClickListener = {
             parentActivityCallback.returnDataFromCategoryAdding(getTextFromEditText())
             afterSubmitOnClickActions()
         }
 
-        isDeleteButtonVisible(false)
+        isDeleteButtonVisible = false
     }
 
     fun setUpBottomSheetInCategoryEditingMode(action: BottomSheetActionType, category: Category) {
-        setUpCurrentModeByAction(action)
-        category.name?.let { setEditTextContent(it) }
+        currentAction = action
+        category.name?.let { editTextContent = it }
 
-        setSubmitButtonOnClickListener {
+        submitButtonOnClickListener = {
             parentActivityCallback.returnDataFromCategoryEditing(
                 category,
                 getTextFromEditText()
@@ -125,16 +158,14 @@ class BottomSheetView : BottomSheetDialogFragment() {
             afterSubmitOnClickActions()
         }
 
-        isDeleteButtonVisible(true)
-        setDeleteButtonOnClickListener {
-            parentActivityCallback.returnCategoryForDeleting(category)
-        }
+        isDeleteButtonVisible = true
+        deleteButtonOnClickListener = { parentActivityCallback.returnCategoryForDeleting(category) }
     }
 
     fun setUpBottomSheetInPhraseAddingMode(action: BottomSheetActionType, categoryToAdd: Category) {
-        setUpCurrentModeByAction(action)
+        currentAction = action
 
-        setSubmitButtonOnClickListener {
+        submitButtonOnClickListener = {
             parentActivityCallback.returnDataFromPhraseAdding(
                 categoryToAdd,
                 getTextFromEditText()
@@ -142,7 +173,7 @@ class BottomSheetView : BottomSheetDialogFragment() {
             afterSubmitOnClickActions()
         }
 
-        isDeleteButtonVisible(false)
+        isDeleteButtonVisible = false
     }
 
     fun setUpBottomSheetInPhraseEditingMode(
@@ -150,10 +181,10 @@ class BottomSheetView : BottomSheetDialogFragment() {
         category: Category,
         phrase: Phrase
     ) {
-        setUpCurrentModeByAction(action)
-        phrase.name?.let { setEditTextContent(it) }
+        currentAction = action
+        phrase.name?.let { editTextContent = it }
 
-        setSubmitButtonOnClickListener {
+        submitButtonOnClickListener = {
             parentActivityCallback.returnDataFromPhraseEditing(
                 category,
                 phrase,
@@ -162,30 +193,54 @@ class BottomSheetView : BottomSheetDialogFragment() {
             afterSubmitOnClickActions()
         }
 
-        isDeleteButtonVisible(true)
-        setDeleteButtonOnClickListener {
-            parentActivityCallback.returnPhraseForDeleting(phrase)
+        isDeleteButtonVisible = true
+
+        deleteButtonOnClickListener = { parentActivityCallback.returnPhraseForDeleting(phrase) }
+
+    }
+
+    fun setUpBottomSheetInSettingsListMode(
+        action: BottomSheetActionType,
+        settingsList: Array<SettingsActionType>
+    ) {
+        currentAction = action
+
+        isDeleteButtonVisible = false
+
+        arrayOfSettingsActions = settingsList
+    }
+
+    fun setBottomSheetCurrentColor(currentColorModeType: ColorModeType) {
+        currentColor = currentColorModeType
+    }
+
+    private fun initRecyclerView() {
+        binding.settingsList.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+    }
+
+    private fun initRecyclerViewAdapter() {
+        binding.settingsList.adapter = arrayOfSettingsActions?.let { list ->
+            SettingsListRecyclerViewAdapter(list) {
+                parentActivityCallback.returnSettingAction(it)
+            }
         }
     }
 
-    private fun isDeleteButtonVisible(isVisible: Boolean) {
-        isDeleteButtonVisible = isVisible
+    private fun showSettingsElements() = with(binding) {
+        settingsList.visibility = View.VISIBLE
+
+        submitButton.visibility = View.INVISIBLE
+        editText.visibility = View.INVISIBLE
+        borderView.visibility = View.INVISIBLE
     }
 
-    private fun setDeleteButtonOnClickListener(function: () -> Unit) {
-        deleteButtonOnClickListener = function
-    }
+    private fun showPhrasesElements() = with(binding) {
+        settingsList.visibility = View.INVISIBLE
 
-    private fun setSubmitButtonOnClickListener(function: () -> Unit) {
-        submitButtonOnClickListener = function
-    }
-
-    private fun setUpCurrentModeByAction(action: BottomSheetActionType) {
-        currentAction = action
-    }
-
-    private fun setEditTextContent(string: String) {
-        editTextContent = string
+        submitButton.visibility = View.VISIBLE
+        editText.visibility = View.VISIBLE
+        borderView.visibility = View.VISIBLE
     }
 
     private fun getTextFromEditText() = with(binding) {
@@ -208,5 +263,7 @@ class BottomSheetView : BottomSheetDialogFragment() {
         fun returnDataFromPhraseEditing(category: Category, phrase: Phrase, newPhraseName: String)
         fun returnCategoryForDeleting(category: Category)
         fun returnPhraseForDeleting(phrase: Phrase)
+
+        fun returnSettingAction(actionType: SettingsActionType)
     }
 }

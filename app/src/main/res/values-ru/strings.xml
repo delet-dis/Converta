@@ -25,4 +25,8 @@
     <string name="ttsErrorText">Произошла ошибка</string>
     <string name="startSTTRecognition">Начать распознавание</string>
     <string name="stopSTTRecognition">Знакончить распознавание</string>
+    <string name="settings">Настройки</string>
+    <string name="changeCommunicationLanguageSettingsAction">Изменить язык общения</string>
+    <string name="changeApplicationOpenModeSettingsAction">Изменить режим открытия приложения</string>
+    <string name="listening">Слушаю</string>
 </resources>

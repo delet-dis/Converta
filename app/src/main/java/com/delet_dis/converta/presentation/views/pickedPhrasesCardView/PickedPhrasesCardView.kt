@@ -8,7 +8,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.res.ResourcesCompat
 import com.delet_dis.converta.R
 import com.delet_dis.converta.data.database.entities.Phrase
-import com.delet_dis.converta.data.model.CardModeType
+import com.delet_dis.converta.data.model.ColorModeType
 import com.delet_dis.converta.databinding.ViewPickedPhrasesCardBinding
 import com.delet_dis.converta.presentation.views.pickedPhrasesCardView.recyclerViewAdapters.PickedPhrasesRecyclerViewAdapter
 import com.delet_dis.converta.presentation.views.pickedPhrasesCardView.viewModel.PickedPhrasesCardViewViewModel
@@ -46,7 +46,7 @@ class PickedPhrasesCardView @JvmOverloads constructor(
             initRecyclerViewList(value)
         }
 
-    var cardMode: CardModeType? = null
+    var colorMode: ColorModeType? = null
         set(value) {
             field = value
             changeCardMode(value)
@@ -115,7 +115,7 @@ class PickedPhrasesCardView @JvmOverloads constructor(
     private fun showControlElements() = with(binding) {
         discardButton.visibility = View.VISIBLE
 
-        if (cardMode != CardModeType.BLUE) {
+        if (colorMode != ColorModeType.BLUE) {
             submitButton.visibility = View.VISIBLE
         }
     }
@@ -171,9 +171,9 @@ class PickedPhrasesCardView @JvmOverloads constructor(
         }
     }
 
-    private fun changeCardMode(modeType: CardModeType?) = with(binding) {
+    private fun changeCardMode(modeType: ColorModeType?) = with(binding) {
         when (modeType) {
-            CardModeType.BLUE -> {
+            ColorModeType.BLUE -> {
                 submitButton.visibility = View.INVISIBLE
 
                 discardButton.setImageDrawable(

@@ -56,7 +56,7 @@ class SpeechRecognizerRepository(val context: Context) {
             putExtra(RecognizerIntent.EXTRA_PARTIAL_RESULTS, true)
             putExtra(
                 RecognizerIntent.EXTRA_LANGUAGE,
-                TextToSpeechEngineRepository(context).getDefaultLanguage()
+                TextToSpeechEngineRepository(context).getDefaultLanguage().language
             )
         }
 
@@ -79,11 +79,14 @@ class SpeechRecognizerRepository(val context: Context) {
             }
 
             override fun onError(error: Int) {
-                changeState(STTStateType.ERROR)
+                if((error!=7) and (error!=5)){
+                    changeState(STTStateType.ERROR)
+                }
             }
 
             override fun onResults(results: Bundle?) {
                 changeState(STTStateType.RESULTS)
+                getSpeechRecognizer(context).stopListening()
             }
 
             override fun onPartialResults(partialResults: Bundle?) {

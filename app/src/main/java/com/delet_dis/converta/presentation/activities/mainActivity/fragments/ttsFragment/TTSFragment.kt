@@ -12,6 +12,7 @@ import com.delet_dis.converta.data.database.entities.Category
 import com.delet_dis.converta.data.database.entities.Phrase
 import com.delet_dis.converta.data.interfaces.FragmentParentInterface
 import com.delet_dis.converta.data.model.BottomSheetActionType
+import com.delet_dis.converta.data.model.ColorModeType
 import com.delet_dis.converta.data.model.TTSStateType
 import com.delet_dis.converta.databinding.FragmentTtsBinding
 import com.delet_dis.converta.presentation.activities.mainActivity.fragments.ttsFragment.recyclerViewAdapters.CategoriesPickingAdapter
@@ -61,6 +62,8 @@ class TTSFragment : Fragment(), FragmentParentInterface {
             initPickedPhrasesObserver()
 
             initTTSStateObserver()
+
+            initSettingsButtonOnClick()
         }
     }
 
@@ -112,6 +115,12 @@ class TTSFragment : Fragment(), FragmentParentInterface {
                 }
             }
         })
+
+    private fun initSettingsButtonOnClick() {
+        binding.settingsButton.setOnClickListener {
+            parentActivityCallback.displaySettingsBottomSheet(ColorModeType.ORANGE)
+        }
+    }
 
     private fun displayCategoriesRecordings() = with(binding) {
         currentBottomRecyclerDisplayingMode.text =
@@ -207,5 +216,7 @@ class TTSFragment : Fragment(), FragmentParentInterface {
             category: Category,
             phrase: Phrase
         )
+
+        fun displaySettingsBottomSheet(colorModeType:ColorModeType)
     }
 }

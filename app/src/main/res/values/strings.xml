@@ -25,4 +25,8 @@
     <string name="ttsErrorText">An error has occurred</string>
     <string name="startSTTRecognition">Start recognition</string>
     <string name="stopSTTRecognition">Stop recognition</string>
+    <string name="settings">Settings</string>
+    <string name="changeCommunicationLanguageSettingsAction">Change communication language</string>
+    <string name="changeApplicationOpenModeSettingsAction">Change application open mode</string>
+    <string name="listening">Listening</string>
 </resources>

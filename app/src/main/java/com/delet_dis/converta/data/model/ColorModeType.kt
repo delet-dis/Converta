@@ -1,6 +1,6 @@
 package com.delet_dis.converta.data.model
 
-enum class CardModeType {
+enum class ColorModeType {
     ORANGE,
     BLUE
 }

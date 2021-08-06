@@ -8,5 +8,6 @@ enum class BottomSheetActionType(val actionStringId: Int?) {
     CATEGORY_PICKING(null),
     PHRASE_ADDING(R.string.phraseAddingMode),
     PHRASE_EDITING(R.string.phraseEditingMode),
-    PHRASE_PICKING(null)
+    PHRASE_PICKING(null),
+    DISPLAYING_SETTINGS(R.string.settings)
 }

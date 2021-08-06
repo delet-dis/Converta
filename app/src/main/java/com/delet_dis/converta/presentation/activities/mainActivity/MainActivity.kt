@@ -2,6 +2,7 @@ package com.delet_dis.converta.presentation.activities.mainActivity
 
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -11,13 +12,16 @@ import com.delet_dis.converta.data.database.entities.Phrase
 import com.delet_dis.converta.data.interfaces.FragmentParentInterface
 import com.delet_dis.converta.data.model.ApplicationMainModeType
 import com.delet_dis.converta.data.model.BottomSheetActionType
+import com.delet_dis.converta.data.model.ColorModeType
+import com.delet_dis.converta.data.model.SettingsActionType
 import com.delet_dis.converta.databinding.ActivityMainBinding
+import com.delet_dis.converta.presentation.activities.mainActivity.fragments.sttFragment.STTFragment
 import com.delet_dis.converta.presentation.activities.mainActivity.fragments.ttsFragment.TTSFragment
 import com.delet_dis.converta.presentation.activities.mainActivity.viewModel.MainActivityViewModel
 import com.delet_dis.converta.presentation.views.bottomSheetView.BottomSheetView
 
 class MainActivity : AppCompatActivity(), TTSFragment.ParentActivityCallback,
-    BottomSheetView.ParentActivityCallback {
+    BottomSheetView.ParentActivityCallback, STTFragment.ParentActivityCallback {
     private lateinit var binding: ActivityMainBinding
 
     private lateinit var mainActivityViewModel: MainActivityViewModel
@@ -153,7 +157,11 @@ class MainActivity : AppCompatActivity(), TTSFragment.ParentActivityCallback,
 
 
     override fun displayBottomSheetForCategoryAdding(action: BottomSheetActionType) {
-        bottomSheetView.setUpBottomSheetInCategoryAddingMode(action)
+        bottomSheetView.apply {
+            setBottomSheetCurrentColor(ColorModeType.ORANGE)
+            setUpBottomSheetInCategoryAddingMode(action)
+        }
+
         showBottomSheet()
     }
 
@@ -161,7 +169,11 @@ class MainActivity : AppCompatActivity(), TTSFragment.ParentActivityCallback,
         action: BottomSheetActionType,
         category: Category
     ) {
-        bottomSheetView.setUpBottomSheetInCategoryEditingMode(action, category)
+        bottomSheetView.apply {
+            setBottomSheetCurrentColor(ColorModeType.ORANGE)
+            setUpBottomSheetInCategoryEditingMode(action, category)
+        }
+
         showBottomSheet()
     }
 
@@ -169,7 +181,11 @@ class MainActivity : AppCompatActivity(), TTSFragment.ParentActivityCallback,
         action: BottomSheetActionType,
         category: Category
     ) {
-        bottomSheetView.setUpBottomSheetInPhraseAddingMode(action, category)
+        bottomSheetView.apply {
+            setBottomSheetCurrentColor(ColorModeType.ORANGE)
+            setUpBottomSheetInPhraseAddingMode(action, category)
+        }
+
         showBottomSheet()
     }
 
@@ -178,7 +194,23 @@ class MainActivity : AppCompatActivity(), TTSFragment.ParentActivityCallback,
         category: Category,
         phrase: Phrase
     ) {
-        bottomSheetView.setUpBottomSheetInPhraseEditingMode(action, category, phrase)
+        bottomSheetView.apply {
+            setBottomSheetCurrentColor(ColorModeType.ORANGE)
+            setUpBottomSheetInPhraseEditingMode(action, category, phrase)
+        }
+
+        showBottomSheet()
+    }
+
+    override fun displaySettingsBottomSheet(colorModeType: ColorModeType) {
+        bottomSheetView.apply {
+            setBottomSheetCurrentColor(colorModeType)
+            setUpBottomSheetInSettingsListMode(
+                BottomSheetActionType.DISPLAYING_SETTINGS,
+                SettingsActionType.values()
+            )
+        }
+
         showBottomSheet()
     }
 
@@ -208,6 +240,10 @@ class MainActivity : AppCompatActivity(), TTSFragment.ParentActivityCallback,
 
     override fun returnPhraseForDeleting(phrase: Phrase) {
         mainActivityViewModel.deletePhraseInDatabase(phrase)
+    }
+
+    override fun returnSettingAction(actionType: SettingsActionType) {
+        Toast.makeText(applicationContext, actionType.name, Toast.LENGTH_SHORT).show()
     }
 
     override fun onPause() {
