@@ -7,10 +7,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.delet_dis.converta.R
+import com.delet_dis.converta.data.model.SettingsActionType
 import com.delet_dis.converta.databinding.ActivityOnboardingBinding
 import com.delet_dis.converta.domain.contracts.SettingsGoToTTSContract
 import com.delet_dis.converta.domain.extensions.findPickedFragmentBackgroundState
+import com.delet_dis.converta.domain.extensions.findSettingsAction
 import com.delet_dis.converta.domain.extensions.isOnboardingPassed
+import com.delet_dis.converta.domain.repositories.ConstantsRepository
 import com.delet_dis.converta.presentation.activities.mainActivity.MainActivity
 import com.delet_dis.converta.presentation.activities.onboardingActivity.fragments.communicationLanguageChooserFragment.CommunicationLanguageChooserFragment
 import com.delet_dis.converta.presentation.activities.onboardingActivity.fragments.preferredModeChooserFragment.PreferredModeChooserFragment
@@ -37,8 +40,6 @@ class OnboardingActivity : AppCompatActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        checkIfOnboardingPassed()
-
         binding = ActivityOnboardingBinding.inflate(layoutInflater)
 
         onboardingActivityViewModel = OnboardingActivityViewModel(application)
@@ -51,9 +52,26 @@ class OnboardingActivity : AppCompatActivity(),
 
         initActivityBackground()
 
-        initNavigationToCommunicationLanguageChooserFragment()
-
         initBackgroundChangerListener()
+
+        if (intent.extras?.getString(ConstantsRepository.SCREEN_TO_NAVIGATE) != null) {
+            navigateToIntentExtrasFragment()
+        } else {
+            checkIfOnboardingPassed()
+
+            initNavigationToCommunicationLanguageChooserFragment()
+        }
+    }
+
+    private fun navigateToIntentExtrasFragment() = with(hostFragment?.findNavController()) {
+        when (intent.extras!!.getString(ConstantsRepository.SCREEN_TO_NAVIGATE)?.let {
+            findSettingsAction(it)
+        }) {
+            SettingsActionType.APPLICATION_OPEN_MODE_PICK -> this
+                ?.navigate(R.id.action_helloFragment_to_preferredModeChooserFragment)
+            else -> {
+            }
+        }
     }
 
     private fun checkIfOnboardingPassed() {
@@ -105,4 +123,12 @@ class OnboardingActivity : AppCompatActivity(),
     override fun backgroundImageGoToBlue() =
         binding.rootLayout.transitionToState(R.id.backgroundImageInOnboardingGoToBlue)
 
+    override fun onBackPressed() {
+        if(isOnboardingPassed(applicationContext)){
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
+        }else{
+            super.onBackPressed()
+        }
+    }
 }

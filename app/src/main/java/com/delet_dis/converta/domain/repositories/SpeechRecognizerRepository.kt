@@ -79,7 +79,7 @@ class SpeechRecognizerRepository(val context: Context) {
             }
 
             override fun onError(error: Int) {
-                if((error!=7) and (error!=5)){
+                if ((error != 7) and (error != 5)) {
                     changeState(STTStateType.ERROR)
                 }
             }

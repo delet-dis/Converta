@@ -73,7 +73,7 @@ class TextToSpeechEngineRepository(val context: Context) {
     fun getDefaultLanguage(): Locale =
         getTextToSpeechEngine(context).voice.locale
 
-    private fun changeState(state:TTSStateType) =
+    private fun changeState(state: TTSStateType) =
         GlobalScope.launch(Dispatchers.IO) {
             _ttsState.emit(state)
         }

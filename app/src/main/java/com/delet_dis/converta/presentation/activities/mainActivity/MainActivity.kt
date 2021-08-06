@@ -1,8 +1,8 @@
 package com.delet_dis.converta.presentation.activities.mainActivity
 
+import android.content.Intent
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -15,9 +15,11 @@ import com.delet_dis.converta.data.model.BottomSheetActionType
 import com.delet_dis.converta.data.model.ColorModeType
 import com.delet_dis.converta.data.model.SettingsActionType
 import com.delet_dis.converta.databinding.ActivityMainBinding
+import com.delet_dis.converta.domain.repositories.ConstantsRepository
 import com.delet_dis.converta.presentation.activities.mainActivity.fragments.sttFragment.STTFragment
 import com.delet_dis.converta.presentation.activities.mainActivity.fragments.ttsFragment.TTSFragment
 import com.delet_dis.converta.presentation.activities.mainActivity.viewModel.MainActivityViewModel
+import com.delet_dis.converta.presentation.activities.onboardingActivity.OnboardingActivity
 import com.delet_dis.converta.presentation.views.bottomSheetView.BottomSheetView
 
 class MainActivity : AppCompatActivity(), TTSFragment.ParentActivityCallback,
@@ -243,7 +245,25 @@ class MainActivity : AppCompatActivity(), TTSFragment.ParentActivityCallback,
     }
 
     override fun returnSettingAction(actionType: SettingsActionType) {
-        Toast.makeText(applicationContext, actionType.name, Toast.LENGTH_SHORT).show()
+        when (actionType) {
+            SettingsActionType.COMMUNICATION_LANGUAGE_PICK -> {
+                startActivity(getSettingsIntent())
+                bottomSheetView.dismiss()
+            }
+            SettingsActionType.APPLICATION_OPEN_MODE_PICK -> {
+                startActivity(
+                    Intent(applicationContext, OnboardingActivity::class.java).putExtra(
+                        ConstantsRepository.SCREEN_TO_NAVIGATE,
+                        actionType.name
+                    ).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                )
+                finish()
+            }
+        }
+    }
+
+    private fun getSettingsIntent() = Intent().apply {
+        action = "com.android.settings.TTS_SETTINGS"
     }
 
     override fun onPause() {
