@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import com.delet_dis.converta.R
 import com.delet_dis.converta.data.database.entities.Category
@@ -130,7 +129,7 @@ class TTSFragment : Fragment(), FragmentParentInterface {
 
         ttsFragmentViewModel.categoriesRecordingsLiveData.observe(viewLifecycleOwner, { list ->
             if (list.size == 1) {
-                createIntro(this@TTSFragment, requireActivity(), itemsBottomRecycler[1])
+                createIntro(this@TTSFragment, requireActivity(), itemsBottomRecycler)
             }
             requireActivity().runOnUiThread {
                 itemsBottomRecycler.adapter = CategoriesPickingAdapter(list,
