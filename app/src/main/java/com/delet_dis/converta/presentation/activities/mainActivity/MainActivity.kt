@@ -104,7 +104,7 @@ class MainActivity : AppCompatActivity(), TTSFragment.ParentActivityCallback,
                     true
                 }
                 else -> {
-                    false
+                    true
                 }
             }
         }

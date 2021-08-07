@@ -3,7 +3,6 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="wrap_content"
-        android:layout_height="45dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/itemCard"
@@ -13,7 +12,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginBottom="11dp"
         android:layout_marginEnd="11dp"
-        app:cardBackgroundColor="@color/black">
+        app:cardBackgroundColor="@color/black"
+        android:layout_height="wrap_content"
+        android:minHeight="45dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -33,8 +34,8 @@
                 app:layout_constraintEnd_toStartOf="@+id/deleteButton"
                 android:layout_marginEnd="8dp"
                 android:lineSpacingExtra="4sp"
-                android:layout_marginTop="9dp"
-                android:layout_marginBottom="11dp"
+                android:layout_marginTop="7dp"
+                android:layout_marginBottom="9dp"
                 app:layout_constrainedWidth="true" />
 
         <ImageButton
