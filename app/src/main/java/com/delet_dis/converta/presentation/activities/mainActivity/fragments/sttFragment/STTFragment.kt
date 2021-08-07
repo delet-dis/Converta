@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -66,6 +67,8 @@ class STTFragment : Fragment(), FragmentParentInterface {
             initRecognizedPhrasesObserver()
 
             initSettingsButtonOnClick()
+
+            setSTTReadyForSpeech()
         }
     }
 
@@ -84,14 +87,12 @@ class STTFragment : Fragment(), FragmentParentInterface {
 
     private fun initSTTStateObserver() =
         sttFragmentViewModel.sttStateLiveData.observe(viewLifecycleOwner, {
+            Log.d("test", it.toString())
             when (it) {
-                STTStateType.READY_FOR_SPEECH -> setSTTReadyForSpeech()
 
                 STTStateType.BEGINNING_OF_SPEECH -> setSTTProcessingOfSpeech()
 
                 STTStateType.PROCESSING_OF_SPEECH -> setSTTProcessingOfSpeech()
-
-                STTStateType.END_OF_SPEECH -> setSTTReadyForSpeech()
 
                 STTStateType.RESULTS -> setSTTReadyForSpeech()
 
@@ -135,7 +136,7 @@ class STTFragment : Fragment(), FragmentParentInterface {
                 sttFragmentViewModel.startSTTListening()
             }
 
-            text = context.getString(R.string.listening)
+            text = context.getString(R.string.stopSTTRecognition)
         }
     }
 

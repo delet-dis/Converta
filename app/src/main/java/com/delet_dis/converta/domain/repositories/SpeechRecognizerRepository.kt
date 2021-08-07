@@ -86,6 +86,18 @@ class SpeechRecognizerRepository(val context: Context) {
 
             override fun onResults(results: Bundle?) {
                 changeState(STTStateType.RESULTS)
+
+                val tempArray = ArrayList<String>()
+
+                results?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
+                    ?.get(0)?.let {
+                        tempArray.add(it)
+                    }
+
+                _recognizedPhrasesArray = tempArray
+
+                emitRecognizedPhrases(_recognizedPhrasesArray)
+
                 getSpeechRecognizer(context).stopListening()
             }
 
@@ -94,7 +106,7 @@ class SpeechRecognizerRepository(val context: Context) {
 
                 val tempArray = ArrayList<String>()
 
-                partialResults?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
+                partialResults?.getStringArrayList("android.speech.extra.UNSTABLE_TEXT")
                     ?.get(0)?.let {
                         tempArray.add(it)
                     }
