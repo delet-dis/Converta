@@ -19,17 +19,28 @@ class TextToSpeechEngineRepository(val context: Context) {
 
         fun getTextToSpeechEngine(context: Context): TextToSpeech {
             if (textToSpeechEngine == null) {
-                textToSpeechEngine = TextToSpeech(
-                    context
-                ) {}
+                textToSpeechEngine = initTTS(context)
             }
             return textToSpeechEngine!!
         }
+
+        fun reInitTTSEngine(context: Context) {
+            getTextToSpeechEngine(context).shutdown()
+
+            textToSpeechEngine = initTTS(context)
+        }
+
+        private fun initTTS(context: Context) = TextToSpeech(
+            context
+        ) {}
     }
 
     private val _ttsState = MutableStateFlow(TTSStateType.DONE)
     val ttsStateType: Flow<TTSStateType>
         get() = _ttsState
+
+    fun reInitTTS() =
+        reInitTTSEngine(context)
 
     fun initTTSEngine() =
         getTextToSpeechEngine(context)

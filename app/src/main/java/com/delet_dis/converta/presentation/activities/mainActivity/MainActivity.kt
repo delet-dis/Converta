@@ -15,6 +15,7 @@ import com.delet_dis.converta.data.model.BottomSheetActionType
 import com.delet_dis.converta.data.model.ColorModeType
 import com.delet_dis.converta.data.model.SettingsActionType
 import com.delet_dis.converta.databinding.ActivityMainBinding
+import com.delet_dis.converta.domain.contracts.SettingsGoToTTSContract
 import com.delet_dis.converta.domain.repositories.ConstantsRepository
 import com.delet_dis.converta.presentation.activities.mainActivity.fragments.sttFragment.STTFragment
 import com.delet_dis.converta.presentation.activities.mainActivity.fragments.ttsFragment.TTSFragment
@@ -31,6 +32,12 @@ class MainActivity : AppCompatActivity(), TTSFragment.ParentActivityCallback,
     private var hostFragment: Fragment? = null
 
     private lateinit var bottomSheetView: BottomSheetView
+
+    private var settingsContract = registerForActivityResult(SettingsGoToTTSContract()) {
+        if (it) {
+            mainActivityViewModel.reInitTTS()
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -247,7 +254,7 @@ class MainActivity : AppCompatActivity(), TTSFragment.ParentActivityCallback,
     override fun returnSettingAction(actionType: SettingsActionType) {
         when (actionType) {
             SettingsActionType.COMMUNICATION_LANGUAGE_PICK -> {
-                startActivity(getSettingsIntent())
+                settingsContract.launch(1)
                 bottomSheetView.dismiss()
             }
             SettingsActionType.APPLICATION_OPEN_MODE_PICK -> {
@@ -260,10 +267,6 @@ class MainActivity : AppCompatActivity(), TTSFragment.ParentActivityCallback,
                 finish()
             }
         }
-    }
-
-    private fun getSettingsIntent() = Intent().apply {
-        action = "com.android.settings.TTS_SETTINGS"
     }
 
     override fun onPause() {

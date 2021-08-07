@@ -60,4 +60,8 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
 
     fun stopTTSEngine() =
         TextToSpeechEngineRepository(getApplication()).stopEngine()
+
+    fun reInitTTS() {
+        TextToSpeechEngineRepository(getApplication()).reInitTTS()
+    }
 }
