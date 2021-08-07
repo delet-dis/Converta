@@ -29,4 +29,5 @@
     <string name="changeCommunicationLanguageSettingsAction">Change communication language</string>
     <string name="changeApplicationOpenModeSettingsAction">Change application open mode</string>
     <string name="listening">Listening</string>
+    <string name="databaseRecordEditingHint">Long press on a phrase or category allows you to edit it</string>
 </resources>

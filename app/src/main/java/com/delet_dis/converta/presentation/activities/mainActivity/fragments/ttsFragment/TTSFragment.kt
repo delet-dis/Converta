@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import com.delet_dis.converta.R
 import com.delet_dis.converta.data.database.entities.Category
@@ -15,6 +16,7 @@ import com.delet_dis.converta.data.model.BottomSheetActionType
 import com.delet_dis.converta.data.model.ColorModeType
 import com.delet_dis.converta.data.model.TTSStateType
 import com.delet_dis.converta.databinding.FragmentTtsBinding
+import com.delet_dis.converta.domain.helpers.createIntro
 import com.delet_dis.converta.presentation.activities.mainActivity.fragments.ttsFragment.recyclerViewAdapters.CategoriesPickingAdapter
 import com.delet_dis.converta.presentation.activities.mainActivity.fragments.ttsFragment.recyclerViewAdapters.PhrasesPickingAdapter
 import com.delet_dis.converta.presentation.activities.mainActivity.fragments.ttsFragment.viewModel.TTSFragmentViewModel
@@ -127,6 +129,9 @@ class TTSFragment : Fragment(), FragmentParentInterface {
             requireContext().getString(R.string.phrasesCategoriesModeDisplayingText)
 
         ttsFragmentViewModel.categoriesRecordingsLiveData.observe(viewLifecycleOwner, { list ->
+            if (list.size == 1) {
+                createIntro(this@TTSFragment, requireActivity(), itemsBottomRecycler[1])
+            }
             requireActivity().runOnUiThread {
                 itemsBottomRecycler.adapter = CategoriesPickingAdapter(list,
                     { category: Category ->
@@ -217,6 +222,6 @@ class TTSFragment : Fragment(), FragmentParentInterface {
             phrase: Phrase
         )
 
-        fun displaySettingsBottomSheet(colorModeType:ColorModeType)
+        fun displaySettingsBottomSheet(colorModeType: ColorModeType)
     }
 }

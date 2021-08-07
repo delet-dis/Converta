@@ -22,7 +22,8 @@
             android:label="@string/appName"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
-            android:theme="@style/Theme.Converta">
+            android:theme="@style/Theme.Converta"
+            tools:replace="android:supportsRtl,android:allowBackup,icon,label">
         <activity
                 android:name=".presentation.activities.onboardingActivity.OnboardingActivity"
                 android:screenOrientation="portrait"

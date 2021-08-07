@@ -29,4 +29,5 @@
     <string name="changeCommunicationLanguageSettingsAction">Изменить язык общения</string>
     <string name="changeApplicationOpenModeSettingsAction">Изменить режим открытия приложения</string>
     <string name="listening">Слушаю</string>
+    <string name="databaseRecordEditingHint">Долгое нажатие на фразу или категорию позволяет редактировать ее</string>
 </resources>
