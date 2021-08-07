@@ -35,12 +35,13 @@
             android:id="@+id/bottomNavigationView"
             android:layout_width="match_parent"
             app:itemIconTint="@color/main_activity_bottom_navigation_items_color"
-            android:layout_height="80dp"
+            android:layout_height="0dp"
             app:itemIconSize="35dp"
             app:labelVisibilityMode="unlabeled"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/horizontalScreenGuideline"
             app:menu="@menu/main_activity_menu"
             android:background="@drawable/main_activity_bottom_navigation_transparent_background" />
 
@@ -50,5 +51,12 @@
             android:id="@+id/verticalHalfScreenGuideline"
             android:orientation="vertical"
             app:layout_constraintGuide_percent="0.5" />
+
+    <androidx.constraintlayout.widget.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/horizontalScreenGuideline"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.88" />
 
 </androidx.constraintlayout.motion.widget.MotionLayout>
