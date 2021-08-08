@@ -3,7 +3,7 @@ package com.delet_dis.converta.presentation.activities.onboardingActivity.fragme
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import com.delet_dis.converta.data.model.ApplicationMainModeType
-import com.delet_dis.converta.domain.repositories.SharedPreferencesRepository
+import com.delet_dis.converta.data.repositories.SharedPreferencesRepository
 
 class PreferredModeChooserFragmentViewModel(application: Application) :
     AndroidViewModel(application) {

@@ -13,7 +13,7 @@ import com.delet_dis.converta.domain.contracts.SettingsGoToTTSContract
 import com.delet_dis.converta.domain.extensions.findPickedFragmentBackgroundState
 import com.delet_dis.converta.domain.extensions.findSettingsAction
 import com.delet_dis.converta.domain.extensions.isOnboardingPassed
-import com.delet_dis.converta.domain.repositories.ConstantsRepository
+import com.delet_dis.converta.data.repositories.ConstantsRepository
 import com.delet_dis.converta.presentation.activities.mainActivity.MainActivity
 import com.delet_dis.converta.presentation.activities.onboardingActivity.fragments.communicationLanguageChooserFragment.CommunicationLanguageChooserFragment
 import com.delet_dis.converta.presentation.activities.onboardingActivity.fragments.preferredModeChooserFragment.PreferredModeChooserFragment

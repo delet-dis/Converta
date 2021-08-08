@@ -8,9 +8,9 @@ import androidx.lifecycle.viewModelScope
 import com.delet_dis.converta.data.database.entities.Category
 import com.delet_dis.converta.data.database.entities.Phrase
 import com.delet_dis.converta.data.model.ApplicationMainModeType
-import com.delet_dis.converta.domain.repositories.DatabaseRepository
-import com.delet_dis.converta.domain.repositories.SharedPreferencesRepository
-import com.delet_dis.converta.domain.repositories.TextToSpeechEngineRepository
+import com.delet_dis.converta.data.repositories.DatabaseRepository
+import com.delet_dis.converta.data.repositories.SharedPreferencesRepository
+import com.delet_dis.converta.data.repositories.TextToSpeechEngineRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 

@@ -15,9 +15,9 @@ import com.delet_dis.converta.data.model.ApplicationMainModeType
 import com.delet_dis.converta.data.model.BottomSheetActionType
 import com.delet_dis.converta.data.model.ColorModeType
 import com.delet_dis.converta.data.model.SettingsActionType
+import com.delet_dis.converta.data.repositories.ConstantsRepository
 import com.delet_dis.converta.databinding.ActivityMainBinding
 import com.delet_dis.converta.domain.contracts.SettingsGoToTTSContract
-import com.delet_dis.converta.domain.repositories.ConstantsRepository
 import com.delet_dis.converta.presentation.activities.mainActivity.fragments.sttFragment.STTFragment
 import com.delet_dis.converta.presentation.activities.mainActivity.fragments.ttsFragment.TTSFragment
 import com.delet_dis.converta.presentation.activities.mainActivity.viewModel.MainActivityViewModel

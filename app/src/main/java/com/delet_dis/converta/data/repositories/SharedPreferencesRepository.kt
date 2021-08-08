@@ -1,4 +1,4 @@
-package com.delet_dis.converta.domain.repositories
+package com.delet_dis.converta.data.repositories
 
 import android.content.Context
 import android.content.SharedPreferences

@@ -9,8 +9,8 @@ import com.delet_dis.converta.data.database.entities.Category
 import com.delet_dis.converta.data.database.entities.Phrase
 import com.delet_dis.converta.data.model.TTSStateType
 import com.delet_dis.converta.domain.extensions.splitBySentences
-import com.delet_dis.converta.domain.repositories.DatabaseRepository
-import com.delet_dis.converta.domain.repositories.TextToSpeechEngineRepository
+import com.delet_dis.converta.data.repositories.DatabaseRepository
+import com.delet_dis.converta.data.repositories.TextToSpeechEngineRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch

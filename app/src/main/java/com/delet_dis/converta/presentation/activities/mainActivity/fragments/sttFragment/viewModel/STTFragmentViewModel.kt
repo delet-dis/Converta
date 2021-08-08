@@ -7,7 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.delet_dis.converta.data.database.entities.Phrase
 import com.delet_dis.converta.data.model.STTStateType
-import com.delet_dis.converta.domain.repositories.SpeechRecognizerRepository
+import com.delet_dis.converta.data.repositories.SpeechRecognizerRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
