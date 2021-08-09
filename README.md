@@ -30,8 +30,8 @@ Please check [CONTRIBUTING](CONTRIBUTING.md) page if you want to help.
         * [Android KTX](https://developer.android.com/kotlin/ktx) -  set of Kotlin extensions
         * [Fragment](https://developer.android.com/jetpack/androidx/releases/fragment) -  using multiple screens inside activity
         * [ViewBinding](https://developer.android.com/topic/libraries/view-binding) -  getting links to interface elements
-    * [Firebase crashlytics](https://firebase.google.com/docs/crashlytics) - crash tracking
-    * [Google speech services](https://play.google.com/store/apps/details?id=com.google.android.tts&hl=ru&gl=RU) - text recognition and pronunciation
+    * [Firebase Crashlytics](https://firebase.google.com/docs/crashlytics) - crash tracking
+    * [Google Speech Services](https://play.google.com/store/apps/details?id=com.google.android.tts&hl=ru&gl=RU) - text recognition and pronunciation
 * Modern Architecture
     * Layers architecture
     * MVVM
