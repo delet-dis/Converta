@@ -3,8 +3,8 @@
         xmlns:tools="http://schemas.android.com/tools"
         package="com.delet_dis.converta">
 
-    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <queries>
         <intent>
@@ -17,6 +17,7 @@
     </queries>
 
     <application
+            android:name=".ConvertaApplication"
             android:allowBackup="false"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/appName"
@@ -37,7 +38,7 @@
         <activity
                 android:name=".presentation.activities.mainActivity.MainActivity"
                 android:screenOrientation="portrait"
-                tools:ignore="LockedOrientationActivity"/>
+                tools:ignore="LockedOrientationActivity" />
     </application>
 
 </manifest>
