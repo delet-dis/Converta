@@ -1,7 +1,5 @@
 package com.delet_dis.converta.data.repositories
 
-import android.content.Context
-import com.delet_dis.converta.data.database.PhrasesDatabase
 import com.delet_dis.converta.data.database.daos.CategoryDAO
 import com.delet_dis.converta.data.database.daos.PhraseDAO
 import com.delet_dis.converta.data.database.entities.Category
@@ -10,34 +8,14 @@ import com.delet_dis.converta.domain.extensions.beautifyString
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import java.util.*
+import javax.inject.Inject
 
-class DatabaseRepository(val context: Context) {
-    companion object {
-        private var categoryDAO: CategoryDAO? = null
-
-        fun getCategoryDao(context: Context): CategoryDAO {
-            if (categoryDAO == null) {
-                synchronized(CategoryDAO::class) {
-                    categoryDAO = PhrasesDatabase.getAppDatabase(context).categoryDao()
-                }
-            }
-            return categoryDAO!!
-        }
-
-        private var phraseDAO: PhraseDAO? = null
-
-        fun getPhraseDao(context: Context): PhraseDAO {
-            if (phraseDAO == null) {
-                synchronized(CategoryDAO::class) {
-                    phraseDAO = PhrasesDatabase.getAppDatabase(context).phraseDao()
-                }
-            }
-            return phraseDAO!!
-        }
-    }
-
+class DatabaseRepository @Inject constructor(
+    private val phraseDAO: PhraseDAO,
+    private val categoryDAO: CategoryDAO
+) {
     fun getCategories(): Flow<List<Category>> =
-        getCategoryDao(context).getAllCategoriesAsFlow().map {
+        categoryDAO.getAllCategoriesAsFlow().map {
             it.forEach { category ->
                 category.name = category.name?.replaceFirstChar { char ->
                     if (char.isLowerCase()) char.titlecase(
@@ -50,11 +28,11 @@ class DatabaseRepository(val context: Context) {
         }
 
     suspend fun renameCategory(category: Category, newCategoryName: String) =
-        getCategoryDao(context).insert(Category(newCategoryName.beautifyString(), category.id))
+        categoryDAO.insert(Category(newCategoryName.beautifyString(), category.id))
 
     suspend fun addCategory(category: String) {
         if (category.isNotBlank() and category.isNotEmpty()) {
-            getCategoryDao(context).insert(
+            categoryDAO.insert(
                 Category(
                     category.beautifyString().lowercase(Locale.getDefault())
                 )
@@ -63,13 +41,13 @@ class DatabaseRepository(val context: Context) {
     }
 
     fun getPhrasesByCategory(category: Category): Flow<List<Phrase>> =
-        getPhraseDao(context).getAllPhrasesByCategory(category.id)
+        phraseDAO.getAllPhrasesByCategory(category.id)
 
     suspend fun addPhraseInCategory(category: Category, newPhraseName: String) =
-        getPhraseDao(context).insert(Phrase(newPhraseName.beautifyString(), category.id))
+        phraseDAO.insert(Phrase(newPhraseName.beautifyString(), category.id))
 
     suspend fun renamePhrase(category: Category, phrase: Phrase, newPhraseName: String) =
-        getPhraseDao(context).insert(
+        phraseDAO.insert(
             Phrase(
                 newPhraseName.beautifyString(),
                 category.id,
@@ -79,11 +57,11 @@ class DatabaseRepository(val context: Context) {
 
     suspend fun deleteCategory(category: Category) {
         deletePhrasesByCategory(category)
-        getCategoryDao(context).deleteById(category.id)
+        categoryDAO.deleteById(category.id)
     }
 
     suspend fun deletePhrase(phrase: Phrase) =
-        getPhraseDao(context).deleteById(phrase.id)
+        phraseDAO.deleteById(phrase.id)
 
     private fun deletePhrasesByCategory(category: Category) {
         getPhrasesByCategory(category).map {
