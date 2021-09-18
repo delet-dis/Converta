@@ -1,21 +1,28 @@
 package com.delet_dis.converta.presentation.activities.mainActivity.fragments.ttsFragment.viewModel
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.delet_dis.converta.data.database.entities.Category
 import com.delet_dis.converta.data.database.entities.Phrase
 import com.delet_dis.converta.data.model.TTSStateType
-import com.delet_dis.converta.domain.extensions.splitBySentences
 import com.delet_dis.converta.data.repositories.DatabaseRepository
 import com.delet_dis.converta.data.repositories.TextToSpeechEngineRepository
+import com.delet_dis.converta.domain.extensions.splitBySentences
+import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class TTSFragmentViewModel(application: Application) : AndroidViewModel(application) {
+@HiltViewModel
+class TTSFragmentViewModel @Inject constructor(
+    @ApplicationContext private val context: Context,
+    private val databaseRepository: DatabaseRepository
+) : ViewModel() {
     private val _categoriesRecordingsLiveData = MutableLiveData<MutableList<Category>>()
     val categoriesRecordingsLiveData: LiveData<MutableList<Category>>
         get() = _categoriesRecordingsLiveData
@@ -41,14 +48,14 @@ class TTSFragmentViewModel(application: Application) : AndroidViewModel(applicat
 
     private fun loadCategoriesRecordings() =
         viewModelScope.launch(Dispatchers.IO) {
-            DatabaseRepository(getApplication()).getCategories().collect {
+            databaseRepository.getCategories().collect {
                 _categoriesRecordingsLiveData.postValue(it.toMutableList())
             }
         }
 
     fun loadPhrasesRecordingsByCategory(category: Category) =
         viewModelScope.launch(Dispatchers.IO) {
-            DatabaseRepository(getApplication()).getPhrasesByCategory(category).collect {
+            databaseRepository.getPhrasesByCategory(category).collect {
                 _phrasesInCategoryRecordingsLiveData.postValue(it.toMutableList())
             }
         }
@@ -89,7 +96,7 @@ class TTSFragmentViewModel(application: Application) : AndroidViewModel(applicat
                 resultString += " " + it.name
             }
 
-            val ttsRepository = TextToSpeechEngineRepository(getApplication())
+            val ttsRepository = TextToSpeechEngineRepository(context)
 
             ttsRepository.speakString(resultString.splitBySentences())
 
@@ -99,5 +106,5 @@ class TTSFragmentViewModel(application: Application) : AndroidViewModel(applicat
         }
 
     private fun initTTSEngine() =
-        TextToSpeechEngineRepository(getApplication()).initTTSEngine()
+        TextToSpeechEngineRepository(context).initTTSEngine()
 }

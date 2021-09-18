@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.view.WindowManager
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -23,12 +24,14 @@ import com.delet_dis.converta.presentation.activities.mainActivity.fragments.tts
 import com.delet_dis.converta.presentation.activities.mainActivity.viewModel.MainActivityViewModel
 import com.delet_dis.converta.presentation.activities.onboardingActivity.OnboardingActivity
 import com.delet_dis.converta.presentation.views.bottomSheetView.BottomSheetView
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity(), TTSFragment.ParentActivityCallback,
     BottomSheetView.ParentActivityCallback, STTFragment.ParentActivityCallback {
     private lateinit var binding: ActivityMainBinding
 
-    private lateinit var mainActivityViewModel: MainActivityViewModel
+    private val mainActivityViewModel: MainActivityViewModel by viewModels()
 
     private var hostFragment: Fragment? = null
 
@@ -48,8 +51,6 @@ class MainActivity : AppCompatActivity(), TTSFragment.ParentActivityCallback,
         hostFragment =
             supportFragmentManager
                 .findFragmentById(binding.navigationMainControllerContainerView.id)
-
-        mainActivityViewModel = MainActivityViewModel(application)
 
         bottomSheetView = BottomSheetView()
 

@@ -11,7 +11,9 @@ import com.delet_dis.converta.R
 import com.delet_dis.converta.data.model.ApplicationMainModeType
 import com.delet_dis.converta.databinding.FragmentPreferredModeChooserBinding
 import com.delet_dis.converta.presentation.activities.onboardingActivity.fragments.preferredModeChooserFragment.viewModel.PreferredModeChooserFragmentViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class PreferredModeChooserFragment : Fragment() {
     private lateinit var binding: FragmentPreferredModeChooserBinding
 

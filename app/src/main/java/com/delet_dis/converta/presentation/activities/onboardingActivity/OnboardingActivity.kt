@@ -18,7 +18,9 @@ import com.delet_dis.converta.presentation.activities.mainActivity.MainActivity
 import com.delet_dis.converta.presentation.activities.onboardingActivity.fragments.communicationLanguageChooserFragment.CommunicationLanguageChooserFragment
 import com.delet_dis.converta.presentation.activities.onboardingActivity.fragments.preferredModeChooserFragment.PreferredModeChooserFragment
 import com.delet_dis.converta.presentation.activities.onboardingActivity.viewModel.OnboardingActivityViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class OnboardingActivity : AppCompatActivity(),
     CommunicationLanguageChooserFragment.ParentActivityCallback,
     PreferredModeChooserFragment.ParentActivityCallback {

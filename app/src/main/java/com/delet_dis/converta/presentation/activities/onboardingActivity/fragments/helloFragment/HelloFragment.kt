@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.delet_dis.converta.databinding.FragmentHelloBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HelloFragment : Fragment() {
     private lateinit var binding: FragmentHelloBinding
 

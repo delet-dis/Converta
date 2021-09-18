@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.delet_dis.converta.R
 import com.delet_dis.converta.data.database.entities.Category
 import com.delet_dis.converta.data.database.entities.Phrase
@@ -22,11 +23,13 @@ import com.delet_dis.converta.presentation.activities.mainActivity.fragments.tts
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class TTSFragment : Fragment(), FragmentParentInterface {
     private lateinit var binding: FragmentTtsBinding
 
-    private lateinit var ttsFragmentViewModel: TTSFragmentViewModel
+    private val ttsFragmentViewModel: TTSFragmentViewModel by viewModels()
 
     private lateinit var parentActivityCallback: ParentActivityCallback
 
@@ -37,8 +40,6 @@ class TTSFragment : Fragment(), FragmentParentInterface {
     ): View? {
         return if (savedInstanceState == null) {
             binding = FragmentTtsBinding.inflate(layoutInflater)
-
-            ttsFragmentViewModel = TTSFragmentViewModel(requireActivity().application)
 
             binding.root
         } else {

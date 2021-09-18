@@ -8,8 +8,9 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import com.delet_dis.converta.databinding.FragmentCommunicationLanguageChooserBinding
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class CommunicationLanguageChooserFragment : Fragment() {
     private lateinit var binding: FragmentCommunicationLanguageChooserBinding
 

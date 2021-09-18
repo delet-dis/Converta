@@ -1,18 +1,23 @@
 package com.delet_dis.converta.presentation.activities.mainActivity.fragments.sttFragment.viewModel
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.delet_dis.converta.data.database.entities.Phrase
 import com.delet_dis.converta.data.model.STTStateType
 import com.delet_dis.converta.data.repositories.SpeechRecognizerRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class STTFragmentViewModel(application: Application) : AndroidViewModel(application) {
+@HiltViewModel
+class STTFragmentViewModel @Inject constructor(@ApplicationContext private val context: Context) :
+    ViewModel() {
     private val _sttStateLiveData = MutableLiveData(STTStateType.READY_FOR_SPEECH)
     val sttStateLiveData: LiveData<STTStateType>
         get() = _sttStateLiveData
@@ -21,8 +26,7 @@ class STTFragmentViewModel(application: Application) : AndroidViewModel(applicat
     val recognizedPhrasesLiveData: LiveData<ArrayList<Phrase>>
         get() = _recognizedPhrasesLiveData
 
-    private val sttRepository = SpeechRecognizerRepository(application)
-
+    private val sttRepository = SpeechRecognizerRepository(context)
 
     init {
         initSTTEngine()

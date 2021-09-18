@@ -12,17 +12,20 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.delet_dis.converta.R
 import com.delet_dis.converta.data.interfaces.FragmentParentInterface
 import com.delet_dis.converta.data.model.ColorModeType
 import com.delet_dis.converta.data.model.STTStateType
 import com.delet_dis.converta.databinding.FragmentSttBinding
 import com.delet_dis.converta.presentation.activities.mainActivity.fragments.sttFragment.viewModel.STTFragmentViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class STTFragment : Fragment(), FragmentParentInterface {
     private lateinit var binding: FragmentSttBinding
 
-    private lateinit var sttFragmentViewModel: STTFragmentViewModel
+    private val sttFragmentViewModel: STTFragmentViewModel by viewModels()
 
     private lateinit var parentActivityCallback: ParentActivityCallback
 
@@ -41,8 +44,6 @@ class STTFragment : Fragment(), FragmentParentInterface {
     ): View? {
         return if (savedInstanceState == null) {
             binding = FragmentSttBinding.inflate(layoutInflater)
-
-            sttFragmentViewModel = STTFragmentViewModel(requireActivity().application)
 
             binding.root
         } else {
