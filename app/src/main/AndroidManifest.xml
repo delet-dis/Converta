@@ -26,6 +26,7 @@
             android:theme="@style/Theme.Converta"
             tools:replace="android:supportsRtl,android:allowBackup,icon,label">
         <activity
+                android:exported="true"
                 android:name=".presentation.activities.onboardingActivity.OnboardingActivity"
                 android:screenOrientation="portrait"
                 tools:ignore="LockedOrientationActivity">
